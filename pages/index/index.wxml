@@ -1,0 +1,115 @@
+<scroll-view style='width:100%;height:100%' scroll-y = "true" bindscroll="scrollTopFun">
+  <view class='sjkjWechat'>
+    <view class='sjkjIndex'>
+      <view class='sjNav'>
+        <text bindtap='map'>{{mapName}} ></text>
+      <input value='' type='text' placeholder='输入店名搜索，如布兰奇'></input>
+      </view>
+    </view>
+    <swiper
+      indicator-dots="{{navSate.indicatorDots}}"
+      autoplay="{{navSate.autoplay}}"
+      interval="{{navSate.interval}}"
+      duration="{{navSate.duration}}"
+      circular="{{navSate.circular}}"
+      indicator-color="{{navSate.indicatorColor}}"
+      indicator-active-color="{{navSate.indicatorActiveColor}}"
+    >
+      <block wx:for="{{navImg}}" wx:key="userInfoListId">
+        <swiper-item>
+          <image src="'https://appletwechat.pigcome.com' + {{item.img}}" class="slide-image" />
+        </swiper-item>
+      </block>
+    </swiper>
+    <view class='notice'>
+      <view class='noticeIcon'>
+        <image src='cloud://sjkj-1-2739cc.736a-sjkj-1-2739cc/img/index/laba@2x.png'></image>
+      </view>
+      <swiper
+        autoplay="{{navSate.autoplay}}" 
+        interval="{{navSate.interval}}" 
+        circular='true' vertical='true'
+      >
+        <block wx:for="{{noticeMessg}}" wx:key="noticeId">
+          <swiper-item>
+            <text>{{item.title}}</text>
+          </swiper-item>
+        </block>
+      </swiper>
+    </view>
+    <view class='sjkjNavList'>
+      <view class='ListTop'>
+          <view wx:for="{{navList}}" wx:key="navListKey" class='navListItem'>
+          <image src='{{item.img}}'></image>
+          <text>{{item.text}}</text>
+        </view>
+      </view>
+      <view class='listBootm'>
+        <view wx:for="{{navList1}}" wx:key="navListKey1" class='navListItem'>
+          <image src='{{item.img}}'></image>
+          <text>{{item.text}}</text>
+        </view>
+      </view>
+    </view>
+    <view class='vicinity'>
+      <text>优质商家</text>
+    </view>
+    <view class='vicinityList'>
+      <view class='vicinityListItem' wx:for="{{quality}}" wx:key="vicinityList">
+        <image src='"http://appletwechat.pigcome.com" "+" + {{item.logo}}'></image>
+        <text>{{item.shopName}}</text>
+      </view>
+    </view>
+    <view class='vicinity'>
+      <text>附近商家</text>
+    </view>
+    <view class='screen {{scrollTop > 100 ? "topnav" : ""}}'>
+      <view class='screenChid'>
+        <text>{{select}}<image src='cloud://sjkj-1-2739cc.736a-sjkj-1-2739cc/img/index/suaixuanjiantouxia@2x.png'></image></text>
+        <text>自营商家</text>
+        <text>评分最高</text>
+      </view>
+    </view>
+    <!-- 这里是商家列表 -->
+    <view class='merchant'>
+      <view class='merchantList' bindtap='GOShopDetails' wx:for="{{shopList}}" wx:for-index= "shopListChid" data-bindId ="{{item.id}}" wx:key="{{item.id}}">
+        <view class='merchantListImg'>
+          <image src='cloud://sjkj-1-2739cc.736a-sjkj-1-2739cc/img/index/216_216.png'></image>
+        </view>
+        <view class='merchantMesg'>
+          <view class='shopName'>
+            <text>{{item.shopName}}</text>
+          </view>
+          <view class='merchatOrder'>
+            <view class='orderLeft'>
+              <view class='grade'>
+                <block wx:for="{{item.sumScore}}" wx:key="sumScore">
+                  <image src='cloud://sjkj-1-2739cc.736a-sjkj-1-2739cc/img/index/huangxin-biekaiche@2x.png'></image>
+                </block>
+                <block wx:for="{{5 - item.sumScore}}" wx:key="sumScore2">
+                  <image src='cloud://sjkj-1-2739cc.736a-sjkj-1-2739cc/img/index/huixing@2x.png'></image>
+                </block>
+              </view>
+              <text>{{item.sumScore}}.0</text>
+              <text>月售{{item.monthSales}}单</text>
+            </view>
+            <view class='distance'>
+              <text>{{item.distance}}km</text>
+            </view>
+          </view>
+          <view class='mode'>
+            <text class='one'>起送￥{{item.riseoff}}</text>
+            <text>取送费￥{{item.takeoff}}</text>
+          </view>
+          <view class='discount'>
+            <view class='discountClass'>
+              <text  wx:for="{{item.discountModelList}}" wx:key="discountModelList" wx:for-item="discountChid">{{discountChid.nathingName}}</text>
+            </view>
+          </view>
+        </view>
+      </view>
+    </view>
+  </view>
+</scroll-view>
+  
+  

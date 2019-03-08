@@ -1,0 +1,83 @@
+<view class="detail">
+  <view class='shopMes'>
+    <view class='shopImg'>
+      <image src='cloud://sjkj-1-2739cc.736a-sjkj-1-2739cc/img/index/216_216.png'></image>
+    </view>
+    <view class='shopName'>
+      <view class='shopName-name'>布兰奇洗衣(美年广场店）</view>
+      <view class='shopName-grade'>
+        <block wx:for="{{one_1}}">
+            <image src='cloud://sjkj-1-2739cc.736a-sjkj-1-2739cc/img/index/huangxin-biekaiche@2x.png'></image>
+          </block>
+          <block wx:for="{{two_1}}">
+            <image src='cloud://sjkj-1-2739cc.736a-sjkj-1-2739cc/img/index/huixing@2x.png'></image>
+        </block>
+        <text>4.7</text>
+      </view>
+      <view class='shopName-notice'>公告：布兰奇为感谢新老用户的支持</view>
+      <view class='shopName-rule'>满20元起送</view>
+    </view>
+  </view>
+  <view class='shopNav'>
+    <block wx:for="{{navbarTitle}}" wx:key="index">
+      <view class="navbar-item {{navbarActiveIndex === index ? 'navbar-item-active' : ''}}" data-navbar-index="{{index}}" catchtap="onNavBarTap">
+        <text>{{item}}</text>
+      </view>
+    </block>
+  </view>
+  <view class='shopContent' style='height:{{second_height}}px'>
+
+    <swiper class='ContentSwiper' current="{{navbarActiveIndex}}" bindanimationfinish="onBindAnimationFinish">
+      <swiper-item class="contenItem">
+        <view class="content">
+          <view class="menu-container">
+            <scroll-view scroll-y='true' class="scroll-view" scroll-into-view="head-{{indexSize}}">
+              <view class="scroll-view-ul"> 
+              <block wx:for="{{detail}}" wx:for-item="item" wx:key="index" id="head-{{index}}">
+                  <view class="scroll-view-item {{indexSize === index?'active':''}}"   bindtap="scrollTo" data-index="{{index}}">{{item.name}}
+                  </view>
+                </block>
+              </view>
+            </scroll-view>
+          </view>
+          <swiper indicator-dots='true' class="detail-container" bindchange="change" data-index="{{index}}" vertical='true' current="{{indexSize}}"
+            indicator-dots="{{indicatorDots}}" autoplay="{{autoplay}}" duration="{{duration}}">
+            <swiper-item wx:for="{{detail}}" wx:for-item="item" wx:key="index">
+              <scroll-view scroll-y="true" class=" market-scroll-list">
+                <view class="title">{{detail[indexSize].name}} </view>
+                <view class='flexCloum'>
+                  <block wx:for="{{detail[indexSize].commodityModelList}}" wx:key="index" item="item"
+                    key="key"  bindtap='selectShop'>
+                    <view class='inner' id='{{item.id}}' data-index="{{item}}" bindtap='selectShop'>
+                      <view class='cover'>
+                        <image src='cloud://sjkj-1-2739cc.736a-sjkj-1-2739cc/img/index/216_216.png'></image>
+                      </view>
+                      <view class='info'>
+                        <view class="info-title">{{item.name}}</view>
+                        <view class="info-Single" >月售{{volume}}单</view>
+                        <view class='info-price'>￥{{item.price}}</view>
+                      </view>
+                    </view>
+                  </block>
+                </view>
+              </scroll-view>
+            </swiper-item>
+          </swiper>
+        </view>
+      </swiper-item>
+      <swiper-item class="contenItem">
+        <scroll-view scroll-y="{{true}}">
+          <text>第二页</text>
+        </scroll-view>
+      </swiper-item>
+      <swiper-item class="contenItem">
+        <scroll-view scroll-y="{{true}}">
+          <text>第三页</text>
+        </scroll-view>
+      </swiper-item>
+    </swiper>
+  </view>
+  <view class='shopClose'>
+    
+  </view>
+</view>

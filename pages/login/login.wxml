@@ -1,0 +1,15 @@
+<view class='login'>
+  <view class='loginTopImg'>
+    <image src='cloud://sjkj-1-2739cc.736a-sjkj-1-2739cc/img/login/bj@2x.png'></image>
+  </view>
+  <view class='loginContent'>
+    <view class='loginPhone loginInput'>
+      <input placeholder="请输入常用手机号" type='number' bindinput ="userNameInput"/>
+    </view>
+    <view class='loginYZ loginInput'>
+      <input placeholder="请输入验证码" type='number'  password="{{passwordType}}" bindinput="passWdInput"/>
+      <button disabled='{{disabled}}' data-id="2" bindtap="getVerificationCode">{{item}}</button>
+    </view>
+    <button hover-class bindtap='login'>登录</button>
+  </view>
+</view>

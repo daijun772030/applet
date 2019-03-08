@@ -1,0 +1,49 @@
+{
+  "pages": [
+    "pages/index/index",
+    "pages/logs/logs",
+    "pages/personal/personal",
+    "pages/order/order",
+    "pages/shopDetails/shopDetails",
+    "pages/weui/weui",
+    "pages/login/login"
+  ],
+  "permission": {
+    "scope.userLocation": {
+      "desc": "我们需要获取您的位置"
+    }
+  },
+  "window": {
+    "backgroundTextStyle": "light",
+    "navigationBarBackgroundColor": "#fff",
+    "navigationBarTitleText": "WeChat",
+    "navigationBarTextStyle": "black",
+    "pageOrientation": "auto"
+  },
+  "tabBar": {
+    "color": "#999999",
+    "selectedColor": "#666666",
+    "borderStyle": "white",
+    "backgroundColor": "#ffffff",
+    "list": [
+      {
+        "pagePath": "pages/index/index",
+        "text": "首页",
+        "iconPath": "images/overall/shouye_f@2x.png",
+        "selectedIconPath": "images/overall/shouye_t@2x.png"
+      },
+      {
+        "pagePath": "pages/order/order",
+        "text": "订单",
+        "iconPath": "images/overall/dingdan_f@2x.png",
+        "selectedIconPath": "images/overall/dingdan_t@2x.png"
+      },
+      {
+        "pagePath": "pages/personal/personal",
+        "text": "我的",
+        "iconPath": "images/overall/wode_f@2x.png",
+        "selectedIconPath": "images/overall/wode_t@2x.png"
+      }
+    ]
+  }
+}
