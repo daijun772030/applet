@@ -56,6 +56,7 @@ Page({
     // })
     // console.log(e);
     // console.log(app.globalData.userData)
+    console.log(e);
     var that = this;
     if(app.globalData.userData) {
       wx.showModal({
@@ -67,6 +68,8 @@ Page({
         confirmColor: "#00D4A0",
         success(res) {
           if (res.confirm) {
+            var shopList = e.currentTarget.dataset.itemlist
+            app.globalData.commercial = shopList;
             var userId = app.globalData.userData.id;//获取的用户id
             var shopId = e.currentTarget.dataset.bindid
             wx.navigateTo({

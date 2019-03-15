@@ -6,7 +6,9 @@
     "pages/order/order",
     "pages/shopDetails/shopDetails",
     "pages/weui/weui",
-    "pages/login/login"
+    "pages/login/login",
+    "pages/shoppingCar/shoppingCar",
+    "pages/payOrder/payOrder"
   ],
   "permission": {
     "scope.userLocation": {

@@ -66,7 +66,15 @@ const post = (url) => {
    sendSms: get('user/sendSms'),//发送验证码
    loginCode: post('user/loginCode'),//验证码登录
    loginPwd:post('user/loginPwd'),//密码登录
-   findByMerchatChidId: get('merchant/findByUseridMerchantid')//点击商铺进去选商品
+   findByMerchatChidId: get('merchant/findByUseridMerchantid'),//点击商铺进去选商品
+   findByEvaluate: get('merchant/findByEvaluate'),//查询评论接口
+   findByShopCarAll: get('shoppingCar/findByShoppingCarAll'),//查询购物车所有状况
+   addshopCar: post('shoppingCar/add'),//添加进购物车
+   shoppingCar: post('shoppingCar/shoppingCarNumberPlus'),//购物车内的数量加减
+   deletShopping: post('shoppingCar/deleteShoppingCarById'),//批量删除购物车
+   findByArchivesId: get('merchant/findByArchivesId'),//查询商家资质
+   queryEvaluate: get('merchant/findByEvaluate'),//查询商户评论接口
+   subminssion: post('order/submission'),//查询提交订单
 }
 
 function request (name,data,config) {

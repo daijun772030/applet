@@ -1,7 +1,9 @@
 //app.js
 App({
   globalData: {
-    userData:null
+    userData:null,
+    commercial:null,
+    shopCarList:null,//购物车点击结算购物车订单
   },
   onLaunch: function () {
     // 展示本地存储能力

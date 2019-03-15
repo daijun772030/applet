@@ -1,0 +1,58 @@
+<view class='pay'>
+  <view class='bg'>
+    <image src='cloud://sjkj-1-2739cc.736a-sjkj-1-2739cc/img/index/SJMeHeadBg@2x.png'></image>
+  </view>
+  <view class='payContent'>
+    <view class='payMessage'>
+      <view class='MessageContent'>
+        <view class='payAddress'>
+          <view class='queryAddress'>
+            <text>中德英伦联邦B区</text>
+            <image src='cloud://sjkj-1-2739cc.736a-sjkj-1-2739cc/img/index/SJ_Perjiantou@2x.png'></image>
+          </view>
+          <text>金洁 18382240965</text>
+        </view>
+        <view class='takeWay'>
+          <text>取送方式</text>
+          <radio-group class="radio-group" bindchange="radioChange">
+            <label class="radio" wx:for-items="{{items}}" wx:key="value">
+              <radio value="{{item.value}}" checked="{{item.checked}}">
+                <text>{{item.name}}</text>
+              </radio>
+            </label>
+          </radio-group> 
+        </view>
+        <view class='takeTime'>
+          <view class='TakeName'>
+            <text>取件时间</text>
+          </view>
+          <view class='timeMessage'>
+            <text>立即取件</text>
+            <image src='cloud://sjkj-1-2739cc.736a-sjkj-1-2739cc/img/index/SJ_Perjiantou@2x.png'></image>
+          </view>
+        </view>
+        <view class='deliveryTime'>
+          <text class='sj'>送件时间</text>
+          <text class='zq'>洗衣周期约3天，请留意短信通知</text>
+        </view>
+      </view>
+    </view>
+    <view class='payOrder'></view>
+    <view class='payMoney'>
+      <view class='moneyContent'>
+        <view class='moneyMessage'>
+          <view>
+            <checkbox-group bindchange="checkboxChange">
+              <label class="checkbox" wx:for="{{item.data}}">
+                <checkbox value="{{item.id}}" checked="{{item.checked}}" />
+                {{item.checked}}
+              </label>
+            </checkbox-group>
+          </view>
+        </view>
+        <view class='invoice'></view>
+      </view>
+    </view>
+  </view>
+  <view class='payClose'></view>
+</view>

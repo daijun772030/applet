@@ -56,7 +56,7 @@
     </view>
     <view class='vicinityList'>
       <view class='vicinityListItem' wx:for="{{quality}}" wx:key="vicinityList">
-        <image src='"http://appletwechat.pigcome.com" "+" + {{item.logo}}'></image>
+        <image src='"http://appletwechat.pigcome.com" + {{item.logo}}'></image>
         <text>{{item.shopName}}</text>
       </view>
     </view>
@@ -72,7 +72,7 @@
     </view>
     <!-- 这里是商家列表 -->
     <view class='merchant'>
-      <view class='merchantList' bindtap='GOShopDetails' wx:for="{{shopList}}" wx:for-index= "shopListChid" data-bindId ="{{item.id}}" wx:key="{{item.id}}">
+      <view class='merchantList' bindtap='GOShopDetails' wx:for="{{shopList}}" wx:for-index= "shopListChid" data-itemList='{{item}}' data-bindId ="{{item.id}}" wx:key="{{item.id}}">
         <view class='merchantListImg'>
           <image src='cloud://sjkj-1-2739cc.736a-sjkj-1-2739cc/img/index/216_216.png'></image>
         </view>

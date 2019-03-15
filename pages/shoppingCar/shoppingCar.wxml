@@ -1,0 +1,47 @@
+<view class='shopCar'>
+  <view class='shopCarChild' wx:for="{{CarList}}" wx:key='key'>
+    <view class='CarFlex'>
+      <view class='shopName'>
+        <checkbox value='1'/>
+        <text>{{item.name}}</text>
+      </view>
+      <view class='content'>
+        <checkbox-group bindchange="checkboxChange">
+          <label class="checkbox" wx:for="{{item.data}}">
+            <checkbox value="{{item.id}}" checked="{{item.checked}}" />
+            {{item.checked}}
+          </label>
+        </checkbox-group>
+        <view class='shopContent'>
+
+          <view class='CarList' wx:for="{{item.data}}" wx:key="child">
+            <view class='listLeft'>
+              <!-- <checkbox bindchange="checkboxChange" value='{{item.id}}'></checkbox> -->
+              <image                                                                                                              src='cloud://sjkj-1-2739cc.736a-sjkj-1-2739cc/img/index/qingxizhong_dingdanxiangqing@2x.png'>
+              </image>
+              <view class='leftShopName'>
+                <text class='shName'>{{item.commodityName}}</text>
+                <text class='remark'>无标注</text>
+              </view>
+            </view>
+            <view class='price'>
+              <text>￥{{item.price}}</text>
+              <view class='NumChid'>
+                <image src='cloud://sjkj-1-2739cc.736a-sjkj-1-2739cc/img/index/jianshuliang@2x.png' data-shopId="{{item.id}}"
+                  data-id="{{index}}" catchtap='moveNum'></image>
+                <text>{{item.number}}</text>
+                <image src='cloud://sjkj-1-2739cc.736a-sjkj-1-2739cc/img/index/jiahao_haocaishouye@2x.png' data-shopId="{{item.id}}"
+                  data-id="{{index}}" catchtap='pushNum'></image>
+              </view>
+            </view>
+          </view>
+
+        </view>
+      </view>
+      <view class='close'>
+        <text>￥0</text>
+        <button class='{{length?"hoverBut":""}}' catchtap='goCar'>去结算</button>
+      </view>
+    </view>
+  </view>
+</view>
