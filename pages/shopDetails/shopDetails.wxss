@@ -277,7 +277,7 @@ button::after{
   width: 253rpx;
   height: 100%;
 }
-.closeBut button {
+.closeBut>button {
   width: 100%;
   height: 100%;
   background:rgba(0,212,160,1);
@@ -286,7 +286,7 @@ button::after{
   font-weight:500;
   color:rgba(255,255,255,1);
   border: none;
-  border-radius:0；
+  border-radius:0;
 }
 .addShop{/*添加商品弹框*/
   width: 100%;
@@ -595,6 +595,11 @@ line-height: 55rpx;
     height: 22rpx;
     opacity: 0.8;
   }
+  .evaluteScroll{
+    width: 100%;
+    height: 100%;
+    overflow-y:auto;
+  }
   .evaluate{
     width: 690rpx;
     margin:0 auto;
@@ -676,3 +681,24 @@ line-height: 55rpx;
     height: 125rpx;
     padding-right: 20rpx;
   }
+  .loadding{
+  width: 100%;
+  height: 100rpx;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 22rpx;
+  color: black;
+}
+.nathingImg {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;  
+  /* align-items: center; */
+}
+.nathingImg>image {
+  margin-top: 130rpx;
+  width: 180rpx;
+  height: 100rpx;
+}

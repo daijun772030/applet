@@ -7,7 +7,13 @@ Page({
   data: {
 
   },
-
+  gotoROrder:function (e) {
+    console.log(e);
+    var index = e.currentTarget.dataset.index
+    wx.navigateTo( {
+      url:'/pages/orderAll/orderAll?index='+ index
+    })
+  },
   /**
    * 生命周期函数--监听页面加载
    */

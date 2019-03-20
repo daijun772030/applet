@@ -10,7 +10,11 @@ Page({
     items: [
       { name: '达达配送', value: '1',checked: 'true' },
       { name: '字取自送', value: '2' },
-      
+    ],
+    checkbox:[
+      {name:'lazyRed',value:'1'},
+      { name: 'lazyRed', value: '2' },
+      { name: 'lazyRed', value: '3' },
     ]
   },
 

@@ -162,7 +162,7 @@ checkbox {
 
 width: 28rpx;
 
-height: 28rpx;
+/* height: 28rpx; */
 }
 checkbox .wx-checkbox-input {
 

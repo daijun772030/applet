@@ -1,10 +1,10 @@
 <view class="detail">
   <view class='shopMes'>
     <view class='shopImg'>
-      <image src='cloud://sjkj-1-2739cc.736a-sjkj-1-2739cc/img/index/216_216.png'></image>
+      <image src="'http://39.108.113.149:8081' + {{shopAllList.logo}}"></image>
     </view>
     <view class='shopName'>
-      <view class='shopName-name'>布兰奇洗衣(美年广场店）</view>
+      <view class='shopName-name'>{{shopAllList.shopName}}</view>
       <view class='shopName-grade'>
         <block wx:for="{{one_1}}">
             <image src='cloud://sjkj-1-2739cc.736a-sjkj-1-2739cc/img/index/huangxin-biekaiche@2x.png'></image>
@@ -12,9 +12,10 @@
           <block wx:for="{{two_1}}">
             <image src='cloud://sjkj-1-2739cc.736a-sjkj-1-2739cc/img/index/huixing@2x.png'></image>
         </block>
-        <text>4.7</text>
+        <text>{{shopAllList.sumScore}}.0</text>
       </view>
-      <view class='shopName-notice'>公告：布兰奇为感谢新老用户的支持</view>
+      <view wx:if="{{shopAllList.remark}}" class='shopName-notice'>{{shopAllList.remark}}</view>
+      <view wx:else class='shopName-notice'>欢迎光临，很高兴为你服务~</view>
       <view class='shopName-rule'>满20元起送</view>
     </view>
   </view>
@@ -51,7 +52,10 @@
                     <view class='inner' id='{{item.id}}' bindtap='selectShop' data-index="{{item}}" data-shopName='{{item.name}}'>
                       <view class='cover'>
                         <image src='cloud://sjkj-1-2739cc.736a-sjkj-1-2739cc/img/index/216_216.png'></image>
-                        <text>1</text>
+                        <!-- <block wx:for="{{shopCarList}}" wx:key="index" wx:for-item="chid">
+                          <text wx:if="{{item.id == chid.commodityid}}">{{chid.number}}</text>
+                        </block> -->
+                        <!-- <text >{{item.number}}</text> -->
                       </view>
                       <view class='info'>
                         <view class="info-title">{{item.name}}</view>
@@ -67,39 +71,43 @@
         </view>
       </swiper-item>
       <swiper-item class="contenItem">
-        <scroll-view scroll-y="true">
-          <view class='evaluate'>
+        <scroll-view scroll-y="{{scrollType}}" class='evaluteScroll' bindscrolltolower="dowmload">
+          <view class='evaluate' wx:for="{{Evalue}}" wx:key="{{index}}">
             <view class='evalueteLogo'>
-              <image src="cloud://sjkj-1-2739cc.736a-sjkj-1-2739cc/img/index/qingxizhong_dingdanxiangqing@2x.png"></image>
+              <image src="'http://39.108.113.149:8081' + {{item.portrait}}"></image>
             </view>
             <view class='evaluateContent'>
               <view class='evalueName'>
-                <text>橘子</text>
-                <text>2019-03-07 14:46:14</text>
+                <text>{{item.name}}</text>
+                <text>{{item.createTime}}</text>
               </view>
               <view class='evalueGrade'>
                 <text>评分</text>
-                <block wx:for="{{item.sumScore}}" wx:key="sumScore">
+                <block wx:for="{{item.score}}" wx:key="sumScore">
                   <image src='cloud://sjkj-1-2739cc.736a-sjkj-1-2739cc/img/index/huangxin-biekaiche@2x.png'></image>
                 </block>
-                <block wx:for="{{5 - item.sumScore}}" wx:key="sumScore2">
+                <block wx:for="{{5 - item.score}}" wx:key="sumScore2">
                   <image src='cloud://sjkj-1-2739cc.736a-sjkj-1-2739cc/img/index/huixing@2x.png'></image>
                 </block>
               </view>
               <view class='evalueContentChid'>
-                <text>嗯。。。衣服洗得很好，老板服务特别周到，感谢，推荐~</text>
+                <text>{{item.comment}}</text>
               </view>
-              <view class='contenImg'>
-                <image src='cloud://sjkj-1-2739cc.736a-sjkj-1-2739cc/img/index/qingxizhong_dingdanxiangqing@2x.png'></image>
-                <image src='cloud://sjkj-1-2739cc.736a-sjkj-1-2739cc/img/index/qingxizhong_dingdanxiangqing@2x.png'></image>
-                <image src='cloud://sjkj-1-2739cc.736a-sjkj-1-2739cc/img/index/qingxizhong_dingdanxiangqing@2x.png'></image>
+              <view class='contenImg' wx:if="{{item.img}}">
+                <image wx:for="{{item.img}}" wx:key="index" src="'http://39.108.113.149:8081' + {{item}}"></image>
               </view>
             </view>
+          </view>
+          <view class='nathingImg' wx:if="{{imgType}}">
+            <image src='cloud://sjkj-1-2739cc.736a-sjkj-1-2739cc/img/index/kongkongruye_dingdan_png@2x.png'></image>
+          </view>
+          <view class='loadding' wx:if="{{loadtType}}">
+            <text wx:if="{{loadtType}}">{{loadNanme}}</text>
           </view>
         </scroll-view>
       </swiper-item>
       <swiper-item class="contenItem">
-        <scroll-view scroll-y="{{true}}" class='shopmessage'>
+        <scroll-view scroll-y="{{scrollType}}" class='shopmessage'>
           <view class='messageOne flexBox' catchtap='callPhone'>
             <view class='shopAddres'>
               <image src='cloud://sjkj-1-2739cc.736a-sjkj-1-2739cc/img/index/weizhi@2x.png'></image>
@@ -160,10 +168,10 @@
       <view class='shoppingCar'>
         <view class='shopingImg' bindtap='shopList'>
           <image src='cloud://sjkj-1-2739cc.736a-sjkj-1-2739cc/img/index/zhunadaizi@2x.png'></image>
-          <text wx:if="{{num}}">{{num}}</text>
+          <text wx:if="{{allNum}}">{{allNum}}</text>
         </view>
         <view class='shoppingPrice'>
-          <text class='PriceMoney'>￥127</text>
+          <text class='PriceMoney'>￥{{allMoneyShop}}</text>
           <text class='PriceTake'>另需取送费3元 | 支持到店自取</text>
         </view>
       </view>

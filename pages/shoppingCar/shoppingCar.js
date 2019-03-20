@@ -18,12 +18,14 @@ Page({
   moveNum: function (e) {//点击减少商品数量
     console.log(e)
     var that = this;
-    var shopALLCar = that.data.shopCarList;
+    var shopALLCar = that.data.CarList;
     var listId = e.currentTarget.dataset.id;
-    var listChildNum = shopALLCar[listId].number;
+    var listChildNum = e.currentTarget.dataset.childitem.number;
+    console.log(listChildNum)
     var shopId = e.currentTarget.dataset.shopid;
     if (listChildNum == 1) {
       service.request('deletShopping', { shoppingCarId: shopId, userid: that.data.userid }).then((res) => {
+        console.log(res);
         if (res.data.retCode == 200) {
           that.findShopCar();
         }

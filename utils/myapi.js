@@ -75,6 +75,7 @@ const post = (url) => {
    findByArchivesId: get('merchant/findByArchivesId'),//查询商家资质
    queryEvaluate: get('merchant/findByEvaluate'),//查询商户评论接口
    subminssion: post('order/submission'),//查询提交订单
+   shoppingCarStatus: get('shoppingCar/findByShoppingCarStatus'),//单个商品添加进购物车得信息
 }
 
 function request (name,data,config) {

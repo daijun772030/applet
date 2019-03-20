@@ -7,6 +7,7 @@ var qqmapsdk;
 var page = 1
 Page({
   data: {
+    top:0,
     mapName:'',
     latitude: '',
     longitude: '',
@@ -41,13 +42,55 @@ Page({
     num:4, //店铺评分相应小星星
     one_1:'',
     two_1:'',
-    scrollTop:0
+    scrollTop:0,
+    loadtType:false,//触底刷新
+    loadNanme:'努力加载更多...',//loading的名字
   },
 
-  scrollTopFun:function (e) {
-    let that = this;
-    that.top = e.detail.scrollTop;
-    that.$apply();
+  goshop:function(e) {
+    console.log(e);
+    var shopid = e.currentTarget.dataset.shopid;
+    if (app.globalData.userData) {
+      wx.showModal({
+        title: "温馨提示",
+        content: '距离超过2km,配送费会根据距离进行适当增加，请谅解',
+        cancelText: "再看看",
+        cancelColor: "#000000",
+        confirmText: "我知道了",
+        confirmColor: "#00D4A0",
+        success(res) {
+          if (res.confirm) {
+            var shopList = e.currentTarget.dataset.itemlist
+            app.globalData.commercial = shopList;
+            var userId = app.globalData.userData.id;//获取的用户id
+            var shopId = e.currentTarget.dataset.bindid
+            wx.navigateTo({
+              url: '/pages/shopDetails/shopDetails?' + "shopid=" + shopId + "&userid=" + userId,
+            })
+          } else if (res.cancel) {
+            console.log("取消按钮")
+          }
+        }
+      })
+    } else {
+      wx.showModal({
+        title: "温馨提示",
+        content: '您还未登录，前去登录',
+        cancelText: "算了",
+        cancelColor: "#000000",
+        confirmText: "去登录",
+        confirmColor: "#00D4A0",
+        success(res) {
+          if (res.confirm) {
+            wx.navigateTo({
+              url: '/pages/login/login',
+            })
+          } else if (res.cancel) {
+            console.log("取消按钮")
+          }
+        }
+      })
+    }
   },
   //事件处理函数
   GOShopDetails:function(e) {//这里是商家展示
@@ -100,15 +143,28 @@ Page({
       })
     }
   },
-  scrollTopFun:function () {//gundong 
-    let that = this;
-    that.data.top = e.detail.scrollTop;
-    that.$apply()
+  scroll(e) {//gundong
+    console.log(e); 
+    // let that = this;
+    // that.setData({
+    //   scrollTop:e.detail.scrollTop
+    // })
   },
   downPart(page) {//查询商铺
     const that = this;
-    service.request('downPart', { longitude: that.data.longitude, latitude: that.data.latitude, type: '0', pageNum: page,        type:that.data.type }).then((res) => {
+    service.request('downPart', { longitude: that.data.longitude, latitude: that.data.latitude, type: '0', pageNum: page,                       type:that.data.type }).then((res) => {
+      console.log(res);
       that.screening(res);
+      if (res.data.retCode == 200 && res.data.data.merchant.length == 0) {
+        that.setData({
+          loadtType: true,
+          loadNanme: '已加载完成全部商家'
+        })
+      } else {
+        that.setData({
+          loadtType: false
+        })
+      }
     })
   },
   screening:function (listAll) {//筛选商家函数
@@ -158,11 +214,16 @@ Page({
     that.downPart(page)
   },
   onReachBottom: function () {
+    console.log("加载更多");
+    this.setData({
+      loadtType: true
+    })
     this.querydis();//后台获取新数据并追加渲染
   },
   upPart () {//查询首页上的广告和推送
     var that = this;
     service.request('upPart', { longitude: that.data.longitude, latitude:that.data.latitude}).then((res) => {
+      console.log(res);
       that.setData({
         noticeMessg: res.data.data.notice,
         quality: res.data.data.merchant,
@@ -212,6 +273,9 @@ Page({
           longitude:res.longitude
         });
         that.upPart();
+        that.setData({
+          shopList:[]
+        })
         page = 1;
         that.downPart(page);
       },

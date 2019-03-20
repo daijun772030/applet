@@ -1,2 +1,92 @@
-<!--pages/personal/personal.wxml-->
-<text>pages/personal/personal.wxml</text>
+<view class='personal'>
+  <view class='navMsg'>
+    <view class='navContent'>
+      <view class='NavImg'>
+        <image src='cloud://sjkj-1-2739cc.736a-sjkj-1-2739cc/img/personal/touxiang@2x.png'></image>
+      </view>
+      <view class='navRemark'>
+        <text>噜啦啦</text>
+        <view class='RemarkMsg'>
+          <text>个人信息</text>
+          <image src='cloud://sjkj-1-2739cc.736a-sjkj-1-2739cc/img/personal/SJ_Perjiantou@2x.png'></image>
+        </view>
+      </view>
+      <view class='service'>
+        <image src='cloud://sjkj-1-2739cc.736a-sjkj-1-2739cc/img/personal/SJMekefu@2x.png'></image>
+        <text>客服</text>
+      </view>
+    </view>
+  </view>
+  <view class='orderAll'>
+    <view class='orderName'>
+      <text>我的订单</text>
+      <view class='typeOrder' catchtap='gotoROrder' data-index='1'>
+        <text>全部订单</text>
+        <image src='cloud://sjkj-1-2739cc.736a-sjkj-1-2739cc/img/personal/SJ_Perjiantou@2x.png'></image>
+      </view>
+    </view>
+    <view class='orderList'>
+      <view class='listChid'>
+        <image class='dfk' src='cloud://sjkj-1-2739cc.736a-sjkj-1-2739cc/img/personal/SJMedaifukuan@2x.png'></image>
+        <text>待付款</text>
+      </view>
+      <view class='listChid'>
+        <image class='djd' src='cloud://sjkj-1-2739cc.736a-sjkj-1-2739cc/img/personal/SJMedaijiedan@2x.png'></image>
+        <text>待接单</text>
+      </view>
+      <view class='listChid'>
+        <image class='dsh' src='cloud://sjkj-1-2739cc.736a-sjkj-1-2739cc/img/personal/SJMedaifahuo@2x.png'></image>
+        <text>待送货</text>
+      </view>
+      <view class='listChid'>
+        <image class='djd' src='cloud://sjkj-1-2739cc.736a-sjkj-1-2739cc/img/personal/SJMedaishouhuo@2x.png'></image>
+        <text>待收货</text>
+      </view>
+      <view class='listChid'>
+        <image class='ddp' src='cloud://sjkj-1-2739cc.736a-sjkj-1-2739cc/img/personal/SJMedaidianping@2x.png'></image>
+        <text>待点评</text>
+      </view>
+    </view>
+  </view>
+  <view class='orderAll'>
+    <view class='orderName'>
+      <text>我的钱包</text>
+      <view class='typeOrder'>
+        <!-- <text>全部订单</text>
+        <image src='cloud://sjkj-1-2739cc.736a-sjkj-1-2739cc/img/personal/SJ_Perjiantou@2x.png'></image> -->
+      </view>
+    </view>
+    <view class='orderList'>
+      <view class='listChid'>
+        <image class='lazyRd' src='cloud://sjkj-1-2739cc.736a-sjkj-1-2739cc/img/personal/SJMelanzhuhongbao@2x.png'></image>
+        <text>懒猪红包</text>
+      </view>
+      <view class='listChid'>
+        <image class='redMoney' src='cloud://sjkj-1-2739cc.736a-sjkj-1-2739cc/img/personal/SJMeqianbao@2x.png'></image>
+        <text>钱包</text>
+      </view>
+      <view class='listChid'>
+        <!-- <image class='dsh' src='cloud://sjkj-1-2739cc.736a-sjkj-1-2739cc/img/personal/SJMedaifahuo@2x.png'></image>
+        <text>待送货</text> -->
+      </view>
+      <view class='listChid'>
+        <!-- <image class='djd' src='cloud://sjkj-1-2739cc.736a-sjkj-1-2739cc/img/personal/SJMedaishouhuo@2x.png'></image>
+        <text>待收货</text> -->
+      </view>
+      <view class='listChid'>
+        <!-- <image class='ddp' src='cloud://sjkj-1-2739cc.736a-sjkj-1-2739cc/img/personal/SJMedaidianping@2x.png'></image>
+        <text>待点评</text> -->
+      </view>
+    </view>
+  </view>
+  <view class='setList'>
+    <view class='setChid'>
+      <text>帮助与反馈</text>
+      <image src='cloud://sjkj-1-2739cc.736a-sjkj-1-2739cc/img/personal/SJ_Perjiantou@2x.png'></image>
+    </view>
+    <view class='setChid'>
+      <text>设置</text>
+      <image src='cloud://sjkj-1-2739cc.736a-sjkj-1-2739cc/img/personal/SJ_Perjiantou@2x.png'></image>
+    </view>
+  </view>
+</view>

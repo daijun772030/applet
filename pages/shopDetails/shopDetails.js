@@ -7,6 +7,7 @@ Page({
    * 页面的初始数据e
    */
   data: {
+    pageNum:1,//评论页数
     userid:null,//用户id
     shopid:null,//商户id
     shopAllList:null,//跳转到单个商品该商家的所有东西
@@ -46,6 +47,7 @@ Page({
       { id: 17, name: '织补' },
       { id: 18, name: '烫伤' },
     ],
+    scrollType:true,//纵向滚动
     singleShop:null,//单个商品的所有信息
     singleId:null,//单个商品的id
     singleName:'',//单个商品的名字
@@ -56,6 +58,12 @@ Page({
     numShop:1,//选取商品的数量。中间
     shopAllPrice:null,//选取商品后的总价格
     showType:false,//显示或者隐藏选取商品
+    Evalue:[],//评论数组
+    loadtType:false,//load加载
+    loadNanme: '努力加载更多...',//loading的名字
+    imgType:true,//没有数据时得图
+    allNum:null,//订单衣物得总
+    allMoneyShop:null,//订单衣物得总数量
   },
   onNavBarTap(e) {//页面上部导航条的点击跳转
   var that = that;
@@ -108,6 +116,7 @@ Page({
       that.setData({
         detail:typeList
       })
+      that.pushString(typeList);
     })
   },
   shopList:function (e) {//点击图片出现商品列表
@@ -119,6 +128,32 @@ Page({
       })
     }
   },
+  // ad:function() {
+
+  // },
+  // pushString:function(value) {//向数据添加商品数量
+  //   debugger;
+  //   var that =this;
+  //   var list = value;
+  //   console.log(value)
+  //   for(var i=0;i<list.length;i++) {
+  //     var childList = list[i].commodityModelList;
+  //     for(var j=0;j<childList.length;j++) {
+  //       var id = childList[j].id;
+  //       service.request('shoppingCarStatus', { userid: that.data.userid, commodityid: id }).then((res) => {
+  //         console.log(res);
+  //         if (res.data.retCode == 200) {
+  //           var number = res.data.data.number;
+  //           childList[j].number = 1;
+  //         }
+  //       })
+  //     }
+  //   }
+  //   that.setData({
+  //     detail: list
+  //   })
+  //   console.log(that.data.detail)
+  // },
   modalHiden:function() {//点击其他位置模态框消失
     this.setData({
       addvange:(!this.data.addvange)
@@ -253,10 +288,26 @@ Page({
       }
       console.log(list);
       var listLength = list.length;
+      var allNum=0;
+      var allMoney=0;
+      for(var w=0;w<list.length;w++) {
+        var money = list[w].price * list[w].number;
+        allNum+=list[w].number;
+        allMoney+= money;
+        console.log(allNum,allMoney)
+      }
       that.setData({
         shopCarList:list,
-        num:listLength
+        num:listLength,
+        allNum: allNum,
+        allMoneyShop: allMoney
       })
+    })
+  },
+  queryOneShop:function() {
+    var that = this;
+    service.request('shoppingCarStatus', { userid: that.data.userid, commodityid: that.data.singleId,}).then((res)=>{
+      console.log(res);
     })
   },
   upCar:function() {//添加商品进购物车
@@ -269,6 +320,7 @@ Page({
           showType:(!that.data.showType)
         })
         that.findShopCar();
+        that.queryOneShop();
       }
     })
   },
@@ -291,8 +343,36 @@ Page({
   },
   queryEvalue:function() {//查询商户评论
     var that = this;
-    service.request('queryEvaluate', { merchantid: that.data.shopid,pageNum:'1'}).then((res)=>{
-      console.log(res);
+    service.request('queryEvaluate', { merchantid: that.data.shopid, pageNum: that.data.pageNum}).then((res)=>{
+      if(!res.data.data) {
+        that.setData({
+          imgType:true
+        })
+      }
+      var list = res.data.data;
+      console.log(list);
+      // debugger;
+      for(var i=0;i<list.length;i++) {
+        var listImg = list[i].img
+        if(listImg) {
+          var newImg = listImg.split(',');
+          list[i].img = newImg;
+          console.log(list);
+        }
+      }
+      var newList = that.data.Evalue;
+      newList.push.apply(newList,list) 
+      console.log(newList);
+      if(res.data.retCode == 200) {
+        that.setData({
+          Evalue: newList
+        })
+        if(!res.data.data.length) {
+          that.setData({
+            loadNanme:'加载完成'
+          })
+        }
+      }
     })
   },
   GoShoppingCar:function() {
@@ -300,6 +380,25 @@ Page({
     wx.navigateTo({
       url: '/pages/shoppingCar/shoppingCar?' + 'userid=' + that.data.userid + "&shopid=" + that.data.shopid
     })
+  },
+  dowmload:function(e) {
+    console.log(e);
+    var that = this;
+    var num = that.data.pageNum;
+    num++
+    that.setData({
+      loadtType:true,
+      pageNum:num
+    })
+    that.queryEvalue();
+  },
+  onReachBottom: function () {//评价触底更新
+    debugger;
+    console.log("加载更多");
+    // this.setData({
+    //   loadtType: true
+    // })
+    // this.querydis();//后台获取新数据并追加渲染
   },
   /**
    * 生命周期函数--监听页面加载
@@ -312,10 +411,9 @@ Page({
       shopid:options.shopid,
       shopAllList: app.globalData.commercial
     })
-    that.queryShopChild();
+    console.log(that.data.shopAllList);
     that.findShopCar();
-    that.queryEvalue();
-
+    that.queryShopChild();
 
     wx.getSystemInfo({
       success: function (res) {
@@ -344,6 +442,7 @@ Page({
    */
   onShow: function () {
     this.findShopCar();
+    this.queryEvalue();
   },
 
   /**

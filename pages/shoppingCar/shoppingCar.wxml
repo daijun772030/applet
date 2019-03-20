@@ -1,5 +1,5 @@
-<view class='shopCar'>
-  <view class='shopCarChild' wx:for="{{CarList}}" wx:key='key'>
+<scroll-view scrool-y="true" class='shopCar'>
+  <view class='shopCarChild' wx:for="{{CarList}}" wx:key='item' wx:for-index="fr">
     <view class='CarFlex'>
       <view class='shopName'>
         <checkbox value='1'/>
@@ -14,24 +14,24 @@
         </checkbox-group>
         <view class='shopContent'>
 
-          <view class='CarList' wx:for="{{item.data}}" wx:key="child">
+          <view class='CarList' wx:for="{{item.data}}" wx:key="child" wx:for-item="items">
             <view class='listLeft'>
               <!-- <checkbox bindchange="checkboxChange" value='{{item.id}}'></checkbox> -->
               <image                                                                                                              src='cloud://sjkj-1-2739cc.736a-sjkj-1-2739cc/img/index/qingxizhong_dingdanxiangqing@2x.png'>
               </image>
               <view class='leftShopName'>
-                <text class='shName'>{{item.commodityName}}</text>
+                <text class='shName'>{{items.commodityName}}</text>
                 <text class='remark'>无标注</text>
               </view>
             </view>
             <view class='price'>
-              <text>￥{{item.price}}</text>
+              <text>￥{{items.price}}</text>
               <view class='NumChid'>
-                <image src='cloud://sjkj-1-2739cc.736a-sjkj-1-2739cc/img/index/jianshuliang@2x.png' data-shopId="{{item.id}}"
-                  data-id="{{index}}" catchtap='moveNum'></image>
-                <text>{{item.number}}</text>
-                <image src='cloud://sjkj-1-2739cc.736a-sjkj-1-2739cc/img/index/jiahao_haocaishouye@2x.png' data-shopId="{{item.id}}"
-                  data-id="{{index}}" catchtap='pushNum'></image>
+                <image src='cloud://sjkj-1-2739cc.736a-sjkj-1-2739cc/img/index/jianshuliang@2x.png' data-shopId="{{items.id}}"
+                  data-id="{{fr}}" data-list='{{item}}' data-childItem='{{items}}' catchtap='moveNum'></image>
+                <text>{{items.number}}</text>
+                <image src='cloud://sjkj-1-2739cc.736a-sjkj-1-2739cc/img/index/jiahao_haocaishouye@2x.png' data-shopId="{{items.id}}"
+                  data-id="{{child}}" catchtap='pushNum'></image>
               </view>
             </view>
           </view>
@@ -44,4 +44,4 @@
       </view>
     </view>
   </view>
-</view>
+</scroll-view>

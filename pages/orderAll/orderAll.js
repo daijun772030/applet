@@ -5,15 +5,19 @@ Page({
    * 页面的初始数据
    */
   data: {
-    orderLlist:[
-      {name:'全部订单',value:1},
-      { name:'待评价',value:2},
-      { name: '退款/售后', value:3}
+    orderLlist: [
+      { name: '全部', value: 1 },
+      { name: '待付款', value: 2 },
+      { name: '待接单', value: 3 },
+      {name:'待取货',value:4},
+      { name: '待发货', value: 5 },
+      { name: '待收货', value: 6 },
+      { name: '待评价', value: 7 }
     ],
     navbarActiveIndex: 0,//导航和下面商品的联动
-    duration:100,//滑动时常
-    circular:true,//是否衔接动画
-    second_height:null,//滑动得高度
+    duration: 100,//滑动时常
+    circular: true,//是否衔接动画
+    second_height: null,//滑动得高度
   },
 
   onNavBarTap(e) {//页面上部导航条的点击跳转

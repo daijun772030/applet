@@ -1,8 +1,9 @@
 .pay{
   width:100%;
   height: 100%;
-  background:rgba(245,245,245,1);
-  position: relative;
+  background-color:rgba(245,245,245,1);
+  position: absolute;
+  z-index: 999;
 }
 .bg{
   width: 100%;
@@ -14,13 +15,69 @@
   width: 100%;
   height: 100%;
 }
+/*选项框的样式*/
+checkbox {
+
+width: 31rpx;
+
+/* height: 31rpx; */
+}
+checkbox .wx-checkbox-input {
+
+width: 31rpx;
+
+height: 31rpx;
+border-radius:50%;
+display: flex;
+justify-content: center;
+align-items: center;
+}
+checkbox .wx-checkbox-input.wx-checkbox-input-checked {
+
+background: rgba(117,232,188,1);
+border:none;
+
+}
+checkbox .wx-checkbox-input.wx-checkbox-input-checked::before {
+
+width: 31rpx;
+
+height: 31rpx;
+
+line-height:31rpx;
+
+text-align: center;
+
+font-size: 22rpx;
+
+color: #fff;
+
+background: transparent;
+
+transform: translate(-50%, -50%) scale(1);
+
+-webkit-transform: translate(-50%, -50%) scale(1);
+
+}
+.group{
+  display: flex;
+  flex-direction: column;
+  padding-right: 17rpx;
+}
+.checkbox{
+  height: 84rpx;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+/*end*/
 .payContent{
   width: 690rpx;
-  /* height: 700rpx; */
+  height: 100%;
   position: absolute;
   top: 23rpx;
   left: 30rpx;
-  border: 1rpx solid red;
+  padding-bottom: 150rpx;
   z-index: 10;
 }
 .payMessage,.payOrder,.payMoney{
@@ -146,15 +203,99 @@ radio text {
   color:rgba(2,199,141,1);
   line-height:30rpx;
 }
+.redMessage{
+  width:583rpx;
+}
+.redMessage>view {
+  width: 100%;
+  height: 84rpx;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+}
+.block {
+  font-size:28rpx;
+  font-family:PingFang-SC-Medium;
+  font-weight:500;
+  color:rgba(102,102,102,1);
+  line-height:30rpx;
+}
+.red {
+  font-size:26rpx;
+  font-family:PingFang-SC-Medium;
+  font-weight:500;
+  color:rgba(222,12,12,1);
+  line-height:30rpx;
+}
 .payOrder{
   width: 100%;
+}
+.orderShopName{
+  width: 100%;
+  height: 87rpx;
+  display: flex;
+  align-items: center;
+  font-size:30rpx;
+  font-family:PingFang-SC-Medium;
+  font-weight:500;
+  color:rgba(85,85,85,1);
+  line-height:30rpx;
+  border-bottom:1rpx solid rgba(230,230,230,1);
+}
+.orderShop{
+  width: 100%;
+  height: 130rpx;
+  margin-top:38rpx;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.shopImg{
+  width: 130rpx;
+  height:130rpx;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  background:rgba(245,250,252,1);
+}
+.shopImg>image {
+  max-width: 80%;
+  max-height: 80%;
+}
+.orderMsg{
+  width:482rpx;
+  height: 130rpx;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.OrderPr{
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size:28rpx;
+  font-family:PingFang-SC-Medium;
+  font-weight:500;
+  color:rgba(85,85,85,1);
+  line-height:30rpx;
+  margin-bottom: 40rpx;
+}
+.shopNum{
+  width: 100%;
+  font-size:28rpx;
+  font-family:PingFang-SC-Medium;
+  font-weight:500;
+  color:rgba(136,136,136,1);
+  line-height:30rpx;
 }
 .payMoney{
   width: 100%;
   height: 513rpx;
 }
 .moneyContent{
-  width: 690rpx;
+  width: 631rpx;
   height: 100%;
   margin:0 auto;
 }
@@ -162,10 +303,83 @@ radio text {
   width: 100%;
   height: 418rpx;
 }
+.redPacket{
+  width: 100%;
+  display: flex;
+
+}
+.discount{
+  width: 100%;
+  height: 84rpx;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.moneyAll{
+  width: 100%;
+  height: 84rpx;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  border-bottom:1rpx solid rgba(230,230,230,1);
+}
+.moneyAllName{
+  padding-right: 19rpx;
+}
+.invoice{
+  width: 100%;
+  height: 84rpx;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size:28rpx;
+  font-family:PingFang-SC-Medium;
+  font-weight:500;
+  color:rgba(102,102,102,1);
+  line-height:30rpx;
+}
+.invoiceMes{
+  font-size:26rpx;
+  font-family:PingFang-SC-Medium;
+  font-weight:500;
+  color:rgba(153,153,153,1);
+  line-height:30rpx;
+}
 .payClose{
   width: 100%;
   height: 99rpx;
   position:fixed;
   bottom: 0;
   z-index: 10;
+  display: flex;
+  background:linear-gradient(45deg,rgba(2,200,142,1) 0%,rgba(11,225,163,1) 100%);
+}
+.payCloseLeft{
+  width: 520rpx;
+  height: 100%;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  background-color: rgba(89,88,88,1);
+  font-size:28rpx;
+  font-family:PingFang-SC-Medium;
+  font-weight:500;
+  color:rgba(255,255,255,1);
+  line-height:30rpx;
+}
+.button{
+  width: calc( 100% - 520rpx );
+  height: 100%;
+}
+.button>button {
+  width: 100%;
+  height: 100%;
+  border:none;
+  border-radius: 0;
+  font-size:32rpx;
+  font-family:PingFang-SC-Medium;
+  font-weight:500;
+  color:rgba(255,255,255,1);
+  line-height:84rpx;
+  text-align: center;
 }

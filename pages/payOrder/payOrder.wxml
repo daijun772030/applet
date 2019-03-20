@@ -1,4 +1,4 @@
-<view class='pay'>
+<scroll-view scroll-y="true" class='pay'>
   <view class='bg'>
     <image src='cloud://sjkj-1-2739cc.736a-sjkj-1-2739cc/img/index/SJMeHeadBg@2x.png'></image>
   </view>
@@ -37,22 +37,79 @@
         </view>
       </view>
     </view>
-    <view class='payOrder'></view>
+
+
+    <view class='payOrder'>
+      <view class='moneyContent'>
+        <view class='orderShopName'>
+           熊猫洗衣生活馆
+        </view>
+        <view class='orderShop'>
+          <view class='shopImg'>
+            <image></image>
+          </view>
+          <view class='orderMsg'>
+            <view class='OrderPr'>
+              <text>羽绒服短</text>
+              <text>￥32.00</text>
+            </view>
+            <view class='shopNum'>
+              <text>×1</text>
+            </view>
+          </view>
+        </view>
+      </view>
+    </view>
+
+
     <view class='payMoney'>
       <view class='moneyContent'>
         <view class='moneyMessage'>
-          <view>
-            <checkbox-group bindchange="checkboxChange">
-              <label class="checkbox" wx:for="{{item.data}}">
-                <checkbox value="{{item.id}}" checked="{{item.checked}}" />
+          <view class='redPacket'>
+            <checkbox-group class="group" bindchange="checkboxChange">
+              <label class="checkbox" wx:for="{{checkbox}}">
+                <checkbox value="{{item.value}}" checked="{{item.checked}}" />
                 {{item.checked}}
               </label>
             </checkbox-group>
+            <view class='redMessage'>
+              <view>
+                <text class='block'>懒猪红包</text>
+                <text class='red'>-￥0</text>
+              </view>
+              <view>
+                <text class='block'>取送劵</text>
+                <text class='red'>-￥0</text>
+              </view>
+              <view>
+                <text class='block'>钱包</text>
+                <text class='red'>-￥15.00</text>
+              </view>
+            </view>
+          </view>
+          <view class='discount'>
+            <text class='block'>打折</text>
+            <text class='red'>-￥5.00</text>
+          </view>
+          <view class='moneyAll'>
+            <text class='block moneyAllName'>合计</text>
+            <text class='red'>-￥5.00</text>
           </view>
         </view>
-        <view class='invoice'></view>
+        <view class='invoice'>
+          <text>发票</text>
+          <text class='invoiceMes'>该商家不支持开具发票</text>
+        </view>
       </view>
     </view>
   </view>
-  <view class='payClose'></view>
-</view>
+  <view class='payClose'>
+    <view class='payCloseLeft'>
+      <text>已优惠￥15.0</text>
+      <text>合计￥ 25.00</text>
+    </view> 
+    <view class='button'>
+      <button plain='true'>提交订单</button>
+    </view>
+  </view>
+</scroll-view>

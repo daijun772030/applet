@@ -1,12 +1,14 @@
 <view class='order'>
-  <view class='shopNav'>
-    <block wx:for="{{orderLlist}}" wx:key="index">
-      <view class="navbar-item {{navbarActiveIndex === index ? 'navbar-item-active' : ''}}" data-navbar-index="{{index}}" catchtap="onNavBarTap">
-        <text>{{item.name}}</text>
-      </view>
-    </block>
-  </view>
-  <swiper style='height:{{second_height}}px' class='ContentSwiper' circular="{{circular}}" current="{{navbarActiveIndex}}" bindanimationfinish="onBindAnimationFinish" duration="{{duration}}">
+  <scroll-view scroll-x="true" class='shopNav' scroll-into-view="head-{{navbarActiveIndex}}">
+    <view class='scrollChild'>
+      <block wx:for="{{orderLlist}}" wx:key="index">
+        <view id="head-{{index}}" class="navbar-item {{navbarActiveIndex === index ? 'navbar-item-active' : ''}}" data-navbar-index="{{index}}"            catchtap="onNavBarTap">
+          <text>{{item.name}}</text>
+        </view>
+      </block>
+    </view>
+  </scroll-view>
+  <swiper style='height:{{second_height}}px' class='ContentSwiper' current="{{navbarActiveIndex}}" bindanimationfinish="onBindAnimationFinish" duration="{{duration}}">
   <block wx:for="{{orderLlist}}" wx:key="{{item.value}}">
     <swiper-item class= "swiperItem">
       <scroll-view class='swiperScrll' scoll-y="true">
