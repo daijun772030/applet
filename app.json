@@ -9,7 +9,8 @@
     "pages/login/login",
     "pages/shoppingCar/shoppingCar",
     "pages/payOrder/payOrder",
-    "pages/orderAll/orderAll"
+    "pages/orderAll/orderAll",
+    "pages/upAddress/upAddress"
   ],
   "permission": {
     "scope.userLocation": {

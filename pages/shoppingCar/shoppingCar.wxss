@@ -21,6 +21,7 @@
   color:rgba(102,102,102,1);
   margin-top: 36rpx;
   margin-bottom: 23rpx;
+  display: flex;
 }
 .shopName checkbox{
   margin-right: 67rpx;
@@ -147,11 +148,18 @@ checkbox-group{
   line-height: 54rpx;
 }
 .hoverBut {
-  background:rgba(0,212,160,1);
+   width: 128rpx;
+  height: 54rpx;
+  background:rgba(225,225,225,1);
+  border-radius:2px;
+  margin-left: 11rpx;
+  margin-right: 0;
   font-size:26rpx;
   font-family:PingFang-SC-Medium;
   font-weight:500;
   color:rgba(255,255,255,1);
+  text-align: center;
+  line-height: 54rpx;
 }
 button::after{
   border:none;

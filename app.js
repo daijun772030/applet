@@ -4,6 +4,7 @@ App({
     userData:null,
     commercial:null,
     shopCarList:null,//购物车点击结算购物车订单
+    shopUpId:[],//提交购物车的购物车的id集合
   },
   onLaunch: function () {
     // 展示本地存储能力

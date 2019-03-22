@@ -6,11 +6,12 @@
     <view class='payMessage'>
       <view class='MessageContent'>
         <view class='payAddress'>
-          <view class='queryAddress'>
-            <text>中德英伦联邦B区</text>
+          <view class='queryAddress' catchtap='queryAddress'>
+            <text wx:if="{{defaultDistance}}">{{defaultDistance.address}}</text>
+            <text wx:else>前去选择地址</text>
             <image src='cloud://sjkj-1-2739cc.736a-sjkj-1-2739cc/img/index/SJ_Perjiantou@2x.png'></image>
           </view>
-          <text>金洁 18382240965</text>
+          <text>{{defaultDistance.name}} {{defaultDistance.phone}}</text>
         </view>
         <view class='takeWay'>
           <text>取送方式</text>
@@ -22,12 +23,13 @@
             </label>
           </radio-group> 
         </view>
-        <view class='takeTime'>
+        <view class='takeTime' catchtap='queryTime'>
           <view class='TakeName'>
             <text>取件时间</text>
           </view>
           <view class='timeMessage'>
-            <text>立即取件</text>
+            <text wx:if="{{immediately == 1}}">立即取件</text>
+            <text wx:else>{{yearStrin}} {{yourString}}</text>
             <image src='cloud://sjkj-1-2739cc.736a-sjkj-1-2739cc/img/index/SJ_Perjiantou@2x.png'></image>
           </view>
         </view>
@@ -75,11 +77,11 @@
             <view class='redMessage'>
               <view>
                 <text class='block'>懒猪红包</text>
-                <text class='red'>-￥0</text>
+                <text class='red'>-￥{{CarOrder.DeliveryRed}}</text>
               </view>
               <view>
                 <text class='block'>取送劵</text>
-                <text class='red'>-￥0</text>
+                <text class='red'>-￥{{CarOrder.DeliveryRed}}</text>
               </view>
               <view>
                 <text class='block'>钱包</text>
@@ -110,6 +112,53 @@
     </view> 
     <view class='button'>
       <button plain='true'>提交订单</button>
+    </view>
+  </view>
+  
+
+  <view class='Distance' catchtouchmove="preventTouchMove" catchtap='showAddShop' wx:if="{{DistanceType}}">
+    <view wx:if="{{disableType}}" class='DistanceContent' catchtap='address'>
+      <view class='contentName'>
+        <text>选择收货地址</text>
+      </view>
+      <scroll-view class='scrollDistance' scroll-y="true">
+        <view class='adress' wx:for="{{Distance}}">
+          <view class='adressName'>
+            <text class='text'>{{item.address}}</text>
+            <text class='txt'>{{item.name}} {{item.phone}}</text>
+          </view>
+          <view class='operation' catchtap='goUpAdd' data-item='{{item}}'>
+            <!-- <image></image> -->
+            <text>编辑</text>
+          </view>
+        </view>
+      </scroll-view>
+      <view class='upDistance'>
+        <image></image>
+        <text>新增收货地址</text>
+      </view>
+    </view>
+    <view class='CarTime' wx:if="{{timeType}}" catchtap='address'>
+      <view class='TimeName'>
+        <text>可选择最近10天</text>
+      </view>
+      <view class='TimeContent'>
+        <view class='dateYear'>
+          <block wx:for="{{year}}" wx:key="index" wx:for-item="year">
+            <text catchtap='setYear' data-index='{{index}}' class="{{navbarActiveIndex === index ? 'activ' : ''}}" data-year='{{year}}'>{{year}}</text>
+          </block>
+        </view>
+        <view class='dateHour'>
+          <view class='rightWay' catchtap='allright'>
+            <text>立即取件</text>
+          </view>
+          <view class='yourContent'>
+            <block wx:for="{{your}}" wx:key="indexT">
+              <text catchtap='setYour' data-year='{{year[index]}}' data-your='{{item}}'>{{item}}</text>
+            </block>
+          </view>
+        </view>
+      </view>
     </view>
   </view>
 </scroll-view>

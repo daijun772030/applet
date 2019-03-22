@@ -76,6 +76,10 @@ const post = (url) => {
    queryEvaluate: get('merchant/findByEvaluate'),//查询商户评论接口
    subminssion: post('order/submission'),//查询提交订单
    shoppingCarStatus: get('shoppingCar/findByShoppingCarStatus'),//单个商品添加进购物车得信息
+   allByDistance: get('address/allByDistance'),//查询改用户的所有地址
+   addByDistance: post('address/addByAddress'),//新增/修改地址
+   deletDistance: post('address/deleteByAddress'),//删除用户地址
+   setDistance: post('address/setUpAddressTakeoff'),//设置地址为取件地址
 }
 
 function request (name,data,config) {

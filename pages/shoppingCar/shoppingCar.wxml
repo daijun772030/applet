@@ -2,14 +2,20 @@
   <view class='shopCarChild' wx:for="{{CarList}}" wx:key='item' wx:for-index="fr">
     <view class='CarFlex'>
       <view class='shopName'>
-        <checkbox value='1'/>
+        <!-- <checkbox value='1' checked='{{checkedType}}'/> -->
+        <!-- <checkbox-group bindchange="checkboxChangeAll" data-list="{{item}}" data-id="{{fr}}">
+          <label>
+            <checkbox value="{{fr}}"/>
+          </label>
+        </checkbox-group> -->
+        <checkbox value='{{fr}}' bindtap='bechi' data-id="{{fr}}" checked='{{item.checkedAFa}}'></checkbox>
+        <!-- <checkbox wx:else value='{{fr}}' bindtap='checkFath' data-id="{{fr}}"></checkbox> -->
         <text>{{item.name}}</text>
       </view>
       <view class='content'>
-        <checkbox-group bindchange="checkboxChange">
-          <label class="checkbox" wx:for="{{item.data}}">
-            <checkbox value="{{item.id}}" checked="{{item.checked}}" />
-            {{item.checked}}
+        <checkbox-group bindchange="checkboxChange" data-check="{{item}}" data-id="{{fr}}">
+          <label class="checkbox" wx:for="{{item.data}}" wx:for-item="check" for='id-{{index}}'>
+            <checkbox id="id-{{index}}" value="{{(check.price*check.number)}},{{index}}" checked='{{check.checked}}' />
           </label>
         </checkbox-group>
         <view class='shopContent'>
@@ -31,7 +37,7 @@
                   data-id="{{fr}}" data-list='{{item}}' data-childItem='{{items}}' catchtap='moveNum'></image>
                 <text>{{items.number}}</text>
                 <image src='cloud://sjkj-1-2739cc.736a-sjkj-1-2739cc/img/index/jiahao_haocaishouye@2x.png' data-shopId="{{items.id}}"
-                  data-id="{{child}}" catchtap='pushNum'></image>
+                  data-id="{{child}}" data-list='{{item}}' data-childItem='{{items}}' catchtap='pushNum'></image>
               </view>
             </view>
           </view>
@@ -39,8 +45,9 @@
         </view>
       </view>
       <view class='close'>
-        <text>￥0</text>
-        <button class='{{length?"hoverBut":""}}' catchtap='goCar'>去结算</button>
+        <text>￥{{item.money}}</text>
+        <button wx:if="{{item.money!=0}}" data-checkId='{{fr}}' catchtap='goCar'>去结算</button>
+        <button wx:else class='hoverBut'>去结算</button>
       </view>
     </view>
   </view>
