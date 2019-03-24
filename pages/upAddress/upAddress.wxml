@@ -2,20 +2,20 @@
   <view class='address'>
     <text>收货地址:</text>
     <view class='addContent' catchtap='queryMap'>
-      <text>四川大学化工学院蒋文伟工作室</text>
+      <text>{{address}}</text>
       <image src='cloud://sjkj-1-2739cc.736a-sjkj-1-2739cc/img/index/SJ_Perjiantou@2x.png'></image>
     </view>
   </view>
   <view class='housNumber'>
     <text>门牌号:</text>
     <view class='housName'>
-      <input focus="true" placeholder=" 详细地址,例： 2号3层314室"></input>
+      <input focus="true" value='{{addressNum}}' bindblur="houstValue" placeholder=" 详细地址,例： 2号3层314室"></input>
     </view>
   </view>
   <view class='contact'>
     <text>联系人:</text>
     <view class='contactName'>
-      <input focus="true" placeholder=" 请填写收货人姓名"></input>
+      <input value='{{name}}' focus="true" bindblur="contactValue" placeholder=" 请填写收货人姓名"></input>
     </view>
   </view>
   <view class='sex'>
@@ -33,8 +33,8 @@
   <view class='phone'>
     <text>手机号:</text>
     <view class='phoneName'>
-      <input type='number' focus="true" placeholder=" 请填写收货人电话"></input>
+      <input value='{{phone}}' type='number' focus="true" bindblur="inputValue" placeholder=" 请填写收货人电话"></input>
     </view>
   </view>
-  <button>保存</button>
+  <button catchtap='save'>保存</button>
 </view>

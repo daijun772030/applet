@@ -11,7 +11,7 @@
           <image src='cloud://sjkj-1-2739cc.736a-sjkj-1-2739cc/img/personal/SJ_Perjiantou@2x.png'></image>
         </view>
       </view>
-      <view class='service'>
+      <view class='service' catchtap='callPhone'>
         <image src='cloud://sjkj-1-2739cc.736a-sjkj-1-2739cc/img/personal/SJMekefu@2x.png'></image>
         <text>客服</text>
       </view>

@@ -1,0 +1,14 @@
+<scroll-view scroll-y="true" class='orderDital'>
+  <view class='bg'>
+    <image src='cloud://sjkj-1-2739cc.736a-sjkj-1-2739cc/img/index/SJMeHeadBg@2x.png'></image>
+  </view>
+  <view class='DitalContent'>
+    <view class='ditalNmae'>
+      
+    </view>
+    <view class='address'></view>
+    <view class='shop'></view>
+    <view class='red'></view>
+    <view class='payType'></view>
+  </view>
+</scroll-view>

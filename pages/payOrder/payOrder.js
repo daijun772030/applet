@@ -12,9 +12,9 @@ Page({
       { name: '字取自送', value: '2' },
     ],
     checkbox:[
-      {name:'lazyRed',value:'1'},
-      { name: 'lazyRed', value: '2' },
-      { name: 'lazyRed', value: '3' },
+      {name:'lazyRed',value:'1',checked:true},
+      { name: 'takeoff', value: '2', checked: true },
+      { name: 'money', value: '3', checked: true },
     ],
     userid:null,//用户id
     shopid:null,//商户id
@@ -35,10 +35,16 @@ Page({
      "2019-03-22", "2019-03-22", "2019-03-22",],//取件得日期
     your: ["10:00:00", "10:00:00", "10:00:00", "10:00:00", "10:00:00", "10:00:00", "10:00:00", "10:00:00",]//取件得时刻
   },
+  yhAllMoney:null,//优惠的总合计
+  payAllMoney:null,//支付的总money
+  wallet:null,//钱包需要扣除的钱
 
   /*页面事件 */
   radioChange:function (e) {//取送方式
     console.log(e.detail.value);
+  },
+  checkboxChange:function(e) {//选取优惠的列表
+    console.log(e);
   },
   quryOrder:function() {//获取本页面得基本数据
     var that =this;
@@ -68,6 +74,54 @@ Page({
       timeType: true,
       disableType: false,
     })
+    if (this.data.CarOrder.startTime == null || this.data.CarOrder.endTime ==null) {
+      
+    }
+    var startTime = this.data.CarOrder.startTime.split(":")[0];
+    var endTime = this.data.CarOrder.endTime.split(":")[0];
+    if (this.data.CarOrder.startTime == null || this.data.CarOrder.endTime == null) {
+      startTime = '09';
+      endTime="18";
+    }
+    console.log(endTime,startTime);
+    var index = endTime - startTime - 1;
+    var yoursDate = [];
+    var d = new Date;
+    var datetime = d.getHours() + ':' + d.getMinutes() + ':' + d.getSeconds();
+    var dateYear = d.getFullYear() + '-' + (d.getMonth() + 1) + '-' + d.getDate();
+
+    console.log(datetime);
+    console.log(Date.parse(dateYear + datetime))
+    for(var j = 0;j<index;j++) {//得到商家的营业时间
+      var newtime = (parseInt(startTime) + 1 + parseInt(j)) + ":00:00"
+      var num = Date.parse(dateYear + newtime);
+      var numt = Date.parse(dateYear + datetime);
+      if(num>num) {
+        yoursDate.push(newtime)
+      }
+    }
+    console.log(yoursDate);
+
+    var newDate = [];
+    
+
+    for(var i =0; i<10;i++) {
+      newDate.push(this.GetDateStr(i))
+    };
+    console.log(newDate);
+    this.setData({
+      year:newDate,
+      your:yoursDate
+    })
+
+  },
+   GetDateStr:function(AddDayCount) {//获取当前时间的往后十天
+    var dd = new Date();
+    dd.setDate(dd.getDate() + AddDayCount);//获取AddDayCount天后的日期
+    var y = dd.getFullYear();
+    var m = (dd.getMonth() + 1) < 10 ? "0" + (dd.getMonth() + 1) : (dd.getMonth() + 1);//获取当前月份的日期，不足10补0
+    var d = dd.getDate() < 10 ? "0" + dd.getDate() : dd.getDate();//获取当前几号，不足10补0
+    return y + "-" + m + "-" + d;
   },
   showAddShop:function () {//点击外层模态框消失
     this.setData({
@@ -126,16 +180,70 @@ Page({
             })
           }
         }
+        setTimeout(function() {
+          that.money();
+        },2000)
       }
     })
   },
-  goUpAdd:function(e) {
+  money:function() {//换算金额
+    var that = this;
+    // debugger;
+    // debugger;
+    var takeoff = that.data.takeoff;
+    var carList = that.data.CarOrder;
+    console.log(that.data.CarOrder,takeoff);
+    var wallet = carList.wallet;//钱包总金额
+    var yh = carList.reduce + carList.DeliveryRed + carList.red;//优惠券加上打折的总金额
+    var shopPayMoney = carList.count + takeoff;//商品总金额加上运费一起的
+    var yhallMoney = null //优惠的总金额
+    var payAllMoney = null;//实际需要支付的金额
+    if (wallet) {
+      if (wallet < (shopPayMoney - yh) && wallet != 0) {
+        yhallMoney = yh + wallet;
+        payAllMoney = shopPayMoney - yhallMoney - wallet;
+        wallet = 0;
+
+      } else if (wallet > (shopPayMoney - yh)) {
+        yhallMoney = (shopPayMoney - 0.01);
+        payAllMoney = 0.01;
+        wallet = shopPayMoney - yh - 0.01
+      }
+    } else {
+      yhallMoney = yh;
+      payAllMoney = shopPayMoney - yh;
+      wallet = 0;
+    }
+    that.setData({
+      yhAllMoney: yhallMoney,
+      payAllMoney: payAllMoney,
+      wallet: wallet
+    })
+    console.log(carList, wallet, yh, shopPayMoney, that.data.yhAllMoney, that.data.payAllMoney);
+  },
+  goUpAdd:function(e) {//跳转新添加地址
     console.log(e);
     wx.navigateTo({
-      url:'/pages/upAddress/upAddress'
+      url: '/pages/upAddress/upAddress?userid=' + this.data.userid
     })
   },
-
+  changeAddress:function(e) {//设置选择的地址为送件地址
+    console.log(e);
+    var that = this;
+    var id = e.currentTarget.dataset.item.id;
+    var userid = e.currentTarget.dataset.item.userid;
+    service.request('setDistance',{id:id,userid:userid,merchantid:that.data.shopid}).then((res)=>{
+      console.log(res);
+      if(res.data.retCode ==200) {
+        that.qeryDistance();
+        this.setData({
+          DistanceType:false,
+          timeType:false,
+          disableType:false
+        });
+      }
+    })
+  },
   /**
    * 生命周期函数--监听页面加载
    */
@@ -154,7 +262,6 @@ Page({
    * 生命周期函数--监听页面初次渲染完成
    */
   onReady: function () {
-
   },
 
   /**
@@ -164,6 +271,9 @@ Page({
     var that =this;
     that.quryOrder();
     that.qeryDistance();
+    setTimeout(function() {
+      that.money()
+    },2000)
   },
 
   /**
