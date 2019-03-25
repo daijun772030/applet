@@ -1,0 +1,103 @@
+<view class='complete'>
+  <view class='nav bgclor'>
+    <view class='Content navContent'>
+      <text>清洗完成</text>
+      <image src='cloud://sjkj-1-2739cc.736a-sjkj-1-2739cc/img/index/zhunadaizi@2x.png'></image>
+    </view>
+  </view>
+  <view class='address bgclor'>
+    <view class='addressContent Content'>
+      <view>
+        <text>收货人姓名</text>
+        <text class='tex'>李四</text>
+      </view>
+      <view>
+       <text>收货人电话</text>
+        <text class='tex'>13666288963</text> 
+      </view>
+      <view>
+       <text>收货人地址</text>
+        <text class='tex'>四川省 成都市 武侯区 美年广场D座</text> 
+      </view>
+    </view>
+  </view>
+  <view class='shopList bgclor'>
+    <view class='Content shopContent'>
+      <view class='shopName mg'>
+        <text>卡伊妮洗衣生活馆</text>
+      </view>
+      <view class='shoppingChid mg'>
+        <view class='shopLog'>
+          <image></image>
+        </view>
+        <view class='shopChidName'>
+          <view class='shopPrice'>
+            <text>活动1</text>
+            <text>￥35.0</text>
+          </view>
+          <text>1</text>  
+        </view>
+      </view>
+      <view class='takeoff mg'>
+        <text>取送费</text>
+        <text class='takTex'>￥5.0</text>
+      </view>
+    </view>
+  </view>
+  <view class='specialList bgclor'>
+    <view class='Content specialCont'>
+      <view>
+        <text>懒猪红包</text>
+        <text class='texRed'>-￥0</text>
+      </view>
+      <view>
+        <text>优惠金额</text>
+        <text class='texRed'>-￥0</text>
+      </view>
+      <view>
+        <text>取送劵</text>
+        <text class='texRed'>-￥0</text>
+      </view>
+      <view>
+        <text>钱包</text>
+        <text class='texRed'>-￥0</text>
+      </view>
+      <view class='bordr'>
+        <text></text>
+        <text class='texAll'><text class='txtAllMoney'>合计</text> ￥0</text>
+      </view>
+      <view>
+        <text>发票</text>
+        <text class='tex'>该商家不支持开具发票</text>
+      </view>
+    </view>
+  </view>
+  <view class='payStyle bgclor'>
+    <view class='payContent Content' >
+      <view>
+        <text>支付方式</text>
+        <text class='tex'>支付宝支付</text>
+      </view>
+      <view>
+       <text>配送方式</text>
+        <text class='tex'>达达配送</text> 
+      </view>
+      <view>
+       <text>订单号</text>
+        <text class='tex'>2019022810062601170</text> 
+      </view>
+      <view>
+       <text>下单时间</text>
+        <text class='tex'>2019-02-28 10:06:26</text> 
+      </view>
+      <view>
+       <text>收件时间</text>
+        <text class='texRed'>2019-02-28 10:06:26</text> 
+      </view>
+      <view>
+       <text>取件时间</text>
+        <text class='texRed'>2019-02-28 10:06:26</text> 
+      </view>
+    </view>
+  </view>
+</view>

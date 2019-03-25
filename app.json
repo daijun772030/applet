@@ -11,7 +11,8 @@
     "pages/payOrder/payOrder",
     "pages/orderAll/orderAll",
     "pages/upAddress/upAddress",
-    "pages/orderDital/orderDital"
+    "pages/orderDital/orderDital",
+    "pages/complete/complete"
   ],
   "permission": {
     "scope.userLocation": {

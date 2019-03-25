@@ -74,11 +74,11 @@
       <view class='moneyContent'>
         <view class='moneyMessage'>
           <view class='redPacket'>
-            <checkbox-group class="group" bindchange="checkboxChange">
+            <view class="group">
               <label class="checkbox" wx:for="{{checkbox}}">
-                <checkbox value="{{item.value}}" checked="{{item.checked}}" />
+                <checkbox value="{{item.value}}" checked="{{item.checked}}" data-id = "{{index}}" data-list="{{checkbox[index]}}" data-CarList='{{CarOrder}}'  catchtap='dada'/>
               </label>
-            </checkbox-group>
+            </view>
             <view class='redMessage'>
               <view>
                 <text class='block'>懒猪红包</text>

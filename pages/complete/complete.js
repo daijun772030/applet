@@ -1,4 +1,4 @@
-// pages/personal/personal.js
+// pages/complete/complete.js
 Page({
 
   /**
@@ -7,26 +7,7 @@ Page({
   data: {
 
   },
-  gotoROrder:function (e) {
-    console.log(e);
-    var index = e.currentTarget.dataset.index
-    wx.navigateTo( {
-      url:'/pages/orderAll/orderAll?index='+ index
-    })
-  },
-  callPhone:function () {
-    wx.makePhoneCall({
-      phoneNumber:'4000286889',
-      success:function(res){
-        console.log(res)
-      }
-    })
-  },
-  goOrder:function() {
-    wx.navigateTo({
-      url: '/pages/complete/complete'
-    })
-  },
+
   /**
    * 生命周期函数--监听页面加载
    */

@@ -80,6 +80,15 @@ const post = (url) => {
    addByDistance: post('address/addByAddress'),//新增/修改地址
    deletDistance: post('address/deleteByAddress'),//删除用户地址
    setDistance: post('address/setUpAddressTakeoff'),//设置地址为取件地址
+
+   //订单部分
+   orderAll:post('order/all'),//查询所有订单
+   deleteOrder: get('order/deleteByOrderId'),//删除订单
+   orderDitail: get('order/findByOrderDetails'),//查询订单详情
+   orerNum: get('order/findByStatisticsCount'),//查询订单数量
+   orderIfhave: get('order/updateByOrderIfhave'),//修改订单为已取衣
+   orderEnd:get('order/updateByOrderType'),//修改订单为已完成
+   updateOrder: get('order/updateByOrderTypePhone'),//修改订单状态
 }
 
 function request (name,data,config) {

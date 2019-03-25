@@ -45,6 +45,9 @@ Page({
   },
   checkboxChange:function(e) {//选取优惠的列表
     console.log(e);
+    var value = e.detail.value;
+    var list = e.currentTarget.dataset.list;
+    // for()
   },
   quryOrder:function() {//获取本页面得基本数据
     var that =this;
@@ -74,9 +77,6 @@ Page({
       timeType: true,
       disableType: false,
     })
-    if (this.data.CarOrder.startTime == null || this.data.CarOrder.endTime ==null) {
-      
-    }
     var startTime = this.data.CarOrder.startTime.split(":")[0];
     var endTime = this.data.CarOrder.endTime.split(":")[0];
     if (this.data.CarOrder.startTime == null || this.data.CarOrder.endTime == null) {
@@ -89,14 +89,17 @@ Page({
     var d = new Date;
     var datetime = d.getHours() + ':' + d.getMinutes() + ':' + d.getSeconds();
     var dateYear = d.getFullYear() + '-' + (d.getMonth() + 1) + '-' + d.getDate();
-
-    console.log(datetime);
-    console.log(Date.parse(dateYear + datetime))
+    var dat = dateYear + " " + datetime;
+    console.log(dateYear,datetime);
+    console.log(Date.parse(dat));
     for(var j = 0;j<index;j++) {//得到商家的营业时间
       var newtime = (parseInt(startTime) + 1 + parseInt(j)) + ":00:00"
-      var num = Date.parse(dateYear + newtime);
-      var numt = Date.parse(dateYear + datetime);
-      if(num>num) {
+      var newDt =dateYear + " " +  newtime
+      console.log(newDt)
+      var num = Date.parse(newDt);
+      var numt = Date.parse(dat);
+      console.log(num,numt);
+      if(num>numt) {
         yoursDate.push(newtime)
       }
     }
@@ -134,12 +137,13 @@ Page({
     })
   },
   setYear:function(e) {//选择取件时间的日期
-    // console.log(e);
+    console.log(e);
     var that = this;
     var index = e.currentTarget.dataset.index;
     var year = e.currentTarget.dataset.year
     that.setData({
       navbarActiveIndex:index,
+      yearStrin:year
     })
   },
   setYour:function(e) {//选取时分秒的时间
@@ -149,7 +153,7 @@ Page({
     var year = e.currentTarget.dataset.year
     that.setData({
       yourString: your,
-      yearStrin:year,
+      // yearStrin:year,
       DistanceType:false,
       immediately:0
     })
@@ -186,6 +190,72 @@ Page({
       }
     })
   },
+  // dada:function (e) {
+  //   // debugger;
+  //   console.log(e);
+  //   var checkList = (!e.currentTarget.dataset.list.checked);
+  //   var value = e.currentTarget.dataset.list.value;
+  //   console.log(checkList);
+  //   if (checkList == false) {
+  //     if (value == 1) {
+  //       var red = "CarOrder.red";
+  //       var checekdd = "checkbox[" + value +"].checked"
+  //       this.setData({
+  //         [red]:0,
+  //         [checekdd]: checkList
+  //       })
+  //     }
+  //     if (value == 2) {
+  //       var red = "CarOrder.DeliveryRed";
+  //       var checekdd = "checkbox[" + value + "].checked"
+  //       this.setData({
+  //         [red]:0,
+  //         [checekdd]: checkList
+  //       })
+  //     }
+  //     if (value == 3) {
+  //       var red = "CarOrder.wallet";
+  //       var checekdd = "checkbox[" + value + "].checked"
+  //       this.setData({
+  //         [red]: 0,
+  //         [checekdd]: checkList
+  //       })
+  //     }
+  //     this.money();
+  //   }else {
+  //     if (value == 1) {
+  //       ths.quryOrder();
+  //       setTimeout(function() {
+  //         this.money()
+  //       },2000)
+  //       var checekdd = "checkbox[" + value + "].checked"
+  //       this.setData({
+  //         [checekdd]: checkList
+  //       })
+  //     }
+  //     if (value == 2) {
+  //       ths.quryOrder();
+  //       setTimeout(function () {
+  //         this.money()
+  //       }, 2000)
+  //       var checekdd = "checkbox[" + value + "].checked"
+  //       this.setData({
+  //         [checekdd]: checkList
+  //       })
+  //     }
+  //     if (value == 3) {
+  //       ths.quryOrder();
+  //       setTimeout(function () {
+  //         this.money()
+  //       }, 2000)
+  //       var checekdd = "checkbox[" + value + "].checked"
+  //       this.setData({
+  //         [checekdd]: checkList
+  //       })
+  //     }
+  //   }
+  //   console.log(checkList);
+  // },
   money:function() {//换算金额
     var that = this;
     // debugger;
@@ -201,8 +271,8 @@ Page({
     if (wallet) {
       if (wallet < (shopPayMoney - yh) && wallet != 0) {
         yhallMoney = yh + wallet;
-        payAllMoney = shopPayMoney - yhallMoney - wallet;
-        wallet = 0;
+        payAllMoney = shopPayMoney - yh - wallet;
+        wallet = carList.wallet;
 
       } else if (wallet > (shopPayMoney - yh)) {
         yhallMoney = (shopPayMoney - 0.01);

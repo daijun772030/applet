@@ -1,0 +1,199 @@
+.complete{
+  width: 100%;
+  background:rgba(245,245,245,1);
+  /* display:flex;
+  flex-direction: column;
+  justify-content: center; */
+  overflow: hidden;
+}
+.bgclor {
+  width: 690rpx;
+  background:rgba(255,255,255,1);
+  border-radius:10px;
+  margin:18rpx auto;
+}
+.Content{
+  width: 613rpx;
+  height: 100%;
+  margin:0 auto;
+}
+.nav{
+  height: 107rpx;
+}
+.navContent{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size:30rpx;
+  font-family:PingFang-SC-Medium;
+  font-weight:500;
+  color:rgba(85,85,85,1);
+  line-height:30px;
+  position: relative;
+  margin-top: 50rpx;
+}
+.navContent>image{
+  width: 81rpx;
+  height: 100rpx;
+  position: absolute;
+  top: -47rpx;
+  right: 0;
+}
+.addressContent{
+  height:254rpx;
+}
+.addressContent>view {
+  width: 100%;
+  height: 33%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size:28rpx;
+  font-family:PingFang-SC-Medium;
+  font-weight:500;
+  color:rgba(85,85,85,1);
+  line-height:30rpx;
+}
+.tex{
+  font-size:26rpx;
+  font-family:PingFang-SC-Medium;
+  font-weight:500;
+  color:rgba(119,119,119,1);
+  line-height:30rpx;
+}
+.shopContent{
+  width: 613rpx;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+}
+.mg {
+  margin-top: 30rpx;
+}
+.shopName{
+  width: 100%;
+  height: 87rpx;
+  border-bottom: 1rpx solid rgba(230,230,230,1);
+  font-size:30rpx;
+  font-family:PingFang-SC-Medium;
+  font-weight:500;
+  color:rgba(85,85,85,1);
+  line-height:50rpx;
+}
+.shoppingChid{
+  width: 100%;
+  height: 130rpx;
+  display: flex;
+  justify-content: space-between;
+}
+.shopLog{
+  width: 130rpx;
+  height:130rpx;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.shopLog>image {
+  max-width: 90%;
+  max-height: 95%;
+}
+.shopChidName{
+  width: 470rpx;
+}
+.shopPrice{
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size:28rpx;
+  font-family:PingFang-SC-Medium;
+  font-weight:500;
+  color:rgba(85,85,85,1);
+  line-height:30rpx;
+}
+.shopChidName>text {
+  font-size:28rpx;
+  font-family:PingFang-SC-Medium;
+  font-weight:500;
+  color:rgba(136,136,136,1);
+  line-height:30rpx;
+}
+.takeoff{
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size:28rpx;
+  font-family:PingFang-SC-Medium;
+  font-weight:500;
+  color:rgba(102,102,102,1);
+  line-height:30rpx;
+  margin-bottom: 30rpx;
+}
+.takTex {
+  font-size:26rpx;
+  font-family:PingFang-SC-Medium;
+  font-weight:500;
+  color:rgba(85,85,85,1);
+  line-height:30rpx;
+}
+.specialCont{
+  height: 494rpx;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+  font-size:28rpx;
+  font-family:PingFang-SC-Medium;
+  font-weight:500;
+  color:rgba(102,102,102,1);
+  line-height:30rpx;
+}
+.specialCont>view {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.texRed {
+  font-size:26rpx;
+  font-family:PingFang-SC-Medium;
+  font-weight:500;
+  color:rgba(222,12,12,1);
+  line-height:30rpx;
+}
+.txtAllMoney {
+  font-size:30rpx;
+  font-family:PingFang-SC-Medium;
+  font-weight:500;
+  color:rgba(102,102,102,1);
+  line-height:30rpx;
+}
+.texAll{
+  font-size:32rpx;
+  font-family:PingFang-SC-Medium;
+  font-weight:500;
+  color:rgba(222,12,12,1);
+  line-height:30rpx;
+}
+.payContent{
+  height: 484rpx;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+}
+.payContent>view {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size:28rpx;
+  font-family:PingFang-SC-Medium;
+  font-weight:500;
+  color:rgba(85,85,85,1);
+  line-height:30rpx;
+}
+.bordr {
+  border-bottom: 1rpx solid rgba(230,230,230,1);
+}
