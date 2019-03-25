@@ -31,7 +31,7 @@ Page({
     waitAppraise:[],//待评价
     refund:[],//退款
   },
-  queryNathing:function (value) {
+  queryNathing:function (value) {//查询订单函数
     if (value == 0) {
       var type = 6;
       service.request('orderAll', { userid: this.data.userid, type: type }).then((res) => {
@@ -39,51 +39,113 @@ Page({
         this.setData({
           allOrder: res.data.data
         })
+        console.log(this.data.allOrder);
       })
     } else if (value == 1) {
       var type = 0;
       service.request('orderAll', { userid: this.data.userid, type: type }).then((res) => {
         console.log(res);
+        var obligation = res.data.data;
+        var arr = [];
+        for (var i = 0; i < obligation; i++) {
+          var chid = obligation[i]
+          if (chid.status == 0 || chid.status == 1) {
+            arr.push(chid)
+          }
+        }
         this.setData({
-          obligation: res.data.data
+          obligation: arr
         })
       })
     } else if (value == 2) {
       var type = 1;
       service.request('orderAll', { userid: this.data.userid, type: type }).then((res) => {
         console.log(res);
+        var valueChid = res.data.data;
+        var arr = [];
+        for (var i = 0; i < valueChid; i++) {
+          var chid = valueChid[i]
+          if (chid.status == 2&&chid.refundStatus == 10&& type == 0) {
+            arr.push(chid)
+          }
+        }
         this.setData({
-          waitOrder: res.data.data
+          waitOrder: arr
         })
       })
-    } else if (value == 3 || value == 4) {
+    } else if (value == 3) {
       var type = 2;
       service.request('orderAll', { userid: this.data.userid, type: type }).then((res) => {
         console.log(res);
+        var valueChid = res.data.data;
+        var arr = [];
+        for (var i = 0; i < valueChid; i++) {
+          var chid = valueChid[i]
+          if (chid.status == 2 && chid.refundStatus == 10 && type == 1 && ifhave != 1 && ifhave != 2) {
+            arr.push(chid)
+          }
+        }
         this.setData({
-          dendOrder: res.data.data
+          waitPickup: arr
         })
       })
-    } else if (value == 5) {
+    }else if(value == 4) {
+      var type = 2;
+      service.request('orderAll', { userid: this.data.userid, type: type }).then((res) => {
+        console.log(res);
+        var valueChid = res.data.data;
+        var arr = [];
+        for (var i = 0; i < valueChid; i++) {
+          var chid = valueChid[i]
+          if (chid.status == 2 && chid.refundStatus == 10 && type == 1 && (ifhave == 1 && ifhave == 2)) {
+            arr.push(chid)
+          }
+        }
+        this.setData({
+          waitPickup: arr
+        })
+      })
+    }else if (value == 5) {
       var type = 3;
       service.request('orderAll', { userid: this.data.userid, type: type }).then((res) => {
         console.log(res);
+        var arr = [];
+        for (var i = 0; i < valueChid; i++) {
+          var chid = valueChid[i]
+          if (chid.status == 2 && chid.refundStatus == 10 && type == 2) {
+            arr.push(chid)
+          }
+        }
         this.setData({
-          takeOrder: res.data.data
+          takeOrder: arr
         })
       })
     } else if (value == 6) {
       var type = 4;
       service.request('orderAll', { userid: this.data.userid, type: type }).then((res) => {
         console.log(res);
+        var arr = [];
+        for (var i = 0; i < valueChid; i++) {
+          var chid = valueChid[i]
+          if (chid.status == 2 && chid.refundStatus == 10 && type == 3) {
+            arr.push(chid)
+          }
+        }
         this.setData({
-          waitAppraise: res.data.data
+          waitAppraise: arr
         })
       })
     } else if (value == 7) {
       var type = 7;
       service.request('orderAll', { userid: this.data.userid, type: type }).then((res) => {
         console.log(res);
+        var arr = [];
+        for (var i = 0; i < valueChid; i++) {
+          var chid = valueChid[i]
+          if (chid.status == 2 && (type == 7 || refundStatus !=10)) {
+            arr.push(chid)
+          }
+        }
         this.setData({
           refund: res.data.data
         })
@@ -106,8 +168,8 @@ Page({
     })
     var index = this.data.navbarActiveIndex;
     this.queryNathing(index);
+    console.log(this.data.waitOrder)
   },
-
   /**
    * 生命周期函数--监听页面加载
    */
