@@ -1,7 +1,15 @@
 <view class='complete'>
   <view class='nav bgclor'>
     <view class='Content navContent'>
-      <text>清洗完成</text>
+      <text wx:if="{{refundTwo.status==0 || refundTwo.status == 1}}">待付款</text>
+      <text wx:if="{{refundTwo.status==2&&refundTwo.refundStatus==10&&refundTwo.type==0}}">待接单</text>
+      <text wx:if="{{refundTwo.status==2&&refundTwo.refundStatus==10&&refundTwo.type==1&&(refundTwo.ifhave!=1&&refundTwo.ifhave!=2)}}">待取货</text>
+      <text wx:if="{{refundTwo.status==2&&refundTwo.refundStatus==10&&refundTwo.type==1&&(refundTwo.ifhave==1||refundTwo.ifhave==2)}}">待发货</text>
+      <text wx:if="{{refundTwo.status==2&&refundTwo.refundStatus==10&&refundTwo.type==2}}">待收货</text>
+      <text wx:if="{{refundTwo.status==2&&refundTwo.refundStatus==10&&refundTwo.type==3}}">待评价</text>
+      <text wx:if="{{refundTwo.status==2&&(refundTwo.type==10||refundTwo.refundStatus!=10)&&refundTwo.refundStatus==0}}">退款中</text>
+      <text wx:if="{{refundTwo.status==2&&(refundTwo.type==10||refundTwo.refundStatus!=10)&&refundTwo.refundStatus==1}}">退款成功</text>
+      <text wx:if="{{refundTwo.status==2&&(refundTwo.type==10||refundTwo.refundStatus!=10)&&refundTwo.refundStatus==2}}">退款失败</text>
       <image src='cloud://sjkj-1-2739cc.736a-sjkj-1-2739cc/img/index/zhunadaizi@2x.png'></image>
     </view>
   </view>
@@ -9,15 +17,15 @@
     <view class='addressContent Content'>
       <view>
         <text>收货人姓名</text>
-        <text class='tex'>李四</text>
+        <text class='tex'>{{refundObj.shName}}</text>
       </view>
       <view>
        <text>收货人电话</text>
-        <text class='tex'>13666288963</text> 
+        <text class='tex'>{{refundTwo.phone}}</text> 
       </view>
       <view>
        <text>收货人地址</text>
-        <text class='tex'>四川省 成都市 武侯区 美年广场D座</text> 
+        <text class='tex addTex'>{{refundObj.address}}</text> 
       </view>
     </view>
   </view>
@@ -26,21 +34,21 @@
       <view class='shopName mg'>
         <text>卡伊妮洗衣生活馆</text>
       </view>
-      <view class='shoppingChid mg'>
+      <view class='shoppingChid mg' wx:for="{{refundTwo.shoppingCarModelList}}" wx:key="id">
         <view class='shopLog'>
-          <image></image>
+          <image src="http://39.108.113.149:8081/img?path=/usr/img//type/7f571459fe034676bdbebc1894dd535a.png"></image>
         </view>
         <view class='shopChidName'>
           <view class='shopPrice'>
-            <text>活动1</text>
-            <text>￥35.0</text>
+            <text>{{item.commodityName}}</text>
+            <text>￥{{item.price}}</text>
           </view>
-          <text>1</text>  
+          <text>{{item.number}}</text>  
         </view>
       </view>
       <view class='takeoff mg'>
         <text>取送费</text>
-        <text class='takTex'>￥5.0</text>
+        <text class='takTex'>￥{{refundTwo.fee}}</text>
       </view>
     </view>
   </view>
@@ -48,11 +56,12 @@
     <view class='Content specialCont'>
       <view>
         <text>懒猪红包</text>
-        <text class='texRed'>-￥0</text>
+        <text class='texRed'>-￥{{refundTwo.redid}}</text>
       </view>
       <view>
         <text>优惠金额</text>
-        <text class='texRed'>-￥0</text>
+        <text class='texRed' wx:if="{{refundTwo.couponMoney}}">-￥{{refundTwo.couponMoney}}</text>
+        <text class='texRed' wx:else>-￥0</text>
       </view>
       <view>
         <text>取送劵</text>
@@ -60,11 +69,11 @@
       </view>
       <view>
         <text>钱包</text>
-        <text class='texRed'>-￥0</text>
+        <text class='texRed'>-￥{{refundObj.walletPay}}</text>
       </view>
       <view class='bordr'>
         <text></text>
-        <text class='texAll'><text class='txtAllMoney'>合计</text> ￥0</text>
+        <text class='texAll'><text class='txtAllMoney'>合计</text> ￥{{refundObj.money}}</text>
       </view>
       <view>
         <text>发票</text>
@@ -76,27 +85,29 @@
     <view class='payContent Content' >
       <view>
         <text>支付方式</text>
-        <text class='tex'>支付宝支付</text>
+        <text class='tex' wx:if="{{refundObj.payMethod}}">支付宝支付</text>
+        <text class='tex' wx:else>微信支付</text>
       </view>
       <view>
        <text>配送方式</text>
-        <text class='tex'>达达配送</text> 
+        <text class='tex' wx:if="{{refundObj.iftake}}">自取自送</text> 
+        <text class='tex' wx:else>达达配送</text> 
       </view>
       <view>
        <text>订单号</text>
-        <text class='tex'>2019022810062601170</text> 
+        <text class='tex'>{{refundObj.orderNum}}</text> 
       </view>
       <view>
        <text>下单时间</text>
-        <text class='tex'>2019-02-28 10:06:26</text> 
+        <text class='tex'>{{refundObj.createTime}}</text> 
       </view>
       <view>
        <text>收件时间</text>
-        <text class='texRed'>2019-02-28 10:06:26</text> 
+        <text class='texRed'>{{refundObj.startTime}}</text> 
       </view>
       <view>
        <text>取件时间</text>
-        <text class='texRed'>2019-02-28 10:06:26</text> 
+        <text class='texRed'>{{refundObj.endTime}}</text> 
       </view>
     </view>
   </view>

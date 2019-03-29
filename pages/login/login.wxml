@@ -12,4 +12,19 @@
     </view>
     <button hover-class bindtap='login'>登录</button>
   </view>
+  <view class='lazyxi'>
+    <checkbox value='{{fr}}' bindtap='bechi' data-id="{{fr}}" checked='{{item.checkedAFa}}'></checkbox>
+    <view class='xiyiMsg' catchtap='webview'>
+      <text>加入懒猪代表您已同意</text>
+      <text style='color:#00E0A8'>《懒猪到家用户协议》</text>
+    </view>
+  </view>
+  <view class='solaid'>
+    <view class='prinst'></view>
+    <view class='zron'></view>
+    <view class='prinst'></view>
+  </view>
+  <view class='loginName' catchtap='gonathLogin'>
+    <text>密码登录</text>
+  </view>
 </view>

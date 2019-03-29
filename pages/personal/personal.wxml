@@ -20,29 +20,29 @@
   <view class='orderAll'>
     <view class='orderName'>
       <text>我的订单</text>
-      <view class='typeOrder' catchtap='gotoROrder' data-index='1'>
+      <view class='typeOrder' catchtap='gotoROrder' data-index='0'>
         <text>全部订单</text>
         <image src='cloud://sjkj-1-2739cc.736a-sjkj-1-2739cc/img/personal/SJ_Perjiantou@2x.png'></image>
       </view>
     </view>
     <view class='orderList'>
-      <view class='listChid' catchtap='goOrder'>
+      <view class='listChid' catchtap='goOrder' data-index='1' >
         <image class='dfk' src='cloud://sjkj-1-2739cc.736a-sjkj-1-2739cc/img/personal/SJMedaifukuan@2x.png'></image>
         <text>待付款</text>
       </view>
-      <view class='listChid'>
+      <view class='listChid' catchtap='goOrder' data-index='2'>
         <image class='djd' src='cloud://sjkj-1-2739cc.736a-sjkj-1-2739cc/img/personal/SJMedaijiedan@2x.png'></image>
         <text>待接单</text>
       </view>
-      <view class='listChid'>
+      <view class='listChid' catchtap='goOrder' data-index='4'>
         <image class='dsh' src='cloud://sjkj-1-2739cc.736a-sjkj-1-2739cc/img/personal/SJMedaifahuo@2x.png'></image>
-        <text>待送货</text>
+        <text>待发货</text>
       </view>
-      <view class='listChid'>
+      <view class='listChid' catchtap='goOrder' data-index='5'>
         <image class='djd' src='cloud://sjkj-1-2739cc.736a-sjkj-1-2739cc/img/personal/SJMedaishouhuo@2x.png'></image>
         <text>待收货</text>
       </view>
-      <view class='listChid'>
+      <view class='listChid' catchtap='goOrder' data-index='6'>
         <image class='ddp' src='cloud://sjkj-1-2739cc.736a-sjkj-1-2739cc/img/personal/SJMedaidianping@2x.png'></image>
         <text>待点评</text>
       </view>
@@ -57,11 +57,11 @@
       </view>
     </view>
     <view class='orderList'>
-      <view class='listChid'>
+      <view class='listChid' catchtap='lazyRed'>
         <image class='lazyRd' src='cloud://sjkj-1-2739cc.736a-sjkj-1-2739cc/img/personal/SJMelanzhuhongbao@2x.png'></image>
         <text>懒猪红包</text>
       </view>
-      <view class='listChid'>
+      <view class='listChid' catchtap='ReCord'>
         <image class='redMoney' src='cloud://sjkj-1-2739cc.736a-sjkj-1-2739cc/img/personal/SJMeqianbao@2x.png'></image>
         <text>钱包</text>
       </view>
@@ -80,11 +80,11 @@
     </view>
   </view>
   <view class='setList'>
-    <view class='setChid'>
+    <view class='setChid' catchtap='uploadImg'>
       <text>帮助与反馈</text>
       <image src='cloud://sjkj-1-2739cc.736a-sjkj-1-2739cc/img/personal/SJ_Perjiantou@2x.png'></image>
     </view>
-    <view class='setChid'>
+    <view class='setChid' catchtap='gotoSet'>
       <text>设置</text>
       <image src='cloud://sjkj-1-2739cc.736a-sjkj-1-2739cc/img/personal/SJ_Perjiantou@2x.png'></image>
     </view>

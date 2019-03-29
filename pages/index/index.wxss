@@ -5,6 +5,29 @@
   align-items: center;
   overflow-x: hidden;
 }
+.shopCarImg{
+  width:68rpx;
+  height:68rpx;
+  background:rgba(255,255,255,1);
+  border:1px solid #e0e0e0;
+  border-radius:50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: fixed;
+  bottom: 32rpx;
+  right: 21rpx;
+  z-index: 99999;
+}
+.shopCarImg>image {
+  width: 100%;
+  height: 100%;
+}
+::-webkit-scrollbar{
+  width: 0;
+  height: 0;
+  color: transparent;
+}
 .sjkjIndex{
 width:100%;
 height:130rpx;
@@ -59,33 +82,43 @@ swiper-item {
 
 .notice{
   width: 100%;
-  height: 50rpx;
+  height: 85rpx;
   margin-top: 20rpx;
-  background:rgba(252,252,244,1);
+  background:rgba(244,248,253,1);
   display:flex;
   justify-content: flex-start;
   align-items: center;
 }
 .noticeIcon{
-  height:28rpx;
-  width: 28rpx;
+  width: 60rpx;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   margin-left: 20rpx;
 }
 .noticeIcon>image {
+  height:60rpx;
+  width: 68rpx;
+}
+.swiper {
+  width: calc(100% - 60rpx);
+  height: 100%;
+}
+.swperChid{
   width: 100%;
   height: 100%;
+  display: flex;
+  align-items: center;
 }
-.notice swiper {
-  width: calc(100% - 28rpx);
-  height: 100%;
-}
-.notice swiper text {
+.swperChid>text {
   font-size:20rpx;
   font-family:PingFang-SC-Regular;
   font-weight:400;
   color:rgba(153,153,153,1);
   padding-left: 11rpx;
   height: 100%;
+  line-height: 85rpx;
 }
 /* 首页导航列表 */
 .sjkjNavList{
@@ -128,6 +161,7 @@ swiper-item {
   /* margin-left: 20rpx; */
   padding-left: 20rpx;
   margin-bottom: 40rpx;
+  margin-top: 38rpx;
   font-size:30rpx;
   font-family:PingFang-SC-Medium;
   font-weight:500;
@@ -154,6 +188,25 @@ swiper-item {
   font-family:PingFang-SC-Regular;
   font-weight:400;
   color:rgba(153,153,153,1);
+  background:rgba(255,255,255,1);
+  border:1px solid rgba(255,174,51,1);
+  border-radius:5rpx;
+  position: relative;
+}
+.sift{
+  width:58rpx;
+  height:29rpx;
+  background:rgba(255,183,51,1);
+  border-radius:5px 0px 10px 0px;
+  position: absolute;
+  top: 0;
+  left: 0;
+  font-size:22rpx;
+  font-family:PingFang-SC-Medium;
+  font-weight:500;
+  color:rgba(255,255,255,1);
+  line-height:30rpx;
+  text-align: center;
 }
 .vicinityListItem image{
   width: 50%;
@@ -203,6 +256,23 @@ swiper-item {
   display: flex;
   justify-content: center;
   align-items: center;
+  position: relative;
+}
+.take {
+width:100%;
+height:47rpx;
+background:rgba(0,0,0,1);
+opacity:0.6;
+border-radius:5px;
+position: absolute;
+bottom: 0;
+left: 0;
+font-size:26rpx;
+font-family:PingFang-SC-Regular;
+font-weight:400;
+color:rgba(255,255,255,1);
+text-align: center;
+line-height: 47rpx;
 }
 .merchantListImg image {
   max-width: 100%;

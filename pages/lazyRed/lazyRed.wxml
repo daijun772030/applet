@@ -1,0 +1,52 @@
+<view class='order'>
+  <view class='shopNav'>
+    <block wx:for="{{orderLlist}}" wx:key="index">
+      <view class="navbar-item {{navbarActiveIndex === index ? 'navbar-item-active' : ''}}" data-navbar-index="{{index}}" catchtap="onNavBarTap">
+        <text>{{item.name}}</text>
+      </view>
+    </block>
+  </view>
+  <view class='lazyMsg'>
+    <image src='cloud://sjkj-1-2739cc.736a-sjkj-1-2739cc/img/reCord/shiyongshuomign_icon@2x.png'></image>
+    <text>懒猪红包，商家优惠劵，钱包使用说明</text>
+  </view>
+  <swiper style='height:{{second_height}}px' class='ContentSwiper' circular="{{circular}}" current="{{navbarActiveIndex}}" bindchange='onBindAnimationFinish' duration="{{duration}}">
+  <block wx:for="{{orderLlist}}" wx:key="{{item.value}}">
+    <swiper-item class= "swiperItem">
+      <scroll-view class='swiperScrll' scroll-y="true">
+        <view class='lazy' wx:for="{{redArr}}" wx:key="id">
+          <view class='bgN' wx:if="{{item.status == 2}}">
+            <image src='cloud://sjkj-1-2739cc.736a-sjkj-1-2739cc/img/lazyRed/beijing_yiguoqi@2x.png'></image>
+          </view>
+          <view class='bgN' wx:if="{{item.status == 0}}">
+            <image src='cloud://sjkj-1-2739cc.736a-sjkj-1-2739cc/img/lazyRed/lanzhuhongbao_kapian@2x.png'></image>
+          </view>
+          <view class='bgN' wx:if="{{item.status == 1}}">
+            <image src='cloud://sjkj-1-2739cc.736a-sjkj-1-2739cc/img/lazyRed/beijing_yishiyong@2x.png'></image>
+          </view>
+          <view class='lazyConet'>
+            <view class='lazyMoney'>
+              <view class='moneyLog'>
+                <text>{{item.money}}元</text>
+              </view>
+              <view class='moneyMsg'>
+                <text>懒猪红包</text>
+                <text class='tex'>{{item.startTime}}-{{item.endTime}}</text>
+              </view>
+              <view class='moneyBt' wx:if="{{item.status == 0}}">
+                <image src='cloud://sjkj-1-2739cc.736a-sjkj-1-2739cc/img/lazyRed/qushiyong_anniu@2x.png'></image>
+              </view>
+            </view>
+            <view class='lazyxz'>
+              <text>满{{item.remark}}可用</text>
+            </view>
+          </view>
+          <view class='lazyMsgBot'>
+            <text>仅限于洗衣订单使用，仅限于手机号{{phone}}的用户使用。</text>
+          </view>
+        </view>
+      </scroll-view>
+    </swiper-item>
+  </block>
+</swiper>
+</view>

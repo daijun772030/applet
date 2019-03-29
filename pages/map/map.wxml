@@ -1,0 +1,26 @@
+<view class='map' style='height:{{second_height}}'>
+  <view class='dadaMap'>
+    <map
+      id="myMap"
+      style="width: 100%; height: 100%;"
+      latitude="{{latitude}}"
+      longitude="{{longitude}}"
+      markers="{{markers}}"
+      show-location
+    ></map>
+  </view>
+  <view class='dadaMsg'>
+    <view class='rider'>
+      <text>骑手状态</text>
+      <text>待接单</text>
+    </view>
+    <view class='rider'>
+      <text>姓名</text>
+      <text>王二</text>
+    </view>
+    <view class='rider'>
+      <text></text>
+      <text>13666288963</text>
+    </view>
+  </view>
+</view>

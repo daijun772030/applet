@@ -27,7 +27,8 @@
               </image>
               <view class='leftShopName'>
                 <text class='shName'>{{items.commodityName}}</text>
-                <text class='remark'>无标注</text>
+                <text class='remark' wx:if="{{items.remark!=null || items.remark!='null'}}">{{items.remark}}</text>
+                <text class='remark' wx:else>无备注</text>
               </view>
             </view>
             <view class='price'>
@@ -46,7 +47,7 @@
       </view>
       <view class='close'>
         <text>￥{{item.money}}</text>
-        <button wx:if="{{item.money!=0}}" data-checkId='{{fr}}' catchtap='goCar'>去结算</button>
+        <button wx:if="{{item.money!=0}}" data-checkId='{{fr}}' data-item='{{item}}' catchtap='goCar'>去结算</button>
         <button wx:else class='hoverBut'>去结算</button>
       </view>
     </view>

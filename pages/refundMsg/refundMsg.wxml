@@ -1,0 +1,31 @@
+<view class='refund'>
+  <view class='refundMsg'>
+    <view class='refundContent'>
+      <view class='refundItem'>
+        <text wx:if="{{refundObj.refundRemark}}">退款原因：{{refundObj.refundRemark}}</text>
+        <text wx:else>退款原因：暂无说明</text>
+      </view>
+      <view class='refundItem'>
+        <text>退款金额：{{refundObj.money}}</text>
+      </view>
+      <view class='refundItem'>
+        <text>退回账户：微信(原路返回)</text>
+      </view>
+      <view class='refundItem'>
+        <text wx:if="{{refundObj.status==2&&(refundObj.type==10||type!=10)&&type==0}}">
+          到账状态：退款中
+        </text>
+        <text wx:if="{{refundObj.status==2&&(refundObj.type==10||type!=10)&&type==1}}">
+          到账状态：退款成功
+        </text>
+        <text wx:if="{{refundObj.status==2&&(refundObj.type==10||type!=10)&&type==2}}">
+          到账状态：退款失败
+        </text>
+      </view>
+      <view class='explain'>
+        <image src='cloud://sjkj-1-2739cc.736a-sjkj-1-2739cc/img/personal/digndan_tuikuanzhong@2x.png'></image>
+        <text>退款审核将在1~3个工作日内完成，请耐心等待</text>
+      </view>
+    </view>
+  </view>
+</view>

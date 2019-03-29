@@ -2,46 +2,83 @@
   <scroll-view scroll-x="true" class='shopNav' scroll-into-view="head-{{navbarActiveIndex}}">
     <view class='scrollChild'>
       <block wx:for="{{orderLlist}}" wx:key="index">
-        <view id="head-{{index}}" class="navbar-item {{navbarActiveIndex === index ? 'navbar-item-active' : ''}}" data-navbar-index="{{index}}"            catchtap="onNavBarTap">
+        <view id="head-{{index}}" class="navbar-item {{navbarActiveIndex == index ? 'navbar-item-active' : ''}}" data-navbar-index="{{index}}"            catchtap="onNavBarTap">
           <text>{{item.name}}</text>
         </view>
       </block>
     </view>
   </scroll-view>
-  <swiper style='height:{{second_height}}px' class='ContentSwiper' current="{{navbarActiveIndex}}" bindanimationfinish="onBindAnimationFinish" duration="{{duration}}">
+  <swiper style='height:{{second_height}}px' class='ContentSwiper' current="{{navbarActiveIndex}}" bindchange="onBindAnimationFinish" duration="{{duration}}">
   <block wx:for="{{orderLlist}}" wx:key="{{item.value}}">
     <swiper-item class= "swiperItem">
-      <scroll-view class='swiperScrll' scoll-y="true">
-        <view class='shopList'>
+      <scroll-view class='swiperScrll' scroll-y="true">
+        <view class='shopList' wx:for="{{arrAll}}" wx:key="id">
           <view class='userImag'>
             <image ></image>
           </view>
           <view class='shopMeg'>
             <view class='MegContent'>
-              <view class='shopName'>
+              <view class='shopName' catchtap="orderMsg" data-item='{{item}}' data-id="{{item.id}}" data-type='{{item.refundStatus}}'>
                 <view>
-                  <text>卡伊妮洗衣店</text>
+                  <text>{{item.shopName}}</text>
                   <image src='cloud://sjkj-1-2739cc.736a-sjkj-1-2739cc/img/personal/SJ_Perjiantou@2x.png'></image>
                 </view>
-                <text>退款中</text>
+                <text wx:if="{{item.status==0 || item.status == 1}}">待付款</text>
+                <text wx:if="{{item.status==2&&item.refundStatus==10&&item.type==0}}">待接单</text>
+                <text wx:if="{{item.status==2&&item.refundStatus==10&&item.type==1&&(item.ifhave!=1&&item.ifhave!=2)}}">待取货</text>
+                <text wx:if="{{item.status==2&&item.refundStatus==10&&item.type==1&&(item.ifhave==1||item.ifhave==2)}}">待发货</text>
+                <text wx:if="{{item.status==2&&item.refundStatus==10&&item.type==2}}">待收货</text>
+                <text wx:if="{{item.status==2&&item.refundStatus==10&&item.type==3}}">待评价</text>
+                <text wx:if="{{item.status==2&&(item.type==10||item.refundStatus!=10)&&item.refundStatus==0}}">退款中</text>
+                <text wx:if="{{item.status==2&&(item.type==10||item.refundStatus!=10)&&item.refundStatus==1}}">退款成功</text>
+                <text wx:if="{{item.status==2&&(item.type==10||item.refundStatus!=10)&&item.refundStatus==2}}">退款失败</text>
               </view>
               <view class='orderTime'>
-                <text>2018-05-20 12:30</text>
+                <text>{{item.createTime}}</text>
               </view>
-              <view class='dindanList'>
+              <view class='dindanList' wx:for="{{item.shoppingCarModelList}}" wx:key="id" wx:for-item="chid">
                 <view class='dindanChid'>
-                  <text>棉服中长</text>
-                  <text>×1</text>
+                  <text>{{chid.commodityName}}</text>
+                  <text>×{{chid.number}}</text>
                 </view>
               </view>
               <view class='shopOneMoney'>
                 <text>共1件商品</text>
                 <text>实付</text>
-                <text>￥222</text>
+                <text style='color:#333333'>￥{{item.money}}</text>
+              </view>
+              <view class='refundMes' wx:if="{{item.status==2&&(item.type==10||item.refundStatus!=10)}}">
+                <text wx:if="{{item.refundRemark}}">退款原因:{{item.refundRemark}}</text>
+                <text wx:else>退款原因:暂未说明</text>
               </view>
             </view>
-            <view class='realyBt'>
-              <button>退款详情</button>
+            <view class='realyBt' wx:if="{{item.status==0 || item.status == 1}}">
+              <button class='nathBt' data-item='{{item}}' data-index="{{navbarActiveIndex}}" catchtap='deleteOrder'>删除订单</button>
+              <button class='button' catchtap='affirm' data-item="{{item}}">确认付款</button>
+            </view>
+            <view class='realyBt' wx:if="{{item.status==2&&item.refundStatus==10&&item.type==0}}">
+              <button catchtap='cancel' catchtap='refund' data-item='{{item}}' class='nathBt'>取消订单</button>
+              <button class='button'>提醒接单</button>
+            </view>
+            <view class='realyBt' wx:if="{{item.status==2&&item.refundStatus==10&&item.type==1&&(item.ifhave!=1&&item.ifhave!=2)}}">
+              <button class='button' catchtap='refund' data-index="{{navbarActiveIndex}}" data-item='{{item}}'>取消订单</button>
+              <button catchtap='callPhone' data-phone='{{item.phone}}' class='nathBt'>联系商家</button>
+            </view>
+            <view class='realyBt' wx:if="{{item.status==2&&item.refundStatus==10&&item.type==1&&(item.ifhave==1||item.ifhave==2)}}">
+              <button catchtap='callPhone' data-phone='{{item.phone}}' class='nathBt'>联系商家</button>
+              <button class='button'>确认发货</button>
+              
+            </view>
+            <view class='realyBt'wx:if="{{item.status==2&&item.refundStatus==10&&item.type==2}}">
+              <button catchtap='callPhone' data-phone='{{item.phone}}' class='nathBt'>联系商家</button>
+              <button class='button'>确认收货</button>
+            </view>
+            <view class='realyBt'wx:if="{{item.status==2&&item.refundStatus==10&&item.type==3}}">
+              <button class='nathBt'>再次购买</button>
+              <button class='button'>评价</button>
+            </view>
+            <view class='realyBt'wx:if="{{item.status==2&&(item.type==10||item.refundStatus!=10)}}">
+              <button catchtap='refundMsg' data-item='{{item.id}}' data-type="{{item.refundStatus}}" class='button'>退款详情</button>
             </view>
           </view>
         </view>

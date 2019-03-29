@@ -1,9 +1,12 @@
 <scroll-view style='width:100%;height:100%' scroll-y="true" bindscroll="scroll">
+  <view class='shopCarImg' catchtap='goshoping'>
+    <image src='cloud://sjkj-1-2739cc.736a-sjkj-1-2739cc/img/index/xuanfugouwuche@2x.png'></image>
+  </view>
   <view class='sjkjWechat'>
     <view class='sjkjIndex'>
       <view class='sjNav'>
         <text bindtap='map'>{{mapName}} ></text>
-      <input value='' type='text' placeholder='输入店名搜索，如布兰奇'></input>
+      <!-- <input value='' type='text' placeholder='输入店名搜索，如布兰奇'></input> -->
       </view>
     </view>
     <swiper
@@ -14,6 +17,7 @@
       circular="{{navSate.circular}}"
       indicator-color="{{navSate.indicatorColor}}"
       indicator-active-color="{{navSate.indicatorActiveColor}}"
+     
     >
       <block wx:for="{{navImg}}" wx:key="userInfoListId">
         <swiper-item>
@@ -23,21 +27,22 @@
     </swiper>
     <view class='notice'>
       <view class='noticeIcon'>
-        <image src='cloud://sjkj-1-2739cc.736a-sjkj-1-2739cc/img/index/laba@2x.png'></image>
+        <image src='cloud://sjkj-1-2739cc.736a-sjkj-1-2739cc/img/index/xiaozhu@2x.png'></image>
       </view>
       <swiper
         autoplay="{{navSate.autoplay}}" 
         interval="{{navSate.interval}}" 
         circular='true' vertical='true'
+         class='swiper'
       >
         <block wx:for="{{noticeMessg}}" wx:key="noticeId">
-          <swiper-item>
+          <swiper-item class = "swperChid">
             <text>{{item.title}}</text>
           </swiper-item>
         </block>
       </swiper>
     </view>
-    <view class='sjkjNavList'>
+    <!-- <view class='sjkjNavList'>
       <view class='ListTop'>
           <view wx:for="{{navList}}" wx:key="navListKey" class='navListItem'>
           <image src='{{item.img}}'></image>
@@ -50,12 +55,15 @@
           <text>{{item.text}}</text>
         </view>
       </view>
-    </view>
+    </view> -->
     <view class='vicinity'>
       <text>优质商家</text>
     </view>
     <view class='vicinityList'>
       <view class='vicinityListItem' wx:for="{{quality}}" wx:key="vicinityList" data-bindId ="{{item.id}}" data-itemList='{{item}}' catchtap='goshop'>
+        <view class='sift'>
+          <text>精选</text>
+        </view>
         <image src='"http://appletwechat.pigcome.com" + {{item.logo}}'></image>
         <text>{{item.shopName}}</text>
       </view>
@@ -75,6 +83,9 @@
       <view class='merchantList' bindtap='GOShopDetails' wx:for="{{shopList}}" wx:for-index= "shopListChid" data-itemList='{{item}}'                data-bindId ="{{item.id}}" wx:key="{{item.id}}">
         <view class='merchantListImg'>
           <image src='cloud://sjkj-1-2739cc.736a-sjkj-1-2739cc/img/index/216_216.png'></image>
+          <view class='take' wx:if="{{item.status == 1}}">
+            <text>休息中</text>
+          </view>
         </view>
         <view class='merchantMesg'>
           <view class='shopName'>

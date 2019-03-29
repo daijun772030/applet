@@ -1,0 +1,3 @@
+<view>
+  <web-view src="http://www.baicu.com"></web-view>
+</view>

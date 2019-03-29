@@ -1,6 +1,7 @@
 // pages/payOrder/payOrder.js
 const app = getApp()
 const service = require('../../utils/myapi.js')
+const MD5 = require('../../utils/MD5.js')
 Page({
 
   /**
@@ -8,14 +9,17 @@ Page({
    */
   data: {
     items: [
-      { name: '达达配送', value: '1',checked: 'true' },
-      { name: '字取自送', value: '2' },
+      { name: '达达配送', value: '0',checked: 'true' },
+      { name: '字取自送', value: '1' },
     ],
     checkbox:[
       {name:'lazyRed',value:'1',checked:true},
       { name: 'takeoff', value: '2', checked: true },
       { name: 'money', value: '3', checked: true },
     ],
+    startime:null,//取件时间
+    endtime:null,//送件时间
+    iftake:0,//配送方式，0达达1自取
     userid:null,//用户id
     shopid:null,//商户id
     Carid:[],//购物车id集合
@@ -30,18 +34,98 @@ Page({
     yearStrin:null,//选中的时间年份
     yourString:null,//选中的取件时间的毫秒
     immediately:1,//0为不是立即取件。一为立即取件
-    year: ["2019-03-22", "2019-03-22", "2019-03-22", 
-    "2019-03-22", "2019-03-22", "2019-03-22", "2019-03-22",
-     "2019-03-22", "2019-03-22", "2019-03-22",],//取件得日期
-    your: ["10:00:00", "10:00:00", "10:00:00", "10:00:00", "10:00:00", "10:00:00", "10:00:00", "10:00:00",]//取件得时刻
+    year:[],//取件得日期
+    your: [],//取件得时刻当天的
+    yours:[],//往后其他的几天的取件时间
+    qujian:[],//真正渲染的取件小时数
   },
   yhAllMoney:null,//优惠的总合计
   payAllMoney:null,//支付的总money
   wallet:null,//钱包需要扣除的钱
 
   /*页面事件 */
+  dada:function(e) {
+    console.log(e);
+    // debugger;
+    var list = e.currentTarget.dataset.item.value;
+    for(var i = 0;i<this.data.checkbox.length;i++) {
+      var check = this.data.checkbox[i].checked
+      var value = this.data.checkbox[i].value;
+      if(list == value) {
+        var arr = "checkbox[" + i + "].checked"
+        this.setData({
+          [arr]: (!check)
+        })
+      }
+      console.log(this.data.checkbox)
+    }
+    var carList = this.data.CarOrder;
+    //取消按钮的操作
+    // debugger;
+    var redmoney = null;//红包
+    var lazyTakeoff = null;//取送费
+    var wallet = 0;//钱包
+    var yhAll = 0;//优惠合计
+    var payALL = 0;//支付合计
+    for (var x = 0; x < this.data.checkbox.length; x++) {
+      // debugger;
+      var carList = this.data.CarOrder;
+      var list = this.data.checkbox[x];
+      if (list.checked) {
+        if (list.value == 1) {
+          redmoney = carList.red
+        } else if (list.value == 2) {
+          lazyTakeoff = carList.DeliveryRed
+        } else if (list.value == 3) {
+          wallet = carList.count + this.data.takeoff + carList.reduce + carList.DeliveryRed + carList.red - 0.01
+        }
+        yhAll += redmoney + lazyTakeoff + wallet
+      } else {
+        if (list.value == 1) {
+          redmoney = 0
+        } else if (list.value == 2) {
+          lazyTakeoff = 0
+        } else if (list.value == 3) {
+          wallet = 0
+        }
+        yhAll += redmoney + lazyTakeoff + wallet
+      }
+
+    } 
+    var payTak = carList.count + this.data.takeoff
+    if (payTak>yhAll) {
+      payALL =payTak - yhAll 
+    }else if(payTak<yhAll){
+      payALL = yhAll -payTak
+    }else {
+      payALL = payTak - yhAll
+    }
+    this.setData({
+      yhAllMoney: yhAll,
+      payAllMoney: payALL.toFixed(2),
+      wallet: wallet
+    })
+  },
+
   radioChange:function (e) {//取送方式
+  // debugger;
     console.log(e.detail.value);
+    this.setData({
+      iftake:e.detail.value
+    })
+    var takeoff = this.data.takeoff
+    if(e.detail.value == 1) {
+      this.setData({
+        takeoff:0
+      })
+      this.money();
+    }else {
+      const that = this;
+      that.qeryDistance();
+      setTimeout(function () {
+        that.money()
+      }, 2000)
+    }
   },
   checkboxChange:function(e) {//选取优惠的列表
     console.log(e);
@@ -77,28 +161,36 @@ Page({
       timeType: true,
       disableType: false,
     })
-    var startTime = this.data.CarOrder.startTime.split(":")[0];
-    var endTime = this.data.CarOrder.endTime.split(":")[0];
+    var startTime = null;
+    var endTime = null;
     if (this.data.CarOrder.startTime == null || this.data.CarOrder.endTime == null) {
       startTime = '09';
       endTime="18";
+    }else {
+      startTime = this.data.CarOrder.startTime.split(":")[0];
+      endTime = this.data.CarOrder.endTime.split(":")[0];
     }
     console.log(endTime,startTime);
     var index = endTime - startTime - 1;
-    var yoursDate = [];
-    var d = new Date;
-    var datetime = d.getHours() + ':' + d.getMinutes() + ':' + d.getSeconds();
+    var yoursDate = [];//当天的取件时间
+    var nathingDate=[];//其他天的取件时间
+    var d = new Date();
+    var xish = d.getHours();
+    var datetime = xish + ':' + d.getMinutes() + ':' + d.getSeconds();
     var dateYear = d.getFullYear() + '-' + (d.getMonth() + 1) + '-' + d.getDate();
-    var dat = dateYear + " " + datetime;
+    var dat = dateYear.replace(/-/g, '/') + " " + datetime;
     console.log(dateYear,datetime);
     console.log(Date.parse(dat));
     for(var j = 0;j<index;j++) {//得到商家的营业时间
-      var newtime = (parseInt(startTime) + 1 + parseInt(j)) + ":00:00"
-      var newDt =dateYear + " " +  newtime
+      var newtime = (parseInt(startTime) + 1 + parseInt(j)) + ":00:00"//营业时间往后推了一个小时
+      var ShopTime = (parseInt(startTime) + parseInt(j)) + ":00:00"//正常的营业时间
+      var newDt = dateYear.replace(/-/g, '/') + " " +  newtime
+
       console.log(newDt)
       var num = Date.parse(newDt);
       var numt = Date.parse(dat);
       console.log(num,numt);
+      nathingDate.push(newtime)
       if(num>numt) {
         yoursDate.push(newtime)
       }
@@ -114,7 +206,9 @@ Page({
     console.log(newDate);
     this.setData({
       year:newDate,
-      your:yoursDate
+      your:yoursDate,
+      yours: nathingDate,
+      qujian: yoursDate
     })
 
   },
@@ -129,6 +223,7 @@ Page({
   showAddShop:function () {//点击外层模态框消失
     this.setData({
       DistanceType: false,
+      navbarActiveIndex:0
     })
   },
   address:function() {//点击模态框内容部分不隐藏
@@ -145,29 +240,40 @@ Page({
       navbarActiveIndex:index,
       yearStrin:year
     })
+    var your =that.data.your;
+    var newYour = that.data.yours;
+    if(index!=0) {
+      that.setData({
+        qujian: newYour
+      })
+    }else {
+      that.setData({
+        qujian: your
+      })
+    }
   },
   setYour:function(e) {//选取时分秒的时间
     console.log(e);
     var that = this;
     var your = e.currentTarget.dataset.your
-    var year = e.currentTarget.dataset.year
     that.setData({
       yourString: your,
-      // yearStrin:year,
       DistanceType:false,
       immediately:0
     })
   },
-  allright:function() {//点击出现立刻取件
-    this.setData({
-      immediately:1,
-      DistanceType: false,
-      timeType: false,
-      disableType: false,
-    })
-  },
+  // allright:function() {//点击出现立刻取件
+  //   debugger;
+  //   this.setData({
+  //     immediately:1,
+  //     DistanceType: false,
+  //     timeType: false,
+  //     disableType: false,
+  //   })
+  // },
   qeryDistance:function() {//查询用户的所有地址
     var that =this;
+    // debugger;
     service.request('allByDistance',{merchantid:that.data.shopid,userid:that.data.userid}).then((res)=>{
       console.log(res);
       if(res.data.retCode == 200 && res.data.data.addressList!=null) {
@@ -177,6 +283,7 @@ Page({
         })
         var DistanceList = that.data.Distance;
         for (var i = 0; i < DistanceList.length; i++) {
+          // debugger;
           var chid = DistanceList[i];
           if (chid.ifSelect == 1) {
             that.setData({
@@ -184,83 +291,17 @@ Page({
             })
           }
         }
-        setTimeout(function() {
-          that.money();
-        },2000)
+        // setTimeout(function() {
+        //   that.money();
+        // },2000)
       }
     })
   },
-  // dada:function (e) {
-  //   // debugger;
-  //   console.log(e);
-  //   var checkList = (!e.currentTarget.dataset.list.checked);
-  //   var value = e.currentTarget.dataset.list.value;
-  //   console.log(checkList);
-  //   if (checkList == false) {
-  //     if (value == 1) {
-  //       var red = "CarOrder.red";
-  //       var checekdd = "checkbox[" + value +"].checked"
-  //       this.setData({
-  //         [red]:0,
-  //         [checekdd]: checkList
-  //       })
-  //     }
-  //     if (value == 2) {
-  //       var red = "CarOrder.DeliveryRed";
-  //       var checekdd = "checkbox[" + value + "].checked"
-  //       this.setData({
-  //         [red]:0,
-  //         [checekdd]: checkList
-  //       })
-  //     }
-  //     if (value == 3) {
-  //       var red = "CarOrder.wallet";
-  //       var checekdd = "checkbox[" + value + "].checked"
-  //       this.setData({
-  //         [red]: 0,
-  //         [checekdd]: checkList
-  //       })
-  //     }
-  //     this.money();
-  //   }else {
-  //     if (value == 1) {
-  //       ths.quryOrder();
-  //       setTimeout(function() {
-  //         this.money()
-  //       },2000)
-  //       var checekdd = "checkbox[" + value + "].checked"
-  //       this.setData({
-  //         [checekdd]: checkList
-  //       })
-  //     }
-  //     if (value == 2) {
-  //       ths.quryOrder();
-  //       setTimeout(function () {
-  //         this.money()
-  //       }, 2000)
-  //       var checekdd = "checkbox[" + value + "].checked"
-  //       this.setData({
-  //         [checekdd]: checkList
-  //       })
-  //     }
-  //     if (value == 3) {
-  //       ths.quryOrder();
-  //       setTimeout(function () {
-  //         this.money()
-  //       }, 2000)
-  //       var checekdd = "checkbox[" + value + "].checked"
-  //       this.setData({
-  //         [checekdd]: checkList
-  //       })
-  //     }
-  //   }
-  //   console.log(checkList);
-  // },
   money:function() {//换算金额
     var that = this;
     // debugger;
     // debugger;
-    var takeoff = that.data.takeoff;
+    var takeoff = Number(that.data.takeoff);
     var carList = that.data.CarOrder;
     console.log(that.data.CarOrder,takeoff);
     var wallet = carList.wallet;//钱包总金额
@@ -270,8 +311,11 @@ Page({
     var payAllMoney = null;//实际需要支付的金额
     if (wallet) {
       if (wallet < (shopPayMoney - yh) && wallet != 0) {
+        // debugger;
         yhallMoney = yh + wallet;
-        payAllMoney = shopPayMoney - yh - wallet;
+        var tfMoney = shopPayMoney - yh - wallet
+        payAllMoney = tfMoney.toFixed(2);
+
         wallet = carList.wallet;
 
       } else if (wallet > (shopPayMoney - yh)) {
@@ -279,10 +323,6 @@ Page({
         payAllMoney = 0.01;
         wallet = shopPayMoney - yh - 0.01
       }
-    } else {
-      yhallMoney = yh;
-      payAllMoney = shopPayMoney - yh;
-      wallet = 0;
     }
     that.setData({
       yhAllMoney: yhallMoney,
@@ -291,8 +331,15 @@ Page({
     })
     console.log(carList, wallet, yh, shopPayMoney, that.data.yhAllMoney, that.data.payAllMoney);
   },
-  goUpAdd:function(e) {//跳转新添加地址
+  goUpAdd:function(e) {//跳转新添加地址编辑地址
     console.log(e);
+    app.globalData.addressList = e.currentTarget.dataset.item
+    wx.navigateTo({
+      url: '/pages/upAddress/upAddress?userid=' + this.data.userid
+    })
+  },
+  upAddress:function() {//新添加地址
+    app.globalData.addressList =[];
     wx.navigateTo({
       url: '/pages/upAddress/upAddress?userid=' + this.data.userid
     })
@@ -312,6 +359,106 @@ Page({
           disableType:false
         });
       }
+    })
+  },
+  nowTiem:function () {//立即取件函数
+    var startime = this.getDay(0);
+    var endtime  = this.getDay(3);
+    console.log(startime,endtime);
+    this.setData({
+      startime:startime,
+      endtime:endtime,
+      DistanceType: false,
+      timeType: false,
+      disableType: false,
+      immediately: 1
+    })
+  },
+   getDay:function(day){//获取当前当天的字段
+    var today = new Date();
+    var targetday_milliseconds = today.getTime() + 1000 * 60 * 60 * 24 * day;
+    today.setTime(targetday_milliseconds); //这个关键
+    var tYear = today.getFullYear();
+    var tMonth = today.getMonth();
+    var tDate = today.getDate();
+    var hours = today.getHours();
+    var min = today.getMinutes();
+    var send = today.getSeconds();
+    tMonth = this.doHandleMonth(tMonth + 1);
+    tDate = this.doHandleMonth(tDate);
+    return tYear + "-" + tMonth + "-" + tDate + ' ' + hours + ':' + min + ':' + send;
+  },
+
+  doHandleMonth:function(month) {//往后三天
+    var m = month;
+    if (month.toString().length == 1) {
+      m = "0" + month;
+    }
+    return m;
+  },
+
+  //微信支付方法
+  UpWechat:function() {//微信支付方法
+    var that = this;
+    var oppenid = wx.getStorageSync('oppenid');//用户得oppenid
+    console.log(oppenid);
+    var item = that.data.CarOrder;
+    var id = that.data.Carid
+    var newID = id.join(',')
+    var money = that.data.payAllMoney * 100;
+    console.log(money);
+    var jsonObj = {//需要传递的json参数对象
+      userid:that.data.userid,
+      merchantid:that.data.shopid,
+      shoppingid: newID,
+      startTime:that.data.startime,
+      endTime:that.data.endtime,
+      addressid: that.data.defaultDistance.id,
+      couponid:item.DeliveryRedId, 
+      redid: item.redId,
+      money: money, 
+      fee: that.data.takeoff,
+      actualMoney: item.count, 
+      payMethod: 0,
+      id: 0, 
+      iftake: that.data.iftake
+    }
+    var ifhave= 1;//代表小程序支付
+    var newJson = encodeURIComponent(JSON.stringify(jsonObj));
+    var subject = "拦住到家-" + item.shopName + '的订单'
+    service.request('wxPay', { openid: oppenid,money: money, subject:subject, jsonObject: newJson}).then((res)=>{//对微信支付进行订单创建
+      console.log(res);
+      // var timestamp = (new Date()).getTime();
+      // debugger;
+      var data = res.data.data;
+      var sigin = MD5.hexMD5(res.data.data.sign);
+      // var appid = data.appid;
+      // var nonce = data.noncestr;
+      // var page = 'prepay_id=' + data.prepayid;
+      // var SinType = 'MD5';
+      // var time = data.timestamp;
+      // var key = data.appkey;
+      // var all = appid + "&" + nonce + "&" + page + "&" + SinType + "&" + time + "&" + key
+      // var psSign = MD5.hexMD5(all)
+      // console.log(psSign);
+      wx.requestPayment(
+        {
+          'appId':data.appid,
+          'timeStamp': data.timestamp,
+          'nonceStr': data.noncestr,
+          'package': 'prepay_id=' + data.prepayid,
+          'signType': 'MD5',
+          'paySign': data.sign,
+          'success': function (res) {
+            console.log(res);
+          },
+          'fail': function (res) {
+            console.log(res);
+           },
+          'complete': function (res) { 
+            console.log(res);
+          }
+        })
     })
   },
   /**

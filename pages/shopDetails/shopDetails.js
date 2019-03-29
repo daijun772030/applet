@@ -1,6 +1,7 @@
 // pages/shopDetails/shopDetails.js
 const app = getApp()
-const service = require('../../utils/myapi.js')
+const service = require('../../utils/myapi.js');
+var arrFlaw = [];//瑕疵的数组
 Page({
 
   /**
@@ -20,6 +21,7 @@ Page({
     two_1:0,
     second_height:0,
     detail: [],//商品数组
+    indexFlaw:null,//瑕疵的初始值
     navbarActiveIndex:0,//导航和下面商品的联动
     navbarTitle:[//导航名称
       "下单",
@@ -27,31 +29,33 @@ Page({
       "商家"
     ],
     flawList:[
-      {id:1,name:'不明污渍'},
-      { id: 1, name: '破洞' },
-      { id: 2, name: '掉色' },
-      { id: 3, name: '血渍' },
-      { id: 4, name: '笔印' },
-      { id: 5, name: '串色' },
-      { id: 6, name: '破洞' },
-      { id: 7, name: '少扣' },
-      { id: 8, name: '掉毛' },
-      { id: 9, name: '变形' },
-      { id: 10, name: '起球' },
-      { id: 11, name: '起泡' },
-      { id: 12, name: '挂毛' },
-      { id: 13, name: '泛黄' },
-      { id: 14, name: '磨损' },
-      { id: 15, name: '霉斑' },
-      { id: 16, name: '油漆' },
-      { id: 17, name: '织补' },
-      { id: 18, name: '烫伤' },
+      {id:1,name:'不明污渍',checed:false},
+      { id: 1, name: '破洞', checed: false },
+      { id: 2, name: '掉色', checed: false},
+      { id: 3, name: '血渍', checed: false},
+      { id: 4, name: '笔印', checed: false},
+      { id: 5, name: '串色', checed: false},
+      { id: 6, name: '破洞', checed: false},
+      { id: 7, name: '少扣', checed: false},
+      { id: 8, name: '掉毛', checed: false},
+      { id: 9, name: '变形', checed: false},
+      { id: 10, name: '起球', checed: false},
+      { id: 11, name: '起泡', checed: false},
+      { id: 12, name: '挂毛', checed: false},
+      { id: 13, name: '泛黄', checed: false},
+      { id: 14, name: '磨损', checed: false},
+      { id: 15, name: '霉斑', checed: false},
+      { id: 16, name: '油漆', checed: false},
+      { id: 17, name: '织补', checed: false},
+      { id: 18, name: '烫伤', checed: false},
     ],
+    shopName:null,//商家除了不是营业中的所有状态
     scrollType:true,//纵向滚动
     singleShop:null,//单个商品的所有信息
     singleId:null,//单个商品的id
     singleName:'',//单个商品的名字
-    remark:null,//其他备注信息内容
+    custom:null,//其他备注信息内容
+    remark:null,//备注
     addvange:false,//控制模态框出现
     shopCarList:[],//购物车内的所有商品
     num:1,//单个商品数量底部购物车
@@ -88,13 +92,30 @@ Page({
     console.log(e)
     var that = this;
     var Type = that.data.showType;
-    that.setData({
-      singleShop: e.currentTarget.dataset.index,
-      shopAllPrice: e.currentTarget.dataset.index.price,
-      showType:(!Type),
-      singleId: e.currentTarget.id,
-      singleName:e.currentTarget.dataset.shopname
-    })
+    var status = that.data.shopAllList.status;
+    if(status == 0) {
+      that.setData({
+        singleShop: e.currentTarget.dataset.index,
+        shopAllPrice: e.currentTarget.dataset.index.price,
+        showType: (!Type),
+        singleId: e.currentTarget.id,
+        singleName: e.currentTarget.dataset.shopname
+      })
+    }else if (status == 1){
+      wx.showToast({
+        title: '商家已休息',
+        icon: 'none',
+        duration: 1000,
+        mask: true
+      })
+    }else if(status == 2) {
+      wx.showToast({
+        title: '商家已下架',
+        icon: 'none',
+        duration: 1000,
+        mask: true
+      })
+    }
   },
   change(e) {//商品导航下拉指定位置
     this.setData({
@@ -108,7 +129,7 @@ Page({
     })
     console.log(e)
   },
-  queryShopChild:function () {
+  queryShopChild:function () {//查询详细商品
     var that = this;
     service.request('findByMerchatChidId',{merchantid:that.data.shopid,userid:that.data.userid}).then((res)=>{
       console.log(res);
@@ -128,32 +149,6 @@ Page({
       })
     }
   },
-  // ad:function() {
-
-  // },
-  // pushString:function(value) {//向数据添加商品数量
-  //   debugger;
-  //   var that =this;
-  //   var list = value;
-  //   console.log(value)
-  //   for(var i=0;i<list.length;i++) {
-  //     var childList = list[i].commodityModelList;
-  //     for(var j=0;j<childList.length;j++) {
-  //       var id = childList[j].id;
-  //       service.request('shoppingCarStatus', { userid: that.data.userid, commodityid: id }).then((res) => {
-  //         console.log(res);
-  //         if (res.data.retCode == 200) {
-  //           var number = res.data.data.number;
-  //           childList[j].number = 1;
-  //         }
-  //       })
-  //     }
-  //   }
-  //   that.setData({
-  //     detail: list
-  //   })
-  //   console.log(that.data.detail)
-  // },
   modalHiden:function() {//点击其他位置模态框消失
     this.setData({
       addvange:(!this.data.addvange)
@@ -167,6 +162,13 @@ Page({
       numShop:1,
       shopAllPrice: price
     })
+    var list =that.data.flawList;
+    for(var i = 0;i<list.length;i++) {
+      var type = 'flawList['+ i +'].checed'
+      this.setData({
+        [type]:false
+      })
+    }
   },
   showChid:function() {//内部内容不会隐藏
     this.setData({
@@ -209,7 +211,7 @@ Page({
   bindTextAreaBlur:function(e) {//其他备注信息的内容
     // console.log(e.detail.value);
     this.setData({
-      remark:e.detail.value
+      custom:e.detail.value
     })
   },
   moveNum:function (e) {//点击减少商品数量
@@ -312,7 +314,20 @@ Page({
   },
   upCar:function() {//添加商品进购物车
     var  that = this;
-    service.request('addshopCar', { userid: that.data.userid, merchantid: that.data.shopid, commodityid: that.data.singleId, commodityName: that.data.singleName,number:that.data.numShop,remark:that.data.remark}).then((res)=>{
+    var upFlaw = [];//瑕疵数组
+    var list = that.data.flawList;
+    for(var i =0;i<list.length;i++) {
+      var chidList = list[i];
+      if(chidList.checed) {
+        upFlaw.push(chidList.name);
+      }
+    }
+    var remark = upFlaw.join(',');
+    this.setData({
+      remark: remark
+    })
+    // console.log(upFlaw.join(','));
+    service.request('addshopCar', { userid: that.data.userid, merchantid: that.data.shopid, commodityid: that.data.singleId, commodityName: that.data.singleName,number:that.data.numShop,remark:that.data.remark,custom:that.data.custom}).then((res)=>{
       console.log(res);
       if(res.data.retCode == 200) {
         // showType
@@ -377,9 +392,12 @@ Page({
   },
   GoShoppingCar:function() {
     var that = this;
-    wx.navigateTo({
-      url: '/pages/shoppingCar/shoppingCar?' + 'userid=' + that.data.userid + "&shopid=" + that.data.shopid
-    })
+    var allNum = that.data.allNum;
+    if(allNum) {
+      wx.navigateTo({
+        url: '/pages/shoppingCar/shoppingCar?' + 'userid=' + that.data.userid + "&shopid=" + that.data.shopid
+      })
+    }
   },
   dowmload:function(e) {
     console.log(e);
@@ -400,6 +418,18 @@ Page({
     // })
     // this.querydis();//后台获取新数据并追加渲染
   },
+  flawCath:function(e) {
+    console.log(e);
+    var index = e.currentTarget.dataset.item;
+    var id = e.currentTarget.dataset.index;
+    var type = index.checed;
+    var chel = 'flawList[' + id +'].checed'
+    this.setData({
+      indexFlaw:(!type),
+      [chel]:(!type)
+    })
+    console.log(this.data.flawList);
+  },
   /**
    * 生命周期函数--监听页面加载
    */
@@ -411,6 +441,15 @@ Page({
       shopid:options.shopid,
       shopAllList: app.globalData.commercial
     })
+    if (app.globalData.commercial.status != 0 && app.globalData.commercial.status == 1) {
+      that.setData({
+        shopName:'商家休息中'
+      })
+    } else if (app.globalData.commercial.status != 0 && app.globalData.commercial.status == 2) {
+      that.setData({
+        shopName: '商家已下架'
+      })
+    }
     console.log(that.data.shopAllList);
     that.findShopCar();
     that.queryShopChild();

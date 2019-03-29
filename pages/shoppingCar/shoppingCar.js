@@ -213,6 +213,7 @@ Page({
   goCar:function(e) {//前往支付页面
     var that =this;
     console.log(e);
+    var id = e.currentTarget.dataset.item.data[0].merchantid
     var arr = [];
     var index = e.currentTarget.dataset.checkid;
     var list = that.data.CarList[index].data;
@@ -226,7 +227,7 @@ Page({
       console.log(arr,app.globalData.shopUpId)
     }
     wx.navigateTo({
-      url: '/pages/payOrder/payOrder?' + 'userid=' + that.data.userid + "&shopid=" + that.data.shopid
+      url: '/pages/payOrder/payOrder?' + 'userid=' + that.data.userid + "&shopid=" + id
     })
   },
   /**

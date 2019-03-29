@@ -21,7 +21,7 @@
   </view>
   <view class='shopNav'>
     <block wx:for="{{navbarTitle}}" wx:key="index">
-      <view class="navbar-item {{navbarActiveIndex === index ? 'navbar-item-active' : ''}}" data-navbar-index="{{index}}" catchtap="onNavBarTap">
+      <view class="navbar-item {{navbarActiveIndex == index ? 'navbar-item-active' : ''}}" data-navbar-index="{{index}}" catchtap="onNavBarTap">
         <text>{{item}}</text>
       </view>
     </block>
@@ -163,7 +163,7 @@
       </view>
     </view>
   </view>
-  <view class='shopClose' wx:if="{{!navbarActiveIndex}}">
+  <view class='shopClose' wx:if="{{!navbarActiveIndex&&shopAllList.status == 0}}">
     <view class='closeBttom'>
       <view class='shoppingCar'>
         <view class='shopingImg' bindtap='shopList'>
@@ -180,7 +180,9 @@
       </view>
     </view>
   </view>
-
+  <view class='takeCar' wx:if="{{shopAllList.status !== 0}}">
+      <text>{{shopName}}~~~</text>
+  </view>
   <view class='addShop' catchtouchmove="preventTouchMove" catchtap='showAddShop' wx:if="{{showType}}">
     <view class='addShopConten' catchtap='showChid'>
       <view class='AddName'>
@@ -197,11 +199,11 @@
       <view class='flaw'>
         <view class='flawName'>
           <text>瑕疵:</text>
-          <view class='flawContent'>
+          <scroll-view scroll-y="true" class='flawContent'>
             <block wx:for="{{flawList}}" wx:key="{{item.id}}">
-              <text catchtap='flawCath' data-name="{{item.name}}">{{item.name}}</text>
+              <view class="flaTex {{item.checed == true?'activeFlaw':''}}"><text catchtap='flawCath'  data-item='{{item}}' data-name="{{item.name}}" data-index="{{index}}">{{item.name}}</text></view>
             </block>
-          </view>
+          </scroll-view>
         </view>
       </view>
       <view class='remark'>

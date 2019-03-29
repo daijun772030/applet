@@ -16,7 +16,7 @@ Page({
       { name: '待发货', value: 5 },
       { name: '待收货', value: 6 },
       { name: '待评价', value: 7 },
-      { name: '退款', value: 8 }
+      // { name: '退款', value: 8 }
     ],
     navbarActiveIndex: 0,//导航和下面商品的联动
     duration: 100,//滑动时常
@@ -30,24 +30,48 @@ Page({
     takeOrder:[],//待收货
     waitAppraise:[],//待评价
     refund:[],//退款
+    arrAll:[],//需要渲染的所有对象的数组
   },
   queryNathing:function (value) {//查询订单函数
-    if (value == 0) {
+    wx.showToast({
+      title: '稍等',
+      icon:'loading',
+      duration:1500,
+      mask:true
+    })
+    if (value == 0) {//所有订单
       var type = 6;
       service.request('orderAll', { userid: this.data.userid, type: type }).then((res) => {
         console.log(res);
+        
+        var arrdata = res.data.data;
+        var arr = [];
+        arr = arrdata;
+        if(arr.length>80) {
+          arr.length = 80;
+        }
+        // for(var i = 0;i<80;i++) {
+        //   arr.push(arrdata[i]);
+        // }
+        console.log(arr);
         this.setData({
-          allOrder: res.data.data
+          allOrder: arr
         })
         console.log(this.data.allOrder);
+        var arrAll = [];
+        arrAll = arr;
+        this.setData({
+          arrAll:arrAll
+        })
+        console.log(this.data.arrAll)
       })
-    } else if (value == 1) {
+    } else if (value == 1) {//待付款
       var type = 0;
       service.request('orderAll', { userid: this.data.userid, type: type }).then((res) => {
         console.log(res);
         var obligation = res.data.data;
         var arr = [];
-        for (var i = 0; i < obligation; i++) {
+        for (let i = 0; i < obligation.length; i++) {
           var chid = obligation[i]
           if (chid.status == 0 || chid.status == 1) {
             arr.push(chid)
@@ -56,98 +80,146 @@ Page({
         this.setData({
           obligation: arr
         })
+        var arrAll = [];
+        console.log(this.data.obligation)
+        arrAll = this.data.obligation
+        this.setData({
+          arrAll: arrAll
+        })
+        console.log(this.data.arrAll)
       })
-    } else if (value == 2) {
+    } else if (value == 2) {//待接单
       var type = 1;
       service.request('orderAll', { userid: this.data.userid, type: type }).then((res) => {
         console.log(res);
         var valueChid = res.data.data;
+        console.log(valueChid)
         var arr = [];
-        for (var i = 0; i < valueChid; i++) {
+        for(let i = 0; i < valueChid.length; i++) {
+          // debugger;
           var chid = valueChid[i]
-          if (chid.status == 2&&chid.refundStatus == 10&& type == 0) {
+          console.log(chid)
+          if (chid.status == 2&&chid.refundStatus == 10&&chid.type == 0) {
             arr.push(chid)
+            console.log(arr)
           }
         }
         this.setData({
           waitOrder: arr
         })
+        var arrAll = [];
+        console.log(this.data.waitOrder)
+        arrAll = this.data.waitOrder
+        this.setData({
+          arrAll: arrAll
+        })
+        console.log(this.data.arrAll)
       })
-    } else if (value == 3) {
+    } else if (value == 3) {//待取货
       var type = 2;
       service.request('orderAll', { userid: this.data.userid, type: type }).then((res) => {
         console.log(res);
         var valueChid = res.data.data;
         var arr = [];
-        for (var i = 0; i < valueChid; i++) {
+        for (let i = 0; i < valueChid.length; i++) {
           var chid = valueChid[i]
-          if (chid.status == 2 && chid.refundStatus == 10 && type == 1 && ifhave != 1 && ifhave != 2) {
+          if (chid.status == 2&&chid.refundStatus == 10&&chid.type == 1&&chid.ifhave != 1&&chid.ifhave != 2) {
             arr.push(chid)
           }
         }
         this.setData({
           waitPickup: arr
         })
+        var arrAll = [];
+        arrAll = this.data.waitPickup
+        this.setData({
+          arrAll: arrAll
+        })
       })
-    }else if(value == 4) {
+    }else if(value == 4) {//待发货
       var type = 2;
       service.request('orderAll', { userid: this.data.userid, type: type }).then((res) => {
         console.log(res);
+        // debugger;
         var valueChid = res.data.data;
         var arr = [];
-        for (var i = 0; i < valueChid; i++) {
+        for (let i = 0; i < valueChid.length; i++) {
           var chid = valueChid[i]
-          if (chid.status == 2 && chid.refundStatus == 10 && type == 1 && (ifhave == 1 && ifhave == 2)) {
+          if (chid.status == 2&&chid.refundStatus == 10&&chid.type == 1 && (chid.ifhave == 1||chid.ifhave == 2)) {
             arr.push(chid)
           }
         }
         this.setData({
-          waitPickup: arr
+          dendOrder: arr
+        })
+        var arrAll = [];
+        arrAll = this.data.dendOrder
+        this.setData({
+          arrAll: arrAll
         })
       })
-    }else if (value == 5) {
+    }else if (value == 5) {//待收货
       var type = 3;
       service.request('orderAll', { userid: this.data.userid, type: type }).then((res) => {
+        var valueChid = res.data.data;
         console.log(res);
         var arr = [];
-        for (var i = 0; i < valueChid; i++) {
+        for (let i = 0; i < valueChid.length; i++) {
+          // debugger;
           var chid = valueChid[i]
-          if (chid.status == 2 && chid.refundStatus == 10 && type == 2) {
+          if (chid.status == 2&&chid.refundStatus == 10&&chid.type == 2) {
             arr.push(chid)
           }
         }
         this.setData({
           takeOrder: arr
         })
+        var arrAll = [];
+        arrAll = this.data.takeOrder
+        this.setData({
+          arrAll: arrAll
+        })
       })
-    } else if (value == 6) {
+    } else if (value == 6) {//待评价
       var type = 4;
       service.request('orderAll', { userid: this.data.userid, type: type }).then((res) => {
         console.log(res);
         var arr = [];
-        for (var i = 0; i < valueChid; i++) {
+        var valueChid = res.data.data;
+        for (let i = 0; i < valueChid.length; i++) {
           var chid = valueChid[i]
-          if (chid.status == 2 && chid.refundStatus == 10 && type == 3) {
+          if (chid.status == 2&&chid.refundStatus == 10&&chid.type == 3) {
             arr.push(chid)
           }
         }
         this.setData({
           waitAppraise: arr
         })
+        var arrAll = [];
+        arrAll = this.data.waitAppraise
+        this.setData({
+          arrAll: arrAll
+        })
       })
-    } else if (value == 7) {
+    } else if (value == 7) {//退款订单
       var type = 7;
       service.request('orderAll', { userid: this.data.userid, type: type }).then((res) => {
         console.log(res);
         var arr = [];
-        for (var i = 0; i < valueChid; i++) {
+        var valueChid = res.data.data;
+        for (let i = 0; i < valueChid.length; i++) {
           var chid = valueChid[i]
-          if (chid.status == 2 && (type == 7 || refundStatus !=10)) {
+          if (chid.status == 2&&(chid.type == 7 || chid.refundStatus !=10)) {
             arr.push(chid)
           }
         }
         this.setData({
           refund: res.data.data
+        })
+        var arrAll = [];
+        arrAll = this.data.refund
+        this.setData({
+          arrAll: arrAll
         })
       })
     }
@@ -173,7 +245,71 @@ Page({
   /**
    * 生命周期函数--监听页面加载
    */
-  orderAll:function (type) {
+
+
+  /*按钮的各种状态*/
+  deleteOrder:function(e) {//待支付的订单删除订单按钮
+    console.log(e);
+    var that = this;
+    var index = e.currentTarget.dataset.index;
+    var id = e.currentTarget.dataset.item.id;
+    service.request('deleteOrder',{orderId:id}).then((res)=>{
+      console.log(e);
+      that.queryNathing(index);
+    })
+  },
+  callPhone:function(e) {//联系商家的按钮
+    console.log(e);
+    var phone = e.currentTarget.dataset.phone;
+    wx.makePhoneCall({
+      phoneNumber: phone,
+    })
+  },
+  refundMsg:function(e) {//跳转退款详情
+    console.log(e);
+    var id = e.currentTarget.dataset.item
+    var type = e.currentTarget.dataset.type
+    wx.navigateTo({
+      url: '/pages/refundMsg/refundMsg?id=' + id + '&type=' + type,
+    })
+  },
+  refund:function(e) {//取消订单、退款
+    console.log(e);
+    var index = e.currentTarget.dataset.index;
+    var orderNum = e.currentTarget.dataset.item.orderNum
+    service.request('wxRefund', { out_trade_no: orderNum,remark:'突然不想洗了' }).then((res) => {
+      console.log(res);
+      that.queryNathing(index);
+    })
+  },
+  orderMsg:function(e) {//跳转订单详情
+    console.log(e);
+    var id = e.currentTarget.dataset.id;
+    var type = e.currentTarget.dataset.type;
+    var item = e.currentTarget.dataset.item;
+    app.globalData.shopMsg = item;
+    wx.navigateTo({
+      url: '/pages/complete/complete?id=' + id + '&type=' + type,
+    })
+  },
+  affirm:function(e) {//前往支付订单
+    console.log(e)
+    var id = e.currentTarget.dataset.item.merchantid;
+    var list = e.currentTarget.dataset.item.shoppingCarModelList;
+    var arr = [];
+    for (var i = 0; i < list.length;i++) {
+      arr.push(list[i].id);
+    }
+    app.globalData.shopUpId = arr;
+    wx.navigateTo({
+      url: '/pages/payOrder/payOrder?' + 'userid=' + this.data.userid + "&shopid=" + id
+    })
+  },
+  comDelivery:function(e) {
+    console.log(e);
+  },
+  /*end*/
+  orderAll:function (type) {//查询所有订单
     if(this.data.userid) {
       service.request('orderAll', { userid: this.data.userid, type: type}).then((res) => {
         console.log(res);
@@ -183,11 +319,17 @@ Page({
   },
   onLoad: function (options) {
     console.log(app.globalData.userData);
+    console.log(options)
     var id = app.globalData.userData.id;
     var that = this;
+    var type = 6;
+    var index = options.index;
     that.setData({
       userid:id,
+      navbarActiveIndex:index
     })
+    that.queryNathing(index);
+    that.orderAll(type);
     // that.orderAll();
     wx.getSystemInfo({
       success: function (res) {
@@ -215,8 +357,10 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-    var type = 6;
-    this.orderAll(type);
+    // var type = 6;
+    // var index = this.data.navbarActiveIndex;
+    // this.queryNathing(index);
+    // this.orderAll(type);
   },
 
   /**

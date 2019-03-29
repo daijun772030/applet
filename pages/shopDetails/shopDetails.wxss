@@ -104,6 +104,21 @@
   bottom: 0;
   /* border: 1px solid red; */
 }
+.takeCar{
+  width:750rpx;
+  height:98rpx;
+  position: fixed;
+  z-index: 3;
+  bottom: 0;
+  background:rgba(0,0,0,1);
+  opacity:0.7;
+  font-size:34rpx;
+  font-family:PingFang-SC-Regular;
+  font-weight:400;
+  color:rgba(255,255,255,1);
+  text-align: center;
+  line-height: 98rpx;
+}
 .modal {
   width: 100%;
   position: fixed;
@@ -349,14 +364,15 @@ button::after{
 .flawContent{
   width: 500rpx;
   height: 100%;
-  overflow-y: auto;
   display: flex;
-  flex-wrap: wrap;
-  justify-content: space-around;
+  justify-content: space-between;
   align-items: flex-start;
 
 }
-.flawContent>text {
+.flaTex {
+  display:inline-block;
+  max-width: 127rpx;
+  height: 51rpx;
   background:rgba(245,245,245,1);
   border-radius:2rpx;
   font-size:24rpx;
@@ -367,6 +383,14 @@ button::after{
   padding: 0 20rpx;
   margin-bottom:10rpx;
   margin-left: 10rpx;
+  white-space : normal nowrap;
+  overflow: hidden;
+  text-align: center;
+  line-height: 51rpx;
+}
+.activeFlaw{
+  background:rgba(237,255,248,1);
+  color:rgba(78,192,148,1);
 }
 .remark{
   width: 100%;

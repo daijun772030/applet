@@ -1,0 +1,13 @@
+<view class='setAplet'>
+  <view class='address' catchtap='goAddress'>
+    <text>收货地址</text>
+    <image src='cloud://sjkj-1-2739cc.736a-sjkj-1-2739cc/img/personal/SJ_Perjiantou@2x.png'></image>
+  </view>
+  <view class='address'>
+    <text>关于懒猪到家</text>
+    <image src='cloud://sjkj-1-2739cc.736a-sjkj-1-2739cc/img/personal/SJ_Perjiantou@2x.png'></image>
+  </view>
+  <view class='deletLogin' catchtap='goLogin'>
+    <button>退出当前账号</button>
+  </view>
+</view>

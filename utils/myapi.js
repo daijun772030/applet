@@ -80,6 +80,7 @@ const post = (url) => {
    addByDistance: post('address/addByAddress'),//新增/修改地址
    deletDistance: post('address/deleteByAddress'),//删除用户地址
    setDistance: post('address/setUpAddressTakeoff'),//设置地址为取件地址
+   allDistance: get('address/all'),//查询改用户的所有地址
 
    //订单部分
    orderAll:post('order/all'),//查询所有订单
@@ -89,6 +90,16 @@ const post = (url) => {
    orderIfhave: get('order/updateByOrderIfhave'),//修改订单为已取衣
    orderEnd:get('order/updateByOrderType'),//修改订单为已完成
    updateOrder: get('order/updateByOrderTypePhone'),//修改订单状态
+
+   //查询红包
+   queryRed: post('red/all'),//查询所有红包
+   findDyReCord: post('user/findByRecord'),//用户钱包
+
+   //微信支付
+   wxPay: post('weixin/weixin'),//微信支付
+   wxPayTwo: post('weixin/wxNotify'),//微信支付第二部
+   wxRefund: post('weixin/wxRefund'),//微信申请退款
+   updateRefund: post('refund/updateRefund'),//微信重新申请退款
 }
 
 function request (name,data,config) {

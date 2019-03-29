@@ -76,7 +76,7 @@
           <view class='redPacket'>
             <view class="group">
               <label class="checkbox" wx:for="{{checkbox}}">
-                <checkbox value="{{item.value}}" checked="{{item.checked}}" data-id = "{{index}}" data-list="{{checkbox[index]}}" data-CarList='{{CarOrder}}'  catchtap='dada'/>
+                <checkbox value="{{item.value}}" checked="{{item.checked}}" data-item="{{item}}" data-CarList='{{CarOrder}}'  catchtap='dada'/>
               </label>
             </view>
             <view class='redMessage'>
@@ -115,7 +115,7 @@
       <text>已优惠￥{{yhAllMoney}}</text>
       <text>合计￥ {{payAllMoney}}</text>
     </view> 
-    <view class='button'>
+    <view class='button' catchtap='UpWechat'>
       <button plain='true'>提交订单</button>
     </view>
   </view>
@@ -138,7 +138,7 @@
           </view>
         </view>
       </scroll-view>
-      <view class='upDistance'>
+      <view class='upDistance' catchtap='upAddress'>
         <image></image>
         <text>新增收货地址</text>
       </view>
@@ -154,14 +154,16 @@
           </block>
         </view>
         <view class='dateHour'>
-          <view class='rightWay' catchtap='allright'>
+          <view class='rightWay' catchtap='allright' catchtap='nowTiem'>
             <text>立即取件</text>
           </view>
-          <view class='yourContent'>
-            <block wx:for="{{your}}" wx:key="indexT">
-              <text catchtap='setYour' data-year='{{year[index]}}' data-your='{{item}}'>{{item}}</text>
-            </block>
-          </view>
+          <scroll-view scroll-y="true" class='yourContent'>
+            <view class='chidContent'>
+              <block wx:for="{{qujian}}" wx:key="indexT">
+                <text catchtap='setYour' data-year='{{year[index]}}' data-your='{{item}}'>{{item}}</text>
+              </block>
+            </view>
+          </scroll-view>
         </view>
       </view>
     </view>

@@ -1,0 +1,236 @@
+.order{
+  width: 100%;
+  height: 100%;
+  background-color:rgba(245,245,245,1);
+}
+.shopNav{
+  width: 100%;
+  height: 132rpx;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  border-bottom: 1rpx solid rgba(238,238,238,1)
+}
+.navbar-item {
+  width: 33%;
+  height: 100%;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  font-size:24rpx;
+  font-family:PingFang-SC-Regular;
+  font-weight:400;
+  color:rgba(102,102,102,1);
+}
+.navbar-item-active{
+  transition: all 0.2s;
+  border-bottom: 5rpx solid rgba(46,227,157,1);
+  font-size:26rpx;
+  font-family:PingFang-SC-Medium;
+  font-weight:500;
+  color:rgba(102,102,102,1);
+}
+.lazyMsg{
+  width: 100%;
+  height: 52rpx;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background:rgba(252,252,244,1);
+}
+.lazyMsg>image {
+  width: 24rpx;
+  height: 24rpx;
+}
+.lazyMsg>text {
+  font-size:20rpx;
+  font-family:PingFang-SC-Medium;
+  font-weight:500;
+  color:rgba(153,153,153,1);
+}
+.ContentSwiper{
+  width: 100%;
+}
+.swiperItem,.swiperScrll{
+  width: 100%;
+  height: 100%;
+}
+/* .shopList{
+  width: 710rpx;
+  margin:30rpx auto;
+  display: flex;
+}
+.userImag{
+  width: 106rpx;
+  height: 106rpx;
+  margin-right: 21rpx;
+  display: flex;
+  justify-content: center;
+  align-content: center;
+}
+.userImag>image {
+  width: 90%;
+  height: 90%;
+}
+.shopMeg{
+  width: calc( 100% - 127rpx );
+}
+.shopName,.orderTime,.dindanList,.dindanChid {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.shopName>view{
+  display:flex;
+  align-items: center;
+  font-size:28rpx;
+  font-family:PingFang-SC-Medium;
+  font-weight:500;
+  color:rgba(102,102,102,1);
+}
+.shopName>view>image {
+  width: 11rpx;
+  height: 22rpx;
+}
+.shopName>text{
+  font-size:28rpx;
+  font-family:PingFang-SC-Medium;
+  font-weight:500;
+  color:rgba(0,212,160,1);
+}
+.orderTime{
+  font-size:20rpx;
+  font-family:PingFang-SC-Regular;
+  font-weight:400;
+  color:rgba(153,153,153,1);
+  justify-content: flex-start;
+}
+.dindanChid text{
+  font-size:22rpx;
+  font-family:PingFang-SC-Regular;
+  font-weight:400;
+  color:rgba(102,102,102,1);
+}
+.shopOneMoney{
+  width: 100%;
+  display: flex;
+  justify-content: flex-end;
+}
+.shopOneMoney text {
+  padding-left: 5rpx;
+}
+.realyBt {
+  width: 100%;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  margin-top: 18rpx;
+}
+.realyBt button {
+  margin:0;
+  width:112rpx;
+  height:44rpx;
+  background:rgba(0,212,160,1);
+  font-size:22rpx;
+  font-family:PingFang-SC-Medium;
+  font-weight:500;
+  color:rgba(255,255,255,1);
+  line-height: 44rpx;
+  text-align: center;
+  border: none;
+  border-radius: 0;
+} */
+.lazy{
+  width:690rpx;
+  height:260rpx;
+  margin:20rpx 30rpx;
+  /* background-image: url('cloud://sjkj-1-2739cc.736a-sjkj-1-2739cc/img/lazyRed/lanzhuhongbao_kapian@2x.png');
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+  background-position: top; */
+  position: relative;
+}
+.bgN{
+  width:100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: -9999;
+}
+.bgN>image{
+  width: 100%;
+  height: 100%;
+}
+.lazyConet{
+  width: 596rpx;
+  height: 206rpx;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  margin-left: 60rpx;
+  margin-bottom: 14rpx;
+  border-bottom: 1rpx solid  rgba(255,255,255,1);
+}
+.lazyMoney{
+  width: 100%;
+  height: 123rpx;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.moneyLog{
+  width:123rpx;
+  height:123rpx;
+  background:rgba(79,240,220,1);
+  border-radius:50%;
+  font-size:48rpx;
+  font-family:PingFang-SC-Medium;
+  font-weight:500;
+  color:rgba(255,254,254,1);
+  line-height: 123rpx;
+  text-align: center;
+}
+.moneyMsg{
+  display: flex;
+  flex-direction: column;
+  justify-content: center; 
+}
+.moneyMsg>text {
+  font-size:24rpx;
+  font-family:PingFang-SC-Medium;
+  font-weight:500;
+  color:rgba(153,153,153,1);
+}
+.tex {
+  font-size:26rpx;
+  font-family:PingFang-SC-Medium;
+  font-weight:500;
+  color:rgba(102,102,102,1);
+}
+.moneyBt>image{
+  width: 116rpx;
+  height: 55rpx;
+}
+.lazyxz{
+  width: 100%;
+  font-size:22rpx;
+  font-family:PingFang-SC-Medium;
+  font-weight:500;
+  color:rgba(245,56,74,1);
+}
+.lazyMsgBot{
+  width: 100%;
+  height: 53rpx;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size:20rpx;
+  font-family:PingFang-SC-Regular;
+  font-weight:400;
+  color:rgba(178,178,178,1);
+}
+button::after {
+  border: none
+}

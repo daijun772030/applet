@@ -12,7 +12,15 @@
     "pages/orderAll/orderAll",
     "pages/upAddress/upAddress",
     "pages/orderDital/orderDital",
-    "pages/complete/complete"
+    "pages/complete/complete",
+    "pages/refundMsg/refundMsg",
+    "pages/lazyRed/lazyRed",
+    "pages/Record/Record",
+    "pages/setAplet/setAplet",
+    "pages/address/address",
+    "pages/webview/lazyweb",
+    "pages/loginTwo/loginTwo",
+    "pages/map/map"
   ],
   "permission": {
     "scope.userLocation": {

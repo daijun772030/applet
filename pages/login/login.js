@@ -51,17 +51,17 @@ Page({
   success: function (code) {//状态成功后的弹窗
     if (code.data.retCode == 200) {
       wx.showToast({
-        title: code.data.message,
+        title: '成功',
         icon: 'success',
-        duration: 1000,
+        duration: 1500,
         mask: true,
       })
       setTimeout(function () {
         wx.hideToast()
-      }, 1000)
+      }, 1500)
     }else {
       wx.showToast({
-        title: code.data.message,
+        title: '登录失败',
         icon:'none',
         duration: 1000,
         mask: true,
@@ -90,17 +90,16 @@ Page({
 
   login:function () {//验证码登录
     const that = this;
-    var pws = MD5.hexMD5('qweasd');
-    console.log(pws);
-    console.log(that.data.phone,that.data.psd)
+    var phone = that.data.phone;
+    var pwd = that.data.psd
     
-    serverce.request('loginPwd', { phone: '18581586912', password:'36f17c3939ac3e7b2fc9396fa8e953ea'}).then((res)=>{
+    serverce.request('loginCode', { phone: phone, code: pwd,state:0}).then((res)=>{
       console.log(res);
       app.globalData.userData = res.data.data;
       if(res.data.retCode == 200) {
         that.success(res)
-        wx.navigateBack({
-          delta: 2
+        wx.switchTab({
+          url: '/pages/index/index',
         })
       }else {
         that.success(res)
@@ -108,7 +107,16 @@ Page({
       console.log(app.globalData.userData)
     })
   },
-
+  webview:function () {//跳转懒猪到家协议
+    wx.navigateTo({
+      url: '/pages/webview/lazyweb',
+    })
+  },
+  gonathLogin:function() {
+    wx.reLaunch({
+      url: '/pages/loginTwo/loginTwo',
+    })
+  },
   /**
    * 生命周期函数--监听页面加载
    */

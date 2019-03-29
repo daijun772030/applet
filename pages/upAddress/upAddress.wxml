@@ -2,7 +2,9 @@
   <view class='address'>
     <text>收货地址:</text>
     <view class='addContent' catchtap='queryMap'>
-      <text>{{address}}</text>
+      <text wx:if="{{addNam}}">{{addNam}}</text>
+      <!-- <text wx:if="{{address}}">{{address}}</text> -->
+      <text wx:else>点击前往选择</text>
       <image src='cloud://sjkj-1-2739cc.736a-sjkj-1-2739cc/img/index/SJ_Perjiantou@2x.png'></image>
     </view>
   </view>

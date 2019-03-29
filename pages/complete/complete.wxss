@@ -61,6 +61,9 @@
   color:rgba(119,119,119,1);
   line-height:30rpx;
 }
+.addTex{
+  max-width:433rpx;
+}
 .shopContent{
   width: 613rpx;
   display: flex;

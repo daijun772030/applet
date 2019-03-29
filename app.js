@@ -5,17 +5,48 @@ App({
     commercial:null,
     shopCarList:null,//购物车点击结算购物车订单
     shopUpId:[],//提交购物车的购物车的id集合
+    shopMsg:null,//订单的详情
+    addressList:null,//编辑地址的集合,
+    appid: 'wxe562417cc49d20bc',//小程序appid
+    secret: '8d803622d8ad580a0bb4eaa21b8aade7',
+
   },
   onLaunch: function () {
+    var that =this;
     // 展示本地存储能力
     var logs = wx.getStorageSync('logs') || []
     logs.unshift(Date.now())
     wx.setStorageSync('logs', logs)
-
     // 登录
     wx.login({
       success: res => {
         // 发送 res.code 到后台换取 openId, sessionKey, unionId
+        console.log(res);
+        var appid = that.globalData.appid;
+        var secret = that.globalData.secret;
+        console.log(appid,secret);
+        wx.request({
+          url: 'https://api.weixin.qq.com/sns/jscode2session?appid=' + 'wxe562417cc49d20bc' + '&secret=' + '8d803622d8ad580a0bb4eaa21b8aade7' + '&js_code=' + res.code + '&grant_type=authorization_code',
+          data: {},
+          header: {
+            'content-type': 'json'
+          },
+          success: function (res) {
+            var openid = res.data.openid //返回openid
+            console.log('openid为' + openid);
+            wx.setStorage({
+              key: 'oppenid',
+              data: openid,
+              success: function () { 
+                console.log('保存成功得oppenid:' + openid);
+              }
+            },
+            )
+          },
+          fail:function(error) {
+            console.log(error);
+          }
+        })
       }
     })
     // 获取用户信息
@@ -38,25 +69,10 @@ App({
         }
       }
     })
-    // wx.getLocation({
-    //   type:'gcj02',
-    //   success: function(res) {
-    //     console.log(res);
-    //     const latitude = res.latitude;
-    //     const longitude = res.longitude;
-    //     wx.openLocation({
-    //       latitude:latitude,
-    //       longitude: longitude,
-    //       success:function(res) {
-    //         console.log(res);
-    //       }
-    //     })
-    //   },
-    // }),
     
   },
   onShow () {//小程序启动或者从后台进入到前台
-  
+    
   },
   onHide () {//小程序从前台进入到后台
 

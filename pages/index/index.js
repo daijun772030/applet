@@ -100,29 +100,40 @@ Page({
     // console.log(e);
     // console.log(app.globalData.userData)
     console.log(e);
+    var km = e.currentTarget.dataset.itemlist.distance
     var that = this;
-    if(app.globalData.userData) {
-      wx.showModal({
-        title: "温馨提示",
-        content: '距离超过2km,配送费会根据距离进行适当增加，请谅解',
-        cancelText: "再看看",
-        cancelColor: "#000000",
-        confirmText: "我知道了",
-        confirmColor: "#00D4A0",
-        success(res) {
-          if (res.confirm) {
-            var shopList = e.currentTarget.dataset.itemlist
-            app.globalData.commercial = shopList;
-            var userId = app.globalData.userData.id;//获取的用户id
-            var shopId = e.currentTarget.dataset.bindid
-            wx.navigateTo({
-              url: '/pages/shopDetails/shopDetails?' + "shopid=" + shopId  + "&userid=" + userId,
-            })
-          } else if (res.cancel) {
-            console.log("取消按钮")
+    if(app.globalData.userData || km<2) {
+      if(km>2) {
+        wx.showModal({
+          title: "温馨提示",
+          content: '距离超过2km,配送费会根据距离进行适当增加，请谅解',
+          cancelText: "再看看",
+          cancelColor: "#000000",
+          confirmText: "我知道了",
+          confirmColor: "#00D4A0",
+          success(res) {
+            if (res.confirm) {
+              var shopList = e.currentTarget.dataset.itemlist
+              app.globalData.commercial = shopList;
+              var userId = app.globalData.userData.id;//获取的用户id
+              var shopId = e.currentTarget.dataset.bindid
+              wx.navigateTo({
+                url: '/pages/shopDetails/shopDetails?' + "shopid=" + shopId + "&userid=" + userId,
+              })
+            } else if (res.cancel) {
+              console.log("取消按钮")
+            }
           }
-        }
-      })
+        })
+      }else {
+        var shopList = e.currentTarget.dataset.itemlist
+        app.globalData.commercial = shopList;
+        var userId = app.globalData.userData.id;//获取的用户id
+        var shopId = e.currentTarget.dataset.bindid
+        wx.navigateTo({
+          url: '/pages/shopDetails/shopDetails?' + "shopid=" + shopId + "&userid=" + userId,
+        })
+      }
     }else {
       wx.showModal({
         title: "温馨提示",
@@ -212,6 +223,12 @@ Page({
     const that = this;
     page++
     that.downPart(page)
+    wx.showToast({
+      title: '稍等',
+      icon: 'loading',
+      duration: 1000,
+      mask: true
+    })
   },
   onReachBottom: function () {
     console.log("加载更多");
@@ -281,7 +298,12 @@ Page({
       },
     })
   },
-
+  goshoping:function() {
+    var userid = app.globalData.userData.id;
+    wx.navigateTo({
+      url: '/pages/shoppingCar/shoppingCar?' + 'userid=' + userid ,
+    })
+  },
   bindViewTap: function() {
     wx.navigateTo({
       url: '../logs/logs'
@@ -297,12 +319,20 @@ Page({
 
   onShow () {
     console.log(this.route);
+    
   },
 
 
   onLoad: function (options) {
+    // debugger;
     var that = this;
     that.queryMapName();
+    var login = app.globalData.userData;
+    if (login == null) {
+      wx.reLaunch({
+        url: '/pages/login/login',
+      })
+    }
     // wx.navigateTo({
     //   url: '/pages/login/login',
     // })
@@ -315,8 +345,6 @@ Page({
     qqmapsdk = new QQMapWX ({
       key:'SJYBZ-B6VH5-BKOIZ-QTJRE-F6NQ2-BNF37'
     })
-
-
     if (app.globalData.userInfo) {
       this.setData({
         userInfo: app.globalData.userInfo,
@@ -343,6 +371,21 @@ Page({
         }
       })
     }
+  },
+  onHide:function () {
+    
+  },
+  onPageScroll: function (e) {
+    console.log(e);//{scrollTop:99}
+  },
+  onPullDownRefresh:function() {//下拉刷新假象
+    console.log('下拉刷新')
+    wx.showNavigationBarLoading()
+    setTimeout(function () {
+      // complete
+      wx.hideNavigationBarLoading() //完成停止加载
+      wx.stopPullDownRefresh() //停止下拉刷新
+    }, 1500);
   },
   getUserInfo: function(e) {
     console.log(e)

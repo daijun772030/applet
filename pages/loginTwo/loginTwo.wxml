@@ -1,0 +1,32 @@
+<view class='login'>
+  <view class='loginTopImg'>
+    <image src='cloud://sjkj-1-2739cc.736a-sjkj-1-2739cc/img/login/bj@2x.png'></image>
+  </view>
+  <view class='loginContent'>
+    <view class='loginPhone loginInput'>
+      <image src='cloud://sjkj-1-2739cc.736a-sjkj-1-2739cc/img/login/yh@2x.png'></image>
+      <input placeholder="请输入常用手机号" type='number' bindinput ="userNameInput"/>
+    </view>
+    <view class='loginYZ loginInput'>
+      <image src='cloud://sjkj-1-2739cc.736a-sjkj-1-2739cc/img/login/mima@2x.png'></image>
+      <input placeholder="请输入登录密码" type='text'  password="{{passwordType}}" bindinput="passWdInput"/>
+      <!-- <button disabled='{{disabled}}' data-id="2" bindtap="getVerificationCode">{{item}}</button> -->
+    </view>
+    <button hover-class bindtap='login'>登录</button>
+  </view>
+  <view class='lazyxi'>
+    <checkbox value='{{fr}}' bindtap='bechi' data-id="{{fr}}" checked='{{item.checkedAFa}}'></checkbox>
+    <view class='xiyiMsg' catchtap='webview'>
+      <text>加入懒猪代表您已同意</text>
+      <text style='color:#00E0A8'>《懒猪到家用户协议》</text>
+    </view>
+  </view>
+  <view class='solaid'>
+    <view class='prinst'></view>
+    <view class='zron'></view>
+    <view class='prinst'></view>
+  </view>
+  <view class='loginName' catchtap='gonathLogin'>
+    <text>验证码登录</text>
+  </view>
+</view>

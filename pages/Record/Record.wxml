@@ -1,0 +1,41 @@
+<view class= "ReCord">
+  <view class='redTop'>
+    <view class='bg'>
+      <image src='cloud://sjkj-1-2739cc.736a-sjkj-1-2739cc/img/reCord/wodeqianbao_beijing_2@2x.png'></image>
+    </view>
+    <view class='redMoney'>
+      <text>可用余额</text>
+      <text class='tex'>{{redList.money}}￥</text>
+      <text class='texT'>不可用金额 {{redList.frozenMoney}}￥</text>
+    </view>
+  </view>
+  <view class='lazyMsg'>
+    <image src='cloud://sjkj-1-2739cc.736a-sjkj-1-2739cc/img/reCord/shiyongshuomign_icon@2x.png'></image>
+    <text>懒猪红包，商家优惠劵，钱包使用说明</text>
+  </view>
+  <view class='content'>
+    <view class='xfmx'>
+      <text>消费明细</text>、
+      <text>支出{{account}}￥，收入{{income}}￥</text>
+    </view>
+    <scroll-view class='scroll' scroll-y="true">
+      <view class='moneyChid' wx:for="{{chidList}}" wx:key="id">
+        <image wx:if="{{item.type == 2 || item.type == 4}}" src='cloud://sjkj-1-2739cc.736a-sjkj-1-2739cc/img/reCord/xiyizhifu_icon@2x.png'></image>
+        <image wx:else src='cloud://sjkj-1-2739cc.736a-sjkj-1-2739cc/img/reCord/tuijianhongbao_icon@2x.png'></image>
+        <view class='moneyMsg'>
+          <view>
+            <text wx:if="{{item.type==0}}">包红包</text>
+            <text wx:if="{{item.type==1}}">充值</text>
+            <text wx:if="{{item.type==2}}">支付</text>
+            <text wx:if="{{item.type==3}}">邀请红包</text>
+            <text wx:if="{{item.type==4}}">提现</text>
+            <text wx:if="{{item.type==5}}">瓜分活动</text>
+            <text class='msgTex' wx:if="{{item.type == 2 || item.type == 4}}">-{{item.money}}</text>
+            <text wx:else class='msgTex'>+{{item.money}}</text>
+          </view>
+          <text>{{item.createTime}}</text>
+        </view>
+      </view>
+    </scroll-view>
+  </view>
+</view>
