@@ -51,6 +51,17 @@
   width: 100%;
   height: 100%; 
 }
+.nathing{
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size:24rpx;
+  font-family:PingFang-SC-Regular;
+  font-weight:400;
+  color:rgba(102,102,102,1);
+}
 .shopList{
   width: 710rpx;
   margin:30rpx auto;

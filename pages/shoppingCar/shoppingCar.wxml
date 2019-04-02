@@ -2,15 +2,11 @@
   <view class='shopCarChild' wx:for="{{CarList}}" wx:key='item' wx:for-index="fr">
     <view class='CarFlex'>
       <view class='shopName'>
-        <!-- <checkbox value='1' checked='{{checkedType}}'/> -->
-        <!-- <checkbox-group bindchange="checkboxChangeAll" data-list="{{item}}" data-id="{{fr}}">
-          <label>
-            <checkbox value="{{fr}}"/>
-          </label>
-        </checkbox-group> -->
         <checkbox value='{{fr}}' bindtap='bechi' data-id="{{fr}}" checked='{{item.checkedAFa}}'></checkbox>
-        <!-- <checkbox wx:else value='{{fr}}' bindtap='checkFath' data-id="{{fr}}"></checkbox> -->
         <text>{{item.name}}</text>
+        <view class='deleteOrder' data-item="{{item.data}}" catchtap='deleteOrder' wx:if="{{type}}">
+          <text>删除</text>
+        </view>
       </view>
       <view class='content'>
         <checkbox-group bindchange="checkboxChange" data-check="{{item}}" data-id="{{fr}}">
@@ -22,9 +18,7 @@
 
           <view class='CarList' wx:for="{{item.data}}" wx:key="child" wx:for-item="items">
             <view class='listLeft'>
-              <!-- <checkbox bindchange="checkboxChange" value='{{item.id}}'></checkbox> -->
-              <image                                                                                                              src='cloud://sjkj-1-2739cc.736a-sjkj-1-2739cc/img/index/qingxizhong_dingdanxiangqing@2x.png'>
-              </image>
+              <image src="http://www.pigcome.com:81{{items.img}}"></image>
               <view class='leftShopName'>
                 <text class='shName'>{{items.commodityName}}</text>
                 <text class='remark' wx:if="{{items.remark!=null || items.remark!='null'}}">{{items.remark}}</text>
@@ -47,7 +41,7 @@
       </view>
       <view class='close'>
         <text>￥{{item.money}}</text>
-        <button wx:if="{{item.money!=0}}" data-checkId='{{fr}}' data-item='{{item}}' catchtap='goCar'>去结算</button>
+        <button class='button' wx:if="{{item.money!=0}}" data-checkId='{{fr}}' data-item='{{item}}' catchtap='goCar'>去结算</button>
         <button wx:else class='hoverBut'>去结算</button>
       </view>
     </view>

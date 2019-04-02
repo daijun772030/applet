@@ -18,6 +18,7 @@ Page({
     checkShopId:null,//当前商品列表的位置
     CarllIdList:[],//
     disable:false,//全选框禁用
+    type:false,//删除按钮出现
   },
 
   /*页面的点击函数*/
@@ -145,15 +146,24 @@ Page({
       var newid = id[1]
       var tf = this.data.checkedType
       var CarList = this.data.CarList;
-      var carLIST = CarList[checkid].data[newid].checked = (!tf)
+      var carLIST = "CarList[" + checkid +"].data[" + newid + "].checked";
       // var type = 'CarList[' + checkid + '].data[' + newid + '].checked'
       // this.setData({
       //   CarList: CarList
       // })
     }
+    if(newValue) {
+      this.setData({
+        type:true,
+      })
+    }else {
+      this.setData({
+        type:false
+      })
+    }
     this.setData({
       [money]:newValue,
-      // shopCarId: e.detail.value,
+      [carLIST]:(!tf),
       length:leg,
       shopAllMoney:newValue,
       checkShopId:checkid,
@@ -179,7 +189,8 @@ Page({
         }
       list[id].money = smoney
         this.setData({
-          CarList: list
+          CarList: list,
+          type:true
         })
 
         console.log(this.data.shopAllMoney)
@@ -191,7 +202,8 @@ Page({
         }
         list[id].money = 0
         this.setData({
-          CarList: list
+          CarList: list,
+          type:false
         })
       }
 
@@ -214,6 +226,8 @@ Page({
     var that =this;
     console.log(e);
     var id = e.currentTarget.dataset.item.data[0].merchantid
+    var payMoney = e.currentTarget.dataset.item.money;
+    console.log(payMoney);
     var arr = [];
     var index = e.currentTarget.dataset.checkid;
     var list = that.data.CarList[index].data;
@@ -226,8 +240,39 @@ Page({
       app.globalData.shopUpId = arr;
       console.log(arr,app.globalData.shopUpId)
     }
-    wx.navigateTo({
-      url: '/pages/payOrder/payOrder?' + 'userid=' + that.data.userid + "&shopid=" + id
+    if(payMoney<20) {
+      wx.showToast({
+        title:'很抱歉，该商家起送价为20.00元,快去多添加两件吧！',
+        icon: 'none',
+        duration: 1500,
+        mask: true,
+      })
+    }else if(payMoney>=20) {
+      wx.navigateTo({
+        url: '/pages/payOrder/payOrder?' + 'userid=' + that.data.userid + "&shopid=" + id
+      })
+    }
+  },
+  deleteOrder:function(e) {//删除订单
+    console.log(e);
+    var that = this;
+    var list = e.currentTarget.dataset.item;
+    var arr = [];//有哪些被选中的商品
+    for(let i =0;i<list.length;i++) {
+      var chid = list[i]
+      if (chid.checked) {
+        arr.push(chid.id);
+      }
+    }
+    var newId = null;
+    if(arr.length == 1) {
+      newId = arr[0]
+    }else {
+      newId = arr.join(",")
+    }
+    console.log(newId)
+    service.request('deletShopping', { shoppingCarId: newId, userid: that.data.userid}).then((res)=>{
+      that.queryAllCar();
     })
   },
   /**

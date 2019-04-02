@@ -100,6 +100,7 @@ const post = (url) => {
    wxPayTwo: post('weixin/wxNotify'),//微信支付第二部
    wxRefund: post('weixin/wxRefund'),//微信申请退款
    updateRefund: post('refund/updateRefund'),//微信重新申请退款
+   queryMap: get('merchant/dadaQuery'),//查询达达地图
 }
 
 function request (name,data,config) {

@@ -5,6 +5,7 @@
   <view class='sjkjWechat'>
     <view class='sjkjIndex'>
       <view class='sjNav'>
+        <image src='cloud://sjkj-1-2739cc.736a-sjkj-1-2739cc/img/SJF_weizhi@2x.png'></image>
         <text bindtap='map'>{{mapName}} ></text>
       <!-- <input value='' type='text' placeholder='输入店名搜索，如布兰奇'></input> -->
       </view>
@@ -21,7 +22,7 @@
     >
       <block wx:for="{{navImg}}" wx:key="userInfoListId">
         <swiper-item>
-          <image src="'https://appletwechat.pigcome.com' + {{item.img}}" class="slide-image" />
+          <image src="http://www.pigcome.com:81{{item.img}}" class="slide-image" />
         </swiper-item>
       </block>
     </swiper>
@@ -64,7 +65,7 @@
         <view class='sift'>
           <text>精选</text>
         </view>
-        <image src='"http://appletwechat.pigcome.com" + {{item.logo}}'></image>
+        <image src='http://www.pigcome.com:81{{item.logo}}'></image>
         <text>{{item.shopName}}</text>
       </view>
     </view>
@@ -82,7 +83,8 @@
     <view class='merchant'>
       <view class='merchantList' bindtap='GOShopDetails' wx:for="{{shopList}}" wx:for-index= "shopListChid" data-itemList='{{item}}'                data-bindId ="{{item.id}}" wx:key="{{item.id}}">
         <view class='merchantListImg'>
-          <image src='cloud://sjkj-1-2739cc.736a-sjkj-1-2739cc/img/index/216_216.png'></image>
+          <!-- <image src='cloud://sjkj-1-2739cc.736a-sjkj-1-2739cc/img/index/216_216.png'></image> -->
+          <image src='http://www.pigcome.com:81{{item.logo}}'></image>
           <view class='take' wx:if="{{item.status == 1}}">
             <text>休息中</text>
           </view>

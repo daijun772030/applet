@@ -95,15 +95,20 @@ Page({
     })
   },
   save:function(){//新添加收件地址
+    var that = this;
     var addList = app.globalData.addressList;
     // debugger;
-    if(addList) {
-      this.setData({
+    if(addList.length>0) {
+      that.setData({
         id:addList.id
       })
+    }else {
+      that.setData({
+        id:0
+      })
     }
-    var newAddress = this.data.address + " " + this.data.addNam + "%26" + this.data.qi + "%26" + this.data.addressNum;
-    service.request("addByDistance", { longitude: this.data.longitude, latitude: this.data.latitude, userid: this.data.userid, address: newAddress, name: this.data.name, phone: this.data.phone, sex: this.data.sex, id:this.data.id}).then((res)=>{
+    var newAddress = that.data.address + " " + that.data.addNam + "%26" + that.data.qi + "%26" + that.data.addressNum;
+    service.request("addByDistance", { longitude: that.data.longitude, latitude: that.data.latitude, userid: that.data.userid, address: newAddress, name: that.data.name, phone: that.data.phone, sex: that.data.sex, id:that.data.id}).then((res)=>{
       console.log(res);
       if(res.data.retCode ==200) {
         wx.navigateBack({
@@ -113,25 +118,11 @@ Page({
           }
         });
       }else {
-        wx.showModal({
-          // title: "温馨提示",
-          content: '请填写完整信息',
-          cancelText: "确定",
-          cancelColor: "#00D4A0",
-          // confirmText: "我知道了",
-          // confirmColor: "#00D4A0",
-          success(res) {
-            if (res.cancel) {
-              // var shopList = e.currentTarget.dataset.itemlist
-              // app.globalData.commercial = shopList;
-              // var userId = app.globalData.userData.id;//获取的用户id
-              // var shopId = e.currentTarget.dataset.bindid
-              // wx.navigateTo({
-              //   url: '/pages/shopDetails/shopDetails?' + "shopid=" + shopId + "&userid=" + userId,
-              // })
-              console.log("取消按钮")
-            }
-          }
+        wx.showToast({
+          title: '请将信息填写完整，方便下单',
+          icon: 'none',
+          duration: 1500,
+          mask: true,
         })
       }
     })
@@ -157,6 +148,7 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
+    // debugger;
     var userId = app.globalData.userData.id;//获取的用户id
     this.setData ({
       userid: userId
@@ -167,6 +159,7 @@ Page({
       var addNum = addList.address.split('&');
       var length = addNum.length - 1;
       var newNum = addNum[length]
+
       console.log(newNum)
       this.setData({
         userid: app.globalData.userData.id,
@@ -177,7 +170,8 @@ Page({
         phone: addList.phone,//电话号码
         sex: addList.sex,//性别
         address: addNum[0],
-        addNam: addNum[1]
+        addNam: addNum[1],
+        id:addList.id
 
       })
       if (addList.sex == 1) {
@@ -194,6 +188,7 @@ Page({
           [ched]: true
         })
       }
+    }else {
     }
     qqmapsdk = new QQMapWX({
       key: 'SJYBZ-B6VH5-BKOIZ-QTJRE-F6NQ2-BNF37'

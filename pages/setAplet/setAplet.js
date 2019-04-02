@@ -12,6 +12,11 @@ Page({
       url: '/pages/login/login',
     })
   },
+  gotoLazy:function() {//前往懒猪协议
+  wx.navigateTo({
+    url: '/pages/webview/lazyweb',
+  })
+  },
   goAddress:function () {//前往收货地址
     wx.navigateTo({
       url: '/pages/address/address',

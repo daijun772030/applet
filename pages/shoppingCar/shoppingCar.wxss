@@ -22,9 +22,14 @@
   margin-top: 36rpx;
   margin-bottom: 23rpx;
   display: flex;
+  position: relative;
 }
 .shopName checkbox{
   margin-right: 67rpx;
+}
+.deleteOrder{
+  position: absolute;
+  right: 0;
 }
 .content  {
   width: 100%;
@@ -136,7 +141,7 @@ checkbox-group{
   font-weight:500;
   color:rgba(245,56,74,1);
 }
-.close>button {
+.close>.button {
   width: 128rpx;
   height: 54rpx;
   background:rgba(0,212,160,1);

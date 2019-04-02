@@ -1,7 +1,7 @@
 <view class="detail">
   <view class='shopMes'>
     <view class='shopImg'>
-      <image src="'http://39.108.113.149:8081' + {{shopAllList.logo}}"></image>
+      <image src="http://www.pigcome.com:81{{shopAllList.logo}}"></image>
     </view>
     <view class='shopName'>
       <view class='shopName-name'>{{shopAllList.shopName}}</view>
@@ -51,11 +51,7 @@
                     key="key">
                     <view class='inner' id='{{item.id}}' bindtap='selectShop' data-index="{{item}}" data-shopName='{{item.name}}'>
                       <view class='cover'>
-                        <image src='cloud://sjkj-1-2739cc.736a-sjkj-1-2739cc/img/index/216_216.png'></image>
-                        <!-- <block wx:for="{{shopCarList}}" wx:key="index" wx:for-item="chid">
-                          <text wx:if="{{item.id == chid.commodityid}}">{{chid.number}}</text>
-                        </block> -->
-                        <!-- <text >{{item.number}}</text> -->
+                        <image src='http://www.pigcome.com:81{{item.img}}'></image>
                       </view>
                       <view class='info'>
                         <view class="info-title">{{item.name}}</view>
@@ -74,7 +70,7 @@
         <scroll-view scroll-y="{{scrollType}}" class='evaluteScroll' bindscrolltolower="dowmload">
           <view class='evaluate' wx:for="{{Evalue}}" wx:key="{{index}}">
             <view class='evalueteLogo'>
-              <image src="'http://39.108.113.149:8081' + {{item.portrait}}"></image>
+              <image src="http://www.pigcome.com:81{{item.portrait}}"></image>
             </view>
             <view class='evaluateContent'>
               <view class='evalueName'>
@@ -94,11 +90,11 @@
                 <text>{{item.comment}}</text>
               </view>
               <view class='contenImg' wx:if="{{item.img}}">
-                <image wx:for="{{item.img}}" wx:key="index" src="'http://39.108.113.149:8081' + {{item}}"></image>
+                <image wx:for="{{item.img}}" wx:key="index" src="http://www.pigcome.com:81{{item}}"></image>
               </view>
             </view>
           </view>
-          <view class='nathingImg' wx:if="{{imgType}}">
+          <view class='nathingImg' wx:if="{{Evalue.length<=0}}">
             <image src='cloud://sjkj-1-2739cc.736a-sjkj-1-2739cc/img/index/kongkongruye_dingdan_png@2x.png'></image>
           </view>
           <view class='loadding' wx:if="{{loadtType}}">
@@ -176,7 +172,7 @@
         </view>
       </view>
       <view class='closeBut'>
-        <button catchtap='GoShoppingCar'>去结算</button>
+        <button class="{{allNum>0?'button':'butnNt'}}" catchtap='GoShoppingCar'>去结算</button>
       </view>
     </view>
   </view>

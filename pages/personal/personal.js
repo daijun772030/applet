@@ -1,11 +1,13 @@
 // pages/personal/personal.js
+const app = getApp()
+const service = require('../../utils/myapi.js');
 Page({
 
   /**
    * 页面的初始数据
    */
   data: {
-
+    userData:null,//用户的所有信息
   },
   gotoROrder:function (e) {//前往全部订单
     console.log(e);
@@ -88,15 +90,19 @@ Page({
     //     })
     //   },
     // })
-    wx.navigateTo({
-      url: '/pages/map/map',
+    wx.navigateTo({//前往地图
+      url: '/pages/map/map?orderNum=2019040114445417296',
     })
   },
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-
+    var userData = app.globalData.userData;
+    console.log(userData)
+    this.setData({
+      userData:userData
+    })
   },
 
   /**

@@ -29,7 +29,8 @@
           </view>
           <view class='timeMessage'>
             <text wx:if="{{immediately == 1}}">立即取件</text>
-            <text wx:else>{{yearStrin}} {{yourString}}</text>
+            <text wx:if="{{immediately == 0}}">{{yearStrin}} {{yourString}}</text>
+            <text wx:else>前往选择取送件时间</text>
             <image src='cloud://sjkj-1-2739cc.736a-sjkj-1-2739cc/img/index/SJ_Perjiantou@2x.png'></image>
           </view>
         </view>
@@ -39,8 +40,6 @@
         </view>
       </view>
     </view>
-
-
     <view class='payOrder'>
       <view class='moneyContent'>
         <view class='orderShopName'>
@@ -48,7 +47,7 @@
         </view>
         <view class='orderShop' wx:for="{{CarOrder.shoppingCar}}" wx:key ="indexCar">
           <view class='shopImg'>
-            <image></image>
+            <image src='http://www.pigcome.com:81{{item.img}}'></image>
           </view>
           <view class='orderMsg'>
             <view class='OrderPr'>
@@ -68,8 +67,6 @@
         <text class='takeoffTex'>￥{{takeoff}}</text>
       </view>
     </view>
-
-
     <view class='payMoney'>
       <view class='moneyContent'>
         <view class='moneyMessage'>
@@ -153,7 +150,7 @@
             <text catchtap='setYear' data-index='{{index}}' class="{{navbarActiveIndex === index ? 'activ' : ''}}" data-year='{{year}}'>{{year}}</text>
           </block>
         </view>
-        <view class='dateHour'>
+        <view class='dateHour' wx:if="{{qujian.length>0}}">
           <view class='rightWay' catchtap='allright' catchtap='nowTiem'>
             <text>立即取件</text>
           </view>

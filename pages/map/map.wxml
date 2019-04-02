@@ -6,21 +6,21 @@
       latitude="{{latitude}}"
       longitude="{{longitude}}"
       markers="{{markers}}"
-      show-location
     ></map>
   </view>
+  <button catchtap='upload'>刷新位置</button>
   <view class='dadaMsg'>
     <view class='rider'>
-      <text>骑手状态</text>
-      <text>待接单</text>
+      <text>骑手状态：</text>
+      <text wx:if="{{dadaList.statusMsg}}">{{dadaList.statusMsg}}</text>
     </view>
     <view class='rider'>
       <text>姓名</text>
-      <text>王二</text>
+      <text wx:if="{{dadaList.transporterName}}">{{dadaList.transporterName}}</text>
     </view>
     <view class='rider'>
-      <text></text>
-      <text>13666288963</text>
+      <text>骑手电话</text>
+      <text wx:if="{{dadaList.transporterPhone}}">{{dadaList.transporterPhone}}</text>
     </view>
   </view>
 </view>

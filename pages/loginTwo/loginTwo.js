@@ -13,9 +13,10 @@ Page({
     disabled: false,//验证码按钮是否使用
     item: '获取验证码',//倒计时
     currentTime: 61,
-    phone: '13666288963',//电话号码
-    psd: 'Ab772030',//验证码
+    phone:'18382409366',//电话号码
+    psd:'lijinhui518818',//验证码
     boolean:true,
+    type:true,//默认阅读懒猪协议
   },
 
   //页面点击事件函数
@@ -72,44 +73,52 @@ Page({
       }, 1000)
     }
   },
-  // sendSms: function () {//发送验证码
-  //   const that = this;
-  //   serverce.request('sendSms', { phone: that.data.phone, state: '0' }).then((res) => {
-  //     console.log(res);
-  //     that.success(res)
-  //   })
-  // },
-
-  // getVerificationCode() {//获取验证码得到验证码
-  //   const that = this;
-  //   that.sendSms();
-  //   that.getCode();
-  //   that.setData({
-  //     disabled: true
-  //   })
-  // },
 
   login: function () {//验证码登录
     const that = this;
     var pwd = that.data.psd
     var phone = that.data.phone
-    var pws = MD5.hexMD5(pwd);
-    console.log(pws);
-    console.log(that.data.phone, that.data.psd)
-
-    serverce.request('loginPwd', { phone: phone, password: pws }).then((res) => {
-      console.log(res);
-      app.globalData.userData = res.data.data;
-      if (res.data.retCode == 200) {
-        that.success(res)
-        wx.switchTab({
-          url: '/pages/index/index',
+    if(pwd&&phone) {
+      var pws = MD5.hexMD5(pwd);
+      console.log(pws);
+      console.log(that.data.phone, that.data.psd)
+      var type = that.data.type;
+      if (type) {
+        serverce.request('loginPwd', { phone: phone, password: pws }).then((res) => {
+          console.log(res);
+          app.globalData.userData = res.data.data;
+          if (res.data.retCode == 200) {
+            that.success(res)
+            wx.switchTab({
+              url: '/pages/index/index',
+            })
+          } else {
+            that.success(res)
+            wx.showToast({
+              title: '登陆失败',
+              icon: 'none',
+              duration: 1500,
+              mask: true,
+            })
+          }
+          console.log(app.globalData.userData)
         })
       } else {
-        that.success(res)
+        wx.showToast({
+          title: '请勾选您已阅读懒猪协议',
+          icon: 'none',
+          duration: 1500,
+          mask: true,
+        })
       }
-      console.log(app.globalData.userData)
-    })
+    }else {
+      wx.showToast({
+        title: '填写账号和密码',
+        icon: 'none',
+        duration: 1500,
+        mask: true,
+      })
+    }
   },
   webview: function () {//跳转懒猪到家协议
     wx.navigateTo({
@@ -119,6 +128,13 @@ Page({
   gonathLogin: function () {
     wx.reLaunch({
       url: '/pages/login/login',
+    })
+  },
+  bechi:function(e) {
+    console.log(e);
+    var type = this.data.type;
+    this.setData({
+      type:(!type)
     })
   },
   /**

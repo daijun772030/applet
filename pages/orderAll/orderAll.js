@@ -33,12 +33,12 @@ Page({
     arrAll:[],//需要渲染的所有对象的数组
   },
   queryNathing:function (value) {//查询订单函数
-    wx.showToast({
-      title: '稍等',
-      icon:'loading',
-      duration:1500,
-      mask:true
-    })
+    // wx.showToast({
+    //   title: '稍等',
+    //   icon:'loading',
+    //   duration:4000,
+    //   mask:true
+    // })
     if (value == 0) {//所有订单
       var type = 6;
       service.request('orderAll', { userid: this.data.userid, type: type }).then((res) => {
@@ -277,7 +277,7 @@ Page({
     console.log(e);
     var index = e.currentTarget.dataset.index;
     var orderNum = e.currentTarget.dataset.item.orderNum
-    service.request('wxRefund', { out_trade_no: orderNum,remark:'突然不想洗了' }).then((res) => {
+    service.request('wxRefund', { out_trade_no: orderNum,remark:' ' }).then((res) => {
       console.log(res);
       that.queryNathing(index);
     })
@@ -316,6 +316,68 @@ Page({
         return res.data.data
       })
     }
+  },
+  seeDada:function(e) {//待收货和待取件时的查看物流达达物流
+    var orderNum = e.currentTarget.dataset.item.orderNum;
+    console.log(e);
+    wx.navigateTo({
+      url: '/pages/map/map?orderNum=' + orderNum,
+    })
+  },
+  Remind:function() {//提醒接单
+    wx.showToast({
+      title: '我们已帮您提醒商家',
+      icon: 'none',
+      duration: 1500,
+      mask: true,
+    })
+  },
+  Confirm: function (e) {//确认发货
+    console.log(e);
+    var that = this;
+    var list = e.currentTarget.dataset.item;
+    if (list.ifhave == 2) {
+      if (list.iftake == 1) {
+        wx.showToast({
+          title: '您选择的是自取自送，请上门收取衣物！',
+          icon: 'none',
+          duration: 1500,
+          mask: true,
+        })
+      } else {
+        console.log('这是达达的订单')
+        service.request('updateOrder', { type: 2, orderId: list.id, outTradeNo: list.orderNum }).then((res) => {
+          console.log(res);
+          var index = that.data.navbarActiveIndex;
+          that.queryNathing(index);
+        })
+      }
+    }
+  },
+  receipt:function(e) {//确认收货/这是自取自送
+    console.log(e)
+    var list = e.currentTarget.dataset.item;
+    service.request('updateOrder', { type: 3, orderId: list.id, outTradeNo: list.orderNum }).then((res) => {
+      console.log(res);
+      var index = that.data.navbarActiveIndex;
+      that.queryNathing(index);
+    })
+  },
+  evaluate:function() {
+    wx.showToast({
+      title: '暂不支持评论，前往APP进行评论',
+      icon: 'none',
+      duration: 1500,
+      mask: true,
+    })
+  },
+  buyAway:function(e) {//再次购买商品跳转选择商品页面
+    console.log(e);
+    var shopid = e.currentTarget.dataset.item.merchantid;
+    var userid = app.globalData.userData.id;
+    wx.navigateTo({
+      url: '/pages/shopDetails/shopDetails?shopid=' + shopid + '&userid=' + userid,
+    })
   },
   onLoad: function (options) {
     console.log(app.globalData.userData);

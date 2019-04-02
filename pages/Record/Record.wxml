@@ -15,7 +15,7 @@
   </view>
   <view class='content'>
     <view class='xfmx'>
-      <text>消费明细</text>、
+      <text>消费明细</text>
       <text>支出{{account}}￥，收入{{income}}￥</text>
     </view>
     <scroll-view class='scroll' scroll-y="true">

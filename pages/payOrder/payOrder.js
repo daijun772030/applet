@@ -33,7 +33,7 @@ Page({
     navbarActiveIndex:0,//选中的时间index初始值
     yearStrin:null,//选中的时间年份
     yourString:null,//选中的取件时间的毫秒
-    immediately:1,//0为不是立即取件。一为立即取件
+    immediately:null,//0为不是立即取件。一为立即取件
     year:[],//取件得日期
     your: [],//取件得时刻当天的
     yours:[],//往后其他的几天的取件时间
@@ -208,7 +208,8 @@ Page({
       year:newDate,
       your:yoursDate,
       yours: nathingDate,
-      qujian: yoursDate
+      qujian: yoursDate,
+      yearStrin:newDate[0]
     })
 
   },
@@ -261,16 +262,10 @@ Page({
       DistanceType:false,
       immediately:0
     })
+
+    that.payTime();
   },
-  // allright:function() {//点击出现立刻取件
-  //   debugger;
-  //   this.setData({
-  //     immediately:1,
-  //     DistanceType: false,
-  //     timeType: false,
-  //     disableType: false,
-  //   })
-  // },
+  
   qeryDistance:function() {//查询用户的所有地址
     var that =this;
     // debugger;
@@ -294,6 +289,10 @@ Page({
         // setTimeout(function() {
         //   that.money();
         // },2000)
+      }else {
+        this.setData({
+          takeoff:0
+        })
       }
     })
   },
@@ -301,9 +300,13 @@ Page({
     var that = this;
     // debugger;
     // debugger;
+    if (that.data.Distance == null || that.data.defaultDistance==null) {
+      this.setData({
+        takeoff:0
+      })
+    }
     var takeoff = Number(that.data.takeoff);
     var carList = that.data.CarOrder;
-    console.log(that.data.CarOrder,takeoff);
     var wallet = carList.wallet;//钱包总金额
     var yh = carList.reduce + carList.DeliveryRed + carList.red;//优惠券加上打折的总金额
     var shopPayMoney = carList.count + takeoff;//商品总金额加上运费一起的
@@ -384,6 +387,7 @@ Page({
     var hours = today.getHours();
     var min = today.getMinutes();
     var send = today.getSeconds();
+     console.log(tMonth)
     tMonth = this.doHandleMonth(tMonth + 1);
     tDate = this.doHandleMonth(tDate);
     return tYear + "-" + tMonth + "-" + tDate + ' ' + hours + ':' + min + ':' + send;
@@ -396,7 +400,34 @@ Page({
     }
     return m;
   },
-
+  qitashijian:function(now,day) {//选取其他的时间的后三天转化
+    var adta1 = new Date(now)
+    console.log(adta1);
+    var targetday_milliseconds = adta1.getTime() + 1000 * 60 * 60 * 24 * day;
+    adta1.setTime(targetday_milliseconds); //这个关键
+    var tYear = adta1.getFullYear();
+    var tMonth = adta1.getMonth();
+    var tDate = adta1.getDate();
+    var hours = adta1.getHours();
+    var min = adta1.getMinutes();
+    var send = adta1.getSeconds();
+    console.log(tMonth)
+    tMonth = this.doHandleMonth(tMonth + 1);
+    tDate = this.doHandleMonth(tDate);
+    return tYear + "-" + tMonth + "-" + tDate + ' ' + hours + ':' + min + '0' + ':' + send + '0';
+  }, 
+  payTime:function() {
+    var that = this;
+    var newTime = that.data.yearStrin + ' ' + that.data.yourString;
+    console.log(newTime);
+    var startTime = that.qitashijian(newTime,0);
+    var endTime = that.qitashijian(newTime,3);
+    console.log(startTime,endTime);
+    this.setData({
+      startime:startTime,
+      endtime:endTime
+    })
+  },
   //微信支付方法
   UpWechat:function() {//微信支付方法
     var that = this;
@@ -416,7 +447,9 @@ Page({
       addressid: that.data.defaultDistance.id,
       couponid:item.DeliveryRedId, 
       redid: item.redId,
-      money: money, 
+      discountMoney:that.data.CarOrder.reduce,//打折优惠的钱要传
+      walletPay:that.data.wallet,//钱包减了多少钱
+      money: that.data.payAllMoney, 
       fee: that.data.takeoff,
       actualMoney: item.count, 
       payMethod: 0,
@@ -425,41 +458,60 @@ Page({
     }
     var ifhave= 1;//代表小程序支付
     var newJson = encodeURIComponent(JSON.stringify(jsonObj));
-    var subject = "拦住到家-" + item.shopName + '的订单'
-    service.request('wxPay', { openid: oppenid,money: money, subject:subject, jsonObject: newJson}).then((res)=>{//对微信支付进行订单创建
-      console.log(res);
-      // var timestamp = (new Date()).getTime();
-      // debugger;
-      var data = res.data.data;
-      var sigin = MD5.hexMD5(res.data.data.sign);
-      // var appid = data.appid;
-      // var nonce = data.noncestr;
-      // var page = 'prepay_id=' + data.prepayid;
-      // var SinType = 'MD5';
-      // var time = data.timestamp;
-      // var key = data.appkey;
-      // var all = appid + "&" + nonce + "&" + page + "&" + SinType + "&" + time + "&" + key
-      // var psSign = MD5.hexMD5(all)
-      // console.log(psSign);
-      wx.requestPayment(
-        {
-          'appId':data.appid,
-          'timeStamp': data.timestamp,
-          'nonceStr': data.noncestr,
-          'package': 'prepay_id=' + data.prepayid,
-          'signType': 'MD5',
-          'paySign': data.sign,
-          'success': function (res) {
-            console.log(res);
-          },
-          'fail': function (res) {
-            console.log(res);
-           },
-          'complete': function (res) { 
-            console.log(res);
-          }
-        })
-    })
+    var subject = "懒猪到家-" + item.shopName + '的订单'
+    if (that.data.startime && that.data.endtime && that.data.defaultDistance.id) {//选择了时间取送地址才能跳转
+      service.request('wxPay', { openid: oppenid, money: money, subject: subject, jsonObject: newJson }).then((res) => {//对微信支付进行订单创建
+        console.log(res);
+        var data = res.data.data;
+        wx.requestPayment(//调起微信支付
+          {
+            'appId': data.appId,
+            'timeStamp': data.timeStamp,
+            'nonceStr': data.nonceStr,
+            'package': data.package,
+            'signType': "MD5",
+            'paySign': data.paySign,
+            'success': function (res) {
+              console.log(res);
+              wx.showToast({
+                title: '支付成功',
+                icon: 'success',
+                duration: 1500,
+                mask: true,
+              })
+              wx.switchTab({
+                url: '/pages/index/index',
+              })
+            },
+            'fail': function (res) {
+              console.log(res);
+              wx.showToast({
+                title: '支付失败',
+                icon: 'none',
+                duration: 1500,
+                mask: true,
+              })
+            },
+            'complete': function (res) {
+              console.log(res);
+            }
+          })
+      })
+    } else if (that.data.startime == null || that.data.endtime==null ) {
+      wx.showToast({
+        title: '请选择取送时间',
+        icon: 'none',
+        duration: 1500,
+        mask: true,
+      })
+    } else if (that.data.defaultDistance.id == null) {
+      wx.showToast({
+        title: '请选择取送地址',
+        icon: 'none',
+        duration: 1500,
+        mask: true,
+      })
+    }
   },
   /**
    * 生命周期函数--监听页面加载
@@ -473,6 +525,7 @@ Page({
       shopid:options.shopid,
       Carid: app.globalData.shopUpId
     });
+    that.qitashijian();
   },
 
   /**

@@ -13,8 +13,9 @@ Page({
     disabled:false,//验证码按钮是否使用
     item:'获取验证码',//倒计时
     currentTime:61,
-    phone:'',//电话号码
-    psd:'',//验证码
+    phone:'18382409366',//电话号码
+    psd:'lijinhui518818',//验证码
+    type:true,//协议默认阅读
   },
 
     //页面点击事件函数
@@ -78,7 +79,6 @@ Page({
       that.success(res)
     })
   },
-
   getVerificationCode () {//获取验证码得到验证码
     const that = this;
     that.sendSms();
@@ -92,20 +92,30 @@ Page({
     const that = this;
     var phone = that.data.phone;
     var pwd = that.data.psd
+    var type = that.data.type;
+    if(type) {
+      serverce.request('loginCode', { phone: phone, code: pwd, state: 0 }).then((res) => {
+        console.log(res);
+        app.globalData.userData = res.data.data;
+        if (res.data.retCode == 200) {
+          that.success(res)
+          wx.switchTab({
+            url: '/pages/index/index',
+          })
+        } else {
+          that.success(res)
+        }
+        console.log(app.globalData.userData)
+      })
+    }else {
+      wx.showToast({
+        title: '请勾选您已阅读懒猪协议',
+        icon: 'none',
+        duration: 1000,
+        mask: true,
+      })
+    }
     
-    serverce.request('loginCode', { phone: phone, code: pwd,state:0}).then((res)=>{
-      console.log(res);
-      app.globalData.userData = res.data.data;
-      if(res.data.retCode == 200) {
-        that.success(res)
-        wx.switchTab({
-          url: '/pages/index/index',
-        })
-      }else {
-        that.success(res)
-      }
-      console.log(app.globalData.userData)
-    })
   },
   webview:function () {//跳转懒猪到家协议
     wx.navigateTo({
@@ -115,6 +125,13 @@ Page({
   gonathLogin:function() {
     wx.reLaunch({
       url: '/pages/loginTwo/loginTwo',
+    })
+  },
+  bechi: function (e) {
+    console.log(e);
+    var type = this.data.type;
+    this.setData({
+      type: (!type)
     })
   },
   /**

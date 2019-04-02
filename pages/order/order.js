@@ -37,7 +37,7 @@ Page({
     wx.showToast({
       title: '稍等',
       icon: 'loading',
-      duration: 1500,
+      duration: 10000,
       mask: true
     })
     if (value == 0) {//所有订单
@@ -61,6 +61,7 @@ Page({
           arrAll: arrAll
         })
         console.log(this.data.arrAll)
+        wx.hideToast();
       })
     } else if (value == 1) {//待评价
       var type = 4;
@@ -83,6 +84,7 @@ Page({
           arrAll: arrAll
         })
       })
+      wx.hideToast();
     } else if (value == 2) {//退款订单
     // debugger;
       var type = 7;
@@ -106,6 +108,7 @@ Page({
           arrAll: arrAll
         })
       })
+      wx.hideToast();
       console.log(this.data.arrAll);
     }
   },
