@@ -33,44 +33,35 @@ Page({
     arrAll:[],//需要渲染的所有对象的数组
   },
   queryNathing:function (value) {//查询订单函数
-    // wx.showToast({
-    //   title: '稍等',
-    //   icon:'loading',
-    //   duration:4000,
-    //   mask:true
-    // })
+    wx.showToast({
+      title: '稍等',
+      icon:'loading',
+      duration:2500,
+      mask:true
+    })
+    var arr = [];
     if (value == 0) {//所有订单
       var type = 6;
       service.request('orderAll', { userid: this.data.userid, type: type }).then((res) => {
         console.log(res);
         
         var arrdata = res.data.data;
-        var arr = [];
+        // var arr = [];
         arr = arrdata;
         if(arr.length>80) {
           arr.length = 80;
         }
-        // for(var i = 0;i<80;i++) {
-        //   arr.push(arrdata[i]);
-        // }
-        console.log(arr);
         this.setData({
-          allOrder: arr
+          arrAll:arr
         })
-        console.log(this.data.allOrder);
-        var arrAll = [];
-        arrAll = arr;
-        this.setData({
-          arrAll:arrAll
-        })
-        console.log(this.data.arrAll)
       })
+      return
     } else if (value == 1) {//待付款
       var type = 0;
       service.request('orderAll', { userid: this.data.userid, type: type }).then((res) => {
         console.log(res);
         var obligation = res.data.data;
-        var arr = [];
+        // var arr = [];
         for (let i = 0; i < obligation.length; i++) {
           var chid = obligation[i]
           if (chid.status == 0 || chid.status == 1) {
@@ -78,23 +69,18 @@ Page({
           }
         }
         this.setData({
-          obligation: arr
-        })
-        var arrAll = [];
-        console.log(this.data.obligation)
-        arrAll = this.data.obligation
-        this.setData({
-          arrAll: arrAll
+          arrAll: arr
         })
         console.log(this.data.arrAll)
       })
+      return
     } else if (value == 2) {//待接单
       var type = 1;
       service.request('orderAll', { userid: this.data.userid, type: type }).then((res) => {
         console.log(res);
         var valueChid = res.data.data;
         console.log(valueChid)
-        var arr = [];
+        // var arr = [];
         for(let i = 0; i < valueChid.length; i++) {
           // debugger;
           var chid = valueChid[i]
@@ -105,22 +91,16 @@ Page({
           }
         }
         this.setData({
-          waitOrder: arr
+          arrAll: arr
         })
-        var arrAll = [];
-        console.log(this.data.waitOrder)
-        arrAll = this.data.waitOrder
-        this.setData({
-          arrAll: arrAll
-        })
-        console.log(this.data.arrAll)
       })
+      return
     } else if (value == 3) {//待取货
       var type = 2;
       service.request('orderAll', { userid: this.data.userid, type: type }).then((res) => {
         console.log(res);
         var valueChid = res.data.data;
-        var arr = [];
+        // var arr = [];
         for (let i = 0; i < valueChid.length; i++) {
           var chid = valueChid[i]
           if (chid.status == 2&&chid.refundStatus == 10&&chid.type == 1&&chid.ifhave != 1&&chid.ifhave != 2) {
@@ -128,21 +108,17 @@ Page({
           }
         }
         this.setData({
-          waitPickup: arr
-        })
-        var arrAll = [];
-        arrAll = this.data.waitPickup
-        this.setData({
-          arrAll: arrAll
+          arrAll: arr
         })
       })
+      return
     }else if(value == 4) {//待发货
       var type = 2;
       service.request('orderAll', { userid: this.data.userid, type: type }).then((res) => {
         console.log(res);
         // debugger;
         var valueChid = res.data.data;
-        var arr = [];
+        // var arr = [];
         for (let i = 0; i < valueChid.length; i++) {
           var chid = valueChid[i]
           if (chid.status == 2&&chid.refundStatus == 10&&chid.type == 1 && (chid.ifhave == 1||chid.ifhave == 2)) {
@@ -150,20 +126,16 @@ Page({
           }
         }
         this.setData({
-          dendOrder: arr
-        })
-        var arrAll = [];
-        arrAll = this.data.dendOrder
-        this.setData({
-          arrAll: arrAll
+          arrAll: arr
         })
       })
+      return
     }else if (value == 5) {//待收货
       var type = 3;
       service.request('orderAll', { userid: this.data.userid, type: type }).then((res) => {
         var valueChid = res.data.data;
         console.log(res);
-        var arr = [];
+        // var arr = [];
         for (let i = 0; i < valueChid.length; i++) {
           // debugger;
           var chid = valueChid[i]
@@ -172,19 +144,15 @@ Page({
           }
         }
         this.setData({
-          takeOrder: arr
-        })
-        var arrAll = [];
-        arrAll = this.data.takeOrder
-        this.setData({
-          arrAll: arrAll
+          arrAll: arr
         })
       })
+      return
     } else if (value == 6) {//待评价
       var type = 4;
       service.request('orderAll', { userid: this.data.userid, type: type }).then((res) => {
         console.log(res);
-        var arr = [];
+        // var arr = [];
         var valueChid = res.data.data;
         for (let i = 0; i < valueChid.length; i++) {
           var chid = valueChid[i]
@@ -193,19 +161,15 @@ Page({
           }
         }
         this.setData({
-          waitAppraise: arr
-        })
-        var arrAll = [];
-        arrAll = this.data.waitAppraise
-        this.setData({
-          arrAll: arrAll
+          arrAll: arr
         })
       })
+      return
     } else if (value == 7) {//退款订单
       var type = 7;
       service.request('orderAll', { userid: this.data.userid, type: type }).then((res) => {
         console.log(res);
-        var arr = [];
+        // var arr = [];
         var valueChid = res.data.data;
         for (let i = 0; i < valueChid.length; i++) {
           var chid = valueChid[i]
@@ -214,15 +178,14 @@ Page({
           }
         }
         this.setData({
-          refund: res.data.data
-        })
-        var arrAll = [];
-        arrAll = this.data.refund
-        this.setData({
-          arrAll: arrAll
+          arrAll: arr
         })
       })
+      return 
     }
+    // this.setData({
+    //       arrAll: arr
+    //     })
   },
   onNavBarTap(e) {//页面上部导航条的点击跳转
     var that = this;
@@ -309,14 +272,14 @@ Page({
     console.log(e);
   },
   /*end*/
-  orderAll:function (type) {//查询所有订单
-    if(this.data.userid) {
-      service.request('orderAll', { userid: this.data.userid, type: type}).then((res) => {
-        console.log(res);
-        return res.data.data
-      })
-    }
-  },
+  // orderAll:function (type) {//查询所有订单
+  //   if(this.data.userid) {
+  //     service.request('orderAll', { userid: this.data.userid, type: type}).then((res) => {
+  //       console.log(res);
+  //       return res.data.data
+  //     })
+  //   }
+  // },
   seeDada:function(e) {//待收货和待取件时的查看物流达达物流
     var orderNum = e.currentTarget.dataset.item.orderNum;
     console.log(e);
@@ -391,7 +354,7 @@ Page({
       navbarActiveIndex:index
     })
     that.queryNathing(index);
-    that.orderAll(type);
+    // that.orderAll(type);
     // that.orderAll();
     wx.getSystemInfo({
       success: function (res) {

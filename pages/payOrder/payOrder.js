@@ -10,7 +10,7 @@ Page({
   data: {
     items: [
       { name: '达达配送', value: '0',checked: 'true' },
-      { name: '字取自送', value: '1' },
+      { name: '自取自送', value: '1' },
     ],
     checkbox:[
       {name:'lazyRed',value:'1',checked:true},
@@ -38,6 +38,7 @@ Page({
     your: [],//取件得时刻当天的
     yours:[],//往后其他的几天的取件时间
     qujian:[],//真正渲染的取件小时数
+    rwoNal:true,//立即取件
   },
   yhAllMoney:null,//优惠的总合计
   payAllMoney:null,//支付的总money
@@ -224,7 +225,8 @@ Page({
   showAddShop:function () {//点击外层模态框消失
     this.setData({
       DistanceType: false,
-      navbarActiveIndex:0
+      navbarActiveIndex:0,
+      rwoNal:true,
     })
   },
   address:function() {//点击模态框内容部分不隐藏
@@ -245,11 +247,13 @@ Page({
     var newYour = that.data.yours;
     if(index!=0) {
       that.setData({
-        qujian: newYour
+        qujian: newYour,
+        rwoNal:false,
       })
     }else {
       that.setData({
-        qujian: your
+        qujian: your,
+        rwoNal:true,
       })
     }
   },

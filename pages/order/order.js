@@ -37,31 +37,21 @@ Page({
     wx.showToast({
       title: '稍等',
       icon: 'loading',
-      duration: 10000,
+      duration: 2500,
       mask: true
     })
     if (value == 0) {//所有订单
       var type = 6;
       service.request('orderAll', { userid: this.data.userid, type: type }).then((res) => {
         console.log(res);
-
         var arrdata = res.data.data;
         var arr = arrdata;
         if(arr.length>80) {
           arr.length = 80;
         }
-        console.log(arr);
         this.setData({
-          allOrder: arr
+          arrAll: arr
         })
-        console.log(this.data.allOrder);
-        var arrAll = [];
-        arrAll = arr;
-        this.setData({
-          arrAll: arrAll
-        })
-        console.log(this.data.arrAll)
-        wx.hideToast();
       })
     } else if (value == 1) {//待评价
       var type = 4;
@@ -76,15 +66,10 @@ Page({
           }
         }
         this.setData({
-          waitAppraise: arr
-        })
-        var arrAll = [];
-        arrAll = this.data.waitAppraise
-        this.setData({
-          arrAll: arrAll
+          arrAll: arr
         })
       })
-      wx.hideToast();
+      // wx.hideToast();
     } else if (value == 2) {//退款订单
     // debugger;
       var type = 7;
@@ -99,17 +84,9 @@ Page({
           }
         }
         this.setData({
-          refund: arr
-        })
-        var arrAll = [];
-        arrAll = this.data.refund
-        console.log(arr)
-        this.setData({
-          arrAll: arrAll
+          arrAll: arr
         })
       })
-      wx.hideToast();
-      console.log(this.data.arrAll);
     }
   },
   onNavBarTap(e) {//页面上部导航条的点击跳转
@@ -224,7 +201,7 @@ Page({
     })
     var index = that.data.navbarActiveIndex;
     that.queryNathing(index);
-    that.orderAll(type);
+    // that.orderAll(type);
     // that.orderAll();
     wx.getSystemInfo({
       success: function (res) {

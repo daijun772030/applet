@@ -94,11 +94,6 @@ Page({
   },
   //事件处理函数
   GOShopDetails:function(e) {//这里是商家展示
-    // service.getRequest('usr/sendSms',{phone:'13666288963',state:'0'}).then((res)=>{
-    //   console.log(res);
-    // })
-    // console.log(e);
-    // console.log(app.globalData.userData)
     console.log(e);
     var km = e.currentTarget.dataset.itemlist.distance
     var that = this;
@@ -250,6 +245,7 @@ Page({
     })
   },
   queryMapName () {//查询地图具体地址
+    // debugger;
     const that = this;
     wx.getLocation({
       type: 'gcj02',
@@ -277,27 +273,70 @@ Page({
           }
         })
       },
+      fail:function(res) {
+        console.log(res);
+        wx.getSetting({
+          success(res) {
+            console.log(res);
+            if (!res.authSetting["scope.userLocation"]) {
+              that.showRemind();
+            }
+          }
+        })
+      }
     });
+  },
+  openSetting:function() {//取消选择后的操作
+    var that = this;
+    wx.openSetting({
+      success: (res) => {
+        console.log(res);
+        if (!res.authSetting['scope.userLocation']) {
+          that.queryMapName();
+        }
+      }, fail: (res) => {
+        if (!res.authSetting['scope.userLocation']) {
+          that.queryMapName();
+        }
+      }
+    })
+  },
+  showRemind:function() {
+    var that = this;
+    wx.showModal({
+      title: '温馨提醒',
+      content: '需要获取您的地理位置才能使用小程序',
+      showCancel: false,
+      confirmText: '获取位置',
+      success: function (res) {
+        if (res.confirm) {
+          that.openSetting();
+        }
+      }, fail: (res) => {
+        that.openSetting();
+      }
+    })
   },
   map () {//重新选择地图位置
     const that = this;
     wx.chooseLocation({
-      success: function(res) {
+      success: function (res) {
         console.log(res);
         that.setData({
-          mapName:res.name,
-          latitude:res.latitude,
-          longitude:res.longitude
+          mapName: res.name,
+          latitude: res.latitude,
+          longitude: res.longitude
         });
         that.upPart();
         that.setData({
-          shopList:[]
+          shopList: []
         })
         page = 1;
         that.downPart(page);
       },
     })
   },
+
   goshoping:function() {
     var userid = app.globalData.userData.id;
     wx.navigateTo({

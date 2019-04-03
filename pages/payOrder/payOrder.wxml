@@ -30,7 +30,7 @@
           <view class='timeMessage'>
             <text wx:if="{{immediately == 1}}">立即取件</text>
             <text wx:if="{{immediately == 0}}">{{yearStrin}} {{yourString}}</text>
-            <text wx:else>前往选择取送件时间</text>
+            <text wx:if="{{immediately!=0&&immediately!=1}}">前往选择取送件时间</text>
             <image src='cloud://sjkj-1-2739cc.736a-sjkj-1-2739cc/img/index/SJ_Perjiantou@2x.png'></image>
           </view>
         </view>
@@ -151,7 +151,7 @@
           </block>
         </view>
         <view class='dateHour' wx:if="{{qujian.length>0}}">
-          <view class='rightWay' catchtap='allright' catchtap='nowTiem'>
+          <view class='rightWay' catchtap='nowTiem' wx:if="{{rwoNal&&your.length>0}}">
             <text>立即取件</text>
           </view>
           <scroll-view scroll-y="true" class='yourContent'>

@@ -1,5 +1,5 @@
 const Promise = require('es6-promise.min.js');
-const baseUrl = 'http://39.108.113.149:8081/'
+const baseUrl = 'https://sjkjwhechat.pigcome.com/'
 function jsonToString (json) {
   var str =[];
   for(var i in json) {
@@ -81,7 +81,7 @@ const post = (url) => {
    deletDistance: post('address/deleteByAddress'),//删除用户地址
    setDistance: post('address/setUpAddressTakeoff'),//设置地址为取件地址
    allDistance: get('address/all'),//查询改用户的所有地址
-
+   getOppend: get('user/jscode2session'),//获取用户opendid
    //订单部分
    orderAll:post('order/all'),//查询所有订单
    deleteOrder: get('order/deleteByOrderId'),//删除订单

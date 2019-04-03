@@ -1,4 +1,5 @@
 //app.js
+const service = require('./utils/myapi.js')
 App({
   globalData: {
     userData:null,
@@ -25,27 +26,19 @@ App({
         var appid = that.globalData.appid;
         var secret = that.globalData.secret;
         console.log(appid,secret);
-        wx.request({
-          url: 'https://api.weixin.qq.com/sns/jscode2session?appid=' + 'wxe562417cc49d20bc' + '&secret=' + '8d803622d8ad580a0bb4eaa21b8aade7' + '&js_code=' + res.code + '&grant_type=authorization_code',
-          data: {},
-          header: {
-            'content-type': 'json'
-          },
-          success: function (res) {
-            var openid = res.data.openid //返回openid
-            console.log('openid为' + openid);
-            wx.setStorage({
+        service.request('getOppend',{js_code:res.code}).then((res)=>{
+          console.log(res.data.data);
+          var newID = res.data.data.split(':');
+          var newId = newID[2].split('"')
+          console.log(newId);
+          wx.setStorage({
               key: 'oppenid',
-              data: openid,
+              data: newId[1],
               success: function () { 
-                console.log('保存成功得oppenid:' + openid);
+                console.log('保存成功得oppenid:' + newId[1]);
               }
             },
             )
-          },
-          fail:function(error) {
-            console.log(error);
-          }
         })
       }
     })

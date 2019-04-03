@@ -38,6 +38,7 @@ Page({
     this.queryRed(value)
   },
   queryRed:function (value) {//查询红包
+  console.log(value)
     console.log(app.globalData)
     var id = app.globalData.userData.id;
     var phone = app.globalData.userData.phone;

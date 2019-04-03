@@ -36,7 +36,7 @@
       </view>
       <view class='shoppingChid mg' wx:for="{{refundTwo.shoppingCarModelList}}" wx:key="id">
         <view class='shopLog'>
-          <image src="http://39.108.113.149:8081/img?path=/usr/img//type/7f571459fe034676bdbebc1894dd535a.png"></image>
+          <image src="http://www.pigcome.com:81{{item.img}}"></image>
         </view>
         <view class='shopChidName'>
           <view class='shopPrice'>

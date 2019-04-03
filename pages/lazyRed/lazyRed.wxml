@@ -15,13 +15,13 @@
     <swiper-item class= "swiperItem">
       <scroll-view class='swiperScrll' scroll-y="true">
         <view class='lazy' wx:for="{{redArr}}" wx:key="id">
-          <view class='bgN' wx:if="{{item.status == 0}}">
+          <view class='bgN' wx:if="{{navbarActiveIndex==1}}">
             <image src='cloud://sjkj-1-2739cc.736a-sjkj-1-2739cc/img/lazyRed/beijing_yiguoqi@2x.png'></image>
           </view>
-          <view class='bgN' wx:if="{{item.status == 2}}">
+          <view class='bgN' wx:if="{{navbarActiveIndex==0}}">
             <image src='cloud://sjkj-1-2739cc.736a-sjkj-1-2739cc/img/lazyRed/lanzhuhongbao_kapian@2x.png'></image>
           </view>
-          <view class='bgN' wx:if="{{item.status == 1}}">
+          <view class='bgN' wx:if="{{navbarActiveIndex==2}}">
             <image src='cloud://sjkj-1-2739cc.736a-sjkj-1-2739cc/img/lazyRed/beijing_yishiyong@2x.png'></image>
           </view>
           <view class='lazyConet'>
@@ -33,7 +33,7 @@
                 <text>懒猪红包</text>
                 <text class='tex'>{{item.startTime}}-{{item.endTime}}</text>
               </view>
-              <view class='moneyBt' wx:if="{{item.status == 2}}">
+              <view class='moneyBt' wx:if="{{navbarActiveIndex==0}}">
                 <image src='cloud://sjkj-1-2739cc.736a-sjkj-1-2739cc/img/lazyRed/qushiyong_anniu@2x.png'></image>
               </view>
             </view>
