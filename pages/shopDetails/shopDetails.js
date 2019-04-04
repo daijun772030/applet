@@ -134,8 +134,20 @@ Page({
     service.request('findByMerchatChidId',{merchantid:that.data.shopid,userid:that.data.userid}).then((res)=>{
       console.log(res);
       var typeList = res.data.data.type;
+      var listShop = res.data.data.merchant;
+      app.globalData.commercial =listShop
+      if (app.globalData.commercial.status == 1) {
+        that.setData({
+          shopName: '商家休息中'
+        })
+      } else if (app.globalData.commercial.status == 2) {
+        that.setData({
+          shopName: '商家已下架'
+        })
+      }
       that.setData({
-        detail:typeList
+        detail:typeList,
+        shopAllList:listShop,
       })
       that.pushString(typeList);
     })
@@ -438,19 +450,8 @@ Page({
     console.log(options)
     that.setData({
       userid:options.userid,
-      shopid:options.shopid,
-      shopAllList: app.globalData.commercial
+      shopid:options.shopid
     })
-    if (app.globalData.commercial.status != 0 && app.globalData.commercial.status == 1) {
-      that.setData({
-        shopName:'商家休息中'
-      })
-    } else if (app.globalData.commercial.status != 0 && app.globalData.commercial.status == 2) {
-      that.setData({
-        shopName: '商家已下架'
-      })
-    }
-    console.log(that.data.shopAllList);
     that.findShopCar();
     that.queryShopChild();
 

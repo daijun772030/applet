@@ -1,7 +1,6 @@
 const app = getApp()
 const service = require('../../utils/myapi.js')
 const MD5 = require('../../utils/MD5.js')
-var arr =[];//数据的空数组；
 Page({
   data: {
     latitude: 30.562261,
@@ -15,12 +14,14 @@ Page({
   },
   queryMap:function(order) {//查询达达地图
     var that = this;
+    var arr = [];//数据的空数组；
     service.request('queryMap', { ordernum:order}).then((res)=>{
       console.log(res);
+      // debugger;
       var shopList = res.data.data.orderModel;//商家的信息
       var dadaList = res.data.data.dadaResponse;//达达的物流信息
-      var type = res.data.data.order_id;//物流消息是否有效
-      var typeDada = dadaList.dadaRespose.code;//达达请求成功订单标识 0为请求成功，其他为无效;
+      var type = res.data.data.order_id;//物流消息1为取件，2为送件
+      var typeDada = dadaList.code.code;//达达请求成功订单标识 0为请求成功，其他为无效;
       var dadaMes = dadaList.result;//达达物流的详细信息
       var yh = {//用户的信息
         id: 1,
@@ -40,21 +41,24 @@ Page({
         width: '35rpx',
         height: '40rpx'
       }
+      var dada=[];
       if(typeDada == 0) {
-        var dada = {//达达的位置//
-          id: 3,
-          latitude: dadaMes.transporterLat,
-          longitude: dadaMes.transporterLng,
-          name: '骑手位置',
-          iconPath: '/images/overall/qishou@3x.png',
-          width: '45rpx',
-          height: '50rpx'
+          dada = {//达达的位置
+            id: 3,
+            latitude: dadaMes.transporterLat,
+            longitude: dadaMes.transporterLng,
+            name: '骑手位置',
+            iconPath: '/images/overall/qishou@3x.png',
+            width: '45rpx',
+            height: '50rpx'
         }
+      }else {
+        dada=[]
       }
       if(type == 1) {//取衣服
         var quimg = "marker[0].iconPath"
         var song = "marker[1].iconPath"
-        this.setData({
+        that.setData({
           [quimg]: '/images/overall/qi@3x.png',
           [song]: '/images/overall/zhong@3x.png',
          latitude: shopList.latitude,
@@ -72,12 +76,12 @@ Page({
         })
 
       }else{//物流订单为坏订单
-        this.setData({
+        that.setData({
           latitude: shopList.latitude,
           longitude: shopList.longitude,
         })
       }
-      arr.push(yh, sh, dada);
+      arr.push(yh,sh,dada);
       console.log(arr)
       that.setData({
         markers:arr,
@@ -121,6 +125,6 @@ Page({
     this.queryMap(ordernum);
   },
   onShow:function() {
-    this.queryMap();
+    // this.queryMap();
   }
 })

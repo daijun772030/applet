@@ -1,0 +1,41 @@
+<view class='upload'>
+  <view class='loadContent'>
+    <view class='shop'>
+      <view class='shopLog'>
+        <image wx:if="{{shopList.logo}}" src='https://sjkjwhechat.pigcome.com{{shopList.logo}}'></image>
+        <image wx:else src='cloud://sjkj-1-2739cc.736a-sjkj-1-2739cc/img/index/touxiang@2x.png'></image>
+      </view>
+      <view class='shopName'>
+        <text>{{shopList.shopName}}</text>
+        <text class='tex'>订单号：{{shopList.orderNum}}</text>
+      </view>
+    </view>
+    <view class='loadImg'>
+      <view class='evaluateIput'>
+        <textarea maxlength="-1" value='{{inputValue}}' placeholder="请描述您对本次服务的感受，您的体验对懒猪及其他用户都非常重要，感谢您来评价~！" bindblur="inputDown"></textarea>
+      </view>
+      <view class='loadMsg'>
+        <view class='Img' wx:for="{{imgoll}}" wx:key="index" wx:if="{{imgoll.length>0}}">
+          <image src='{{item}}'></image>
+        </view>
+        <view class='default' wx:if="{{imgoll.length<3}}" catchtap="dowmImg">
+          <image src='cloud://sjkj-1-2739cc.736a-sjkj-1-2739cc/img/index/tianjiatupian@2x.png'></image>
+        </view>
+      </view>
+    </view>
+    <view class='grade'>
+      <view class='gradName'>
+        <text>服务评分</text>
+      </view>
+      <view class='gradeStar'>
+        <view wx:for="{{num}}" wx:key="index" catchtap='grademun' data-index="{{index}}">
+          <image src='{{item.imgName}}' wx:if="{{!item.checked}}"></image>
+          <image wx:if="{{item.checked}}" src='cloud://sjkj-1-2739cc.736a-sjkj-1-2739cc/img/index/huangxin-biekaiche@2x.png'></image>
+        </view>
+      </view>
+    </view>
+    <view class='up' catchtap='uplaod'>
+      <text>上传</text>
+    </view>
+  </view>
+</view>

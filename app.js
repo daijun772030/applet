@@ -10,7 +10,7 @@ App({
     addressList:null,//编辑地址的集合,
     appid: 'wxe562417cc49d20bc',//小程序appid
     secret: '8d803622d8ad580a0bb4eaa21b8aade7',
-
+    gradeList:null,//评价需要的对象数据
   },
   onLaunch: function () {
     var that =this;

@@ -1,0 +1,124 @@
+.upload{
+  width: 100%;
+  height: 1206rpx;
+  background:rgba(245,245,245,1);
+}
+.loadContent{
+  width: 690rpx;
+  height: 100%;
+  margin: 37rpx auto;
+}
+.shop{
+  width: 100%;
+  height: 172rpx;
+  display: flex;
+  align-items: center;
+  margin:37rpx 22rpx 37rpx 0;
+}
+.shopLog{
+  width: 97rpx;
+  height: 97rpx;
+}
+.shopLog>image{
+  width: 100%;
+  height: 100%;
+}
+.shopName{
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  font-size:30rpx;
+  font-family:PingFang-SC-Medium;
+  font-weight:500;
+  color:rgba(102,102,102,1);
+}
+.tex {
+  font-size:24rpx;
+  font-family:PingFang-SC-Regular;
+  font-weight:400;
+  color:rgba(102,102,102,1);
+  padding-top: 19rpx;
+}
+.loadImg{
+  width: 690rpx;
+  height: 416rpx;
+  background:rgba(255,255,255,1);
+  border-radius:8px;
+   margin-bottom: 52rpx;
+}
+.evaluateIput{
+  width: 626rpx;
+  height: 187rpx;
+  border-bottom: 1rpx solid rgba(131,245,222,1);
+  margin-left: 33rpx;
+}
+.evaluateIput>textarea {
+  width: 100%;
+  height: 100%;
+  border: none;
+  font-size:26rpx;
+}
+.loadMsg{
+  width: 626rpx;
+  height: 228rpx;
+  margin-left: 33rpx;
+  display: flex;
+  align-items: center;
+}
+.default{
+  width: 113rpx;
+  height: 113rpx;
+}
+.default>image {
+  width:100%;
+  height:100%;
+}
+.Img {
+  width: 113rpx;
+  height: 113rpx;
+  margin-right: 20rpx;
+  margin: 0 20rpx;
+}
+.Img>image{
+  width: 113rpx;
+  height: 113rpx;
+}
+.grade{
+  width: 100%;
+  height: 96rpx;
+  display: flex;
+  align-items: center;
+  /* margin-left: 30rpx; */
+  background:rgba(255,255,255,1);
+  border-radius:8px;
+}
+.gradName{
+  font-size:28rpx;
+  font-family:PingFang-SC-Medium;
+  font-weight:500;
+  color:rgba(102,102,102,1);
+  margin-right: 39rpx;
+  margin-left: 33rpx;
+}
+.gradeStar{
+  display: flex;
+}
+.gradeStar>view>image {
+  width:36rpx;
+  height:36rpx;
+  margin-left: 16rpx;
+}
+.up{
+  width:128rpx;
+  height:54rpx;
+  background:rgba(0,212,160,1);
+  border-radius:2rpx;
+  margin: 30rpx auto;
+  font-size:32rpx;
+  font-family:PingFang-SC-Medium;
+  font-weight:500;
+  color:rgba(255,255,255,1);
+  text-align: center;
+  line-height: 54rpx
+}

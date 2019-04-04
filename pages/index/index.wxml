@@ -22,7 +22,7 @@
     >
       <block wx:for="{{navImg}}" wx:key="userInfoListId">
         <swiper-item>
-          <image src="http://www.pigcome.com:81{{item.img}}" class="slide-image" />
+          <image src="https://sjkjwhechat.pigcome.com{{item.img}}" class="slide-image" />
         </swiper-item>
       </block>
     </swiper>

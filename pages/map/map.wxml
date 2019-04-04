@@ -13,14 +13,17 @@
     <view class='rider'>
       <text>骑手状态：</text>
       <text wx:if="{{dadaList.statusMsg}}">{{dadaList.statusMsg}}</text>
+      <text class='tex' wx:else>暂无信息</text>
     </view>
     <view class='rider'>
-      <text>姓名</text>
+      <text>骑手姓名：</text>
       <text wx:if="{{dadaList.transporterName}}">{{dadaList.transporterName}}</text>
+      <text class='tex' wx:else>暂无信息</text>
     </view>
     <view class='rider'>
-      <text>骑手电话</text>
+      <text>骑手电话：</text>
       <text wx:if="{{dadaList.transporterPhone}}">{{dadaList.transporterPhone}}</text>
+      <text class='tex' wx:else>暂无信息</text>
     </view>
   </view>
 </view>

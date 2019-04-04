@@ -326,18 +326,24 @@ Page({
       that.queryNathing(index);
     })
   },
-  evaluate:function() {
+  evaluate:function(e) {
+    console.log(e);
+    app.globalData.gradeList = e.currentTarget.dataset.item
     wx.showToast({
       title: '暂不支持评论，前往APP进行评论',
       icon: 'none',
       duration: 1500,
       mask: true,
     })
+    // wx.navigateTo({
+    //   url: '/pages/uploadImg/uploadImg',
+    // })
   },
   buyAway:function(e) {//再次购买商品跳转选择商品页面
     console.log(e);
     var shopid = e.currentTarget.dataset.item.merchantid;
     var userid = app.globalData.userData.id;
+    app.globalData.commercial = e.currentTarget.dataset.item;
     wx.navigateTo({
       url: '/pages/shopDetails/shopDetails?shopid=' + shopid + '&userid=' + userid,
     })

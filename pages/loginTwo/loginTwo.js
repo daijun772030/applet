@@ -13,8 +13,8 @@ Page({
     disabled: false,//验证码按钮是否使用
     item: '获取验证码',//倒计时
     currentTime: 61,
-    phone:'18382409366',//电话号码
-    psd:'lijinhui518818',//验证码
+    phone:'',//电话号码
+    psd:'',//验证码
     boolean:true,
     type:true,//默认阅读懒猪协议
   },

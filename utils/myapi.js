@@ -101,6 +101,8 @@ const post = (url) => {
    wxRefund: post('weixin/wxRefund'),//微信申请退款
    updateRefund: post('refund/updateRefund'),//微信重新申请退款
    queryMap: get('merchant/dadaQuery'),//查询达达地图
+   //添加评论
+   uploadImg: post('merchant/addEvaluateEdition'),//上传图片
 }
 
 function request (name,data,config) {

@@ -78,7 +78,7 @@
             </view>
             <view class='realyBt'wx:if="{{item.status==2&&item.refundStatus==10&&item.type==3}}">
               <button class='nathBt' catchtap='buyAway' data-item='{{item}}'>再次购买</button>
-              <button class='button' catchtap='evaluate'>评价</button>
+              <button class='button' data-item='{{item}}' catchtap='evaluate'>评价</button>
             </view>
             <view class='realyBt'wx:if="{{item.status==2&&item.refundStatus==10&&item.type==4}}">
               <button class='button'>已完成</button>

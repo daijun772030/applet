@@ -20,7 +20,8 @@
     "pages/address/address",
     "pages/webview/lazyweb",
     "pages/loginTwo/loginTwo",
-    "pages/map/map"
+    "pages/map/map",
+    "pages/uploadImg/uploadImg"
   ],
   "permission": {
     "scope.userLocation": {
