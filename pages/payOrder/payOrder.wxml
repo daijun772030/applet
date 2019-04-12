@@ -79,11 +79,11 @@
             <view class='redMessage'>
               <view>
                 <text class='block'>懒猪红包</text>
-                <text class='red'>-￥{{CarOrder.red}}</text>
+                <text class='red'>-￥{{lazyRed}}</text>
               </view>
               <view>
                 <text class='block'>取送劵</text>
-                <text class='red'>-￥{{CarOrder.DeliveryRed}}</text>
+                <text class='red'>-￥{{takoffRed}}</text>
               </view>
               <view>
                 <text class='block'>钱包</text>
@@ -136,7 +136,7 @@
         </view>
       </scroll-view>
       <view class='upDistance' catchtap='upAddress'>
-        <image></image>
+        <image src='cloud://sjkj-1-2739cc.736a-sjkj-1-2739cc/img/index/jiahao_haocaishouye@2x.png'></image>
         <text>新增收货地址</text>
       </view>
     </view>

@@ -12,6 +12,7 @@ Page({
     userid:null,//用户id
     shopid:null,//商户id
     shopAllList:null,//跳转到单个商品该商家的所有东西
+    evaluateSize:0,//评论的条数
     indexSize: 0,
     indicatorDots: false,
     autoplay: false,
@@ -135,6 +136,8 @@ Page({
       console.log(res);
       var typeList = res.data.data.type;
       var listShop = res.data.data.merchant;
+      var size = res.data.data.evaluateSize;//评论条数
+      listShop.sumScore = listShop.sumScore.toFixed(1)
       app.globalData.commercial =listShop
       if (app.globalData.commercial.status == 1) {
         that.setData({
@@ -148,6 +151,7 @@ Page({
       that.setData({
         detail:typeList,
         shopAllList:listShop,
+        evaluateSize: size,
       })
       that.pushString(typeList);
     })
@@ -191,6 +195,22 @@ Page({
     console.log(e);
     this.setData({
       addvange:true
+    })
+  },
+  cleanAll:function(e) {//删除全部所选商品
+    console.log(e);
+    var that = this;
+    var arr = [];
+    var list = e.currentTarget.dataset.item;
+    for(let i=0;i<list.length;i++) {
+      var chid = list[i].id;
+      arr.push(chid);
+    }
+    var StrId = arr.join(',');
+    console.log(StrId);
+    service.request('deletShopping',{shoppingCarId:StrId,userid:that.data.userid}).then((res)=>{
+      console.log(res);
+      that.findShopCar();
     })
   },
   moveNumShop () {//选取商品数量减商品中部
@@ -371,6 +391,7 @@ Page({
   queryEvalue:function() {//查询商户评论
     var that = this;
     service.request('queryEvaluate', { merchantid: that.data.shopid, pageNum: that.data.pageNum}).then((res)=>{
+      console.log(res);
       if(!res.data.data) {
         that.setData({
           imgType:true
@@ -380,12 +401,25 @@ Page({
       console.log(list);
       // debugger;
       for(var i=0;i<list.length;i++) {
+        var num = Number(list[i].score)
+        var newNUm = parseInt(num); 
+        list[i].score = newNUm;
+        console.log(list[i].score)
         var listImg = list[i].img
         if(listImg) {
           var newImg = listImg.split(',');
           list[i].img = newImg;
           console.log(list);
         }
+        var a =list[i].name;
+        var regx = /(1[3|4|5|7|8][\d]{9}|0[\d]{2,3}-[\d]{7,8}|400[-]?[\d]{3}[-]?[\d]{4})/g;
+        if(regx.test(a)) {
+          // console.log('这是电话号码')
+          var NewName = a.replace(/(\d{3})\d{4}(\d{4})/, '$1****$2');
+          // console.log(NewName);
+          list[i].name = NewName;
+        }
+
       }
       var newList = that.data.Evalue;
       newList.push.apply(newList,list) 
@@ -454,7 +488,7 @@ Page({
     })
     that.findShopCar();
     that.queryShopChild();
-
+    this.queryEvalue();
     wx.getSystemInfo({
       success: function (res) {
         console.log(res);
@@ -482,7 +516,6 @@ Page({
    */
   onShow: function () {
     this.findShopCar();
-    this.queryEvalue();
   },
 
   /**

@@ -56,20 +56,23 @@
     <view class='Content specialCont'>
       <view>
         <text>懒猪红包</text>
-        <text class='texRed'>-￥{{refundTwo.redid}}</text>
+        <text class='texRed' wx:if="{{refundObj.redMoney}}">-￥{{refundObj.redMoney}}</text>
+        <text class='texRed' wx:else>-￥0</text>
       </view>
       <view>
         <text>优惠金额</text>
-        <text class='texRed' wx:if="{{refundTwo.couponMoney}}">-￥{{refundTwo.couponMoney}}</text>
+        <text class='texRed' wx:if="{{refundObj.discountMoney}}">-￥{{refundObj.discountMoney}}</text>
         <text class='texRed' wx:else>-￥0</text>
       </view>
       <view>
         <text>取送劵</text>
-        <text class='texRed'>-￥0</text>
+        <text class='texRed' wx:if="{{refundObj.couponMoney}}">-￥{{refundObj.couponMoney}}</text>
+        <text wx:else class='texRed'>-￥0</text>
       </view>
       <view>
         <text>钱包</text>
-        <text class='texRed'>-￥{{refundObj.walletPay}}</text>
+        <text class='texRed' wx:if="{{refundObj.walletPay}}">-￥{{refundObj.walletPay}}</text>
+        <text wx:else class='texRed'>-￥0</text>
       </view>
       <view class='bordr'>
         <text></text>

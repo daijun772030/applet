@@ -66,6 +66,7 @@ const post = (url) => {
    sendSms: get('user/sendSms'),//发送验证码
    loginCode: post('user/loginCode'),//验证码登录
    loginPwd:post('user/loginPwd'),//密码登录
+   setPsd: post('user/setUpPassword'),//设置密码
    findByMerchatChidId: get('merchant/findByUseridMerchantid'),//点击商铺进去选商品
    findByEvaluate: get('merchant/findByEvaluate'),//查询评论接口
    findByShopCarAll: get('shoppingCar/findByShoppingCarAll'),//查询购物车所有状况

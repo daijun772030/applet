@@ -98,10 +98,18 @@ Page({
         console.log(res);
         app.globalData.userData = res.data.data;
         if (res.data.retCode == 200) {
-          that.success(res)
-          wx.switchTab({
-            url: '/pages/index/index',
-          })
+          app.globalData.phone = phone;
+          if(res.data.data.status ==0 ) {
+            that.success(res)
+            wx.switchTab({
+              url: '/pages/index/index',
+            })
+          }else {
+            console.log('设置密码')
+            wx.reLaunch({
+              url: '/pages/setPsd/setPsd',
+            })
+          }
         } else {
           that.success(res)
         }

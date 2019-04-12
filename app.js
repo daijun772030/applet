@@ -11,6 +11,7 @@ App({
     appid: 'wxe562417cc49d20bc',//小程序appid
     secret: '8d803622d8ad580a0bb4eaa21b8aade7',
     gradeList:null,//评价需要的对象数据
+    phone:null,//登录的账号
   },
   onLaunch: function () {
     var that =this;

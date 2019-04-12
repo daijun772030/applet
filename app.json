@@ -21,7 +21,8 @@
     "pages/webview/lazyweb",
     "pages/loginTwo/loginTwo",
     "pages/map/map",
-    "pages/uploadImg/uploadImg"
+    "pages/uploadImg/uploadImg",
+    "pages/setPsd/setPsd"
   ],
   "permission": {
     "scope.userLocation": {

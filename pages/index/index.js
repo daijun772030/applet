@@ -16,6 +16,7 @@ Page({
     navImg: [],//轮播图
     noticeMessg:[],//公告内容
     shopList:[],//首页底部商家
+    distance:0,//距离商家的距离
     navList:[//首页导航
       { img:'cloud://sjkj-1-2739cc.736a-sjkj-1-2739cc/img/index/chenyi@2x.png',text:'洗衣到家'},
       { img:'cloud://sjkj-1-2739cc.736a-sjkj-1-2739cc/img/index/saozhou@2x.png',text:'保洁到家'},
@@ -28,6 +29,12 @@ Page({
       { img: 'cloud://sjkj-1-2739cc.736a-sjkj-1-2739cc/img/index/xiyishebei_icon_shouye@2x.png', text: '洗衣设备' },
       { img: 'cloud://sjkj-1-2739cc.736a-sjkj-1-2739cc/img/index/tuwenjiaocheng_icon_shouye@2x.png', text: '图文教程' }
     ],
+    sort: [//排序的数组
+      {name:'距离最近',id:0,check:true},
+      { name: '自营商家', id: 1, check: false },
+      { name: '综合排序', id: 2, check: false }
+    ],
+    sortIndex:0,//排序的初始值
     quality: [],//优质商家
     navSate:{
       indicatorDots: true,
@@ -150,15 +157,20 @@ Page({
     }
   },
   scroll(e) {//gundong
-    console.log(e); 
+    // console.log(e); 
     // let that = this;
     // that.setData({
     //   scrollTop:e.detail.scrollTop
     // })
   },
-  downPart(page) {//查询商铺
-    const that = this;
-    service.request('downPart', { longitude: that.data.longitude, latitude: that.data.latitude, type: '0', pageNum: page,                       type:that.data.type }).then((res) => {
+  sort:function(e) {//查询是什么排列的
+    console.log(e);
+    var that = this;
+    var index = e.currentTarget.dataset.index;
+    that.setData({
+      sortIndex:index
+    })
+    service.request('downPart', { longitude: that.data.longitude, latitude: that.data.latitude, type:that.data.sortIndex, pageNum:1}).then((res) => {
       console.log(res);
       that.screening(res);
       if (res.data.retCode == 200 && res.data.data.merchant.length == 0) {
@@ -173,11 +185,69 @@ Page({
       }
     })
   },
+  downPart(page) {//查询商铺
+    const that = this;
+    service.request('downPart', { longitude: that.data.longitude, latitude: that.data.latitude, type:that.data.sortIndex, pageNum: page,}).then((res) => {
+      console.log(res);
+      that.screening(res);
+      if (res.data.retCode == 200 && res.data.data.merchant.length == 0) {
+        that.setData({
+          loadtType: true,
+          loadNanme: '已加载完成全部商家'
+        })
+      } else {
+        that.setData({
+          loadtType: false
+        })
+      }
+    })
+  },
+  formSubmit(a,b) {//计算商家距离。到米
+    var that = this;
+    qqmapsdk.calculateDistance({
+      mode:'straight',
+      from:a,
+      to:b,
+      success:function(e) {
+        var discance = e.result.elements[0].distance;
+        console.log(e.result.elements[0].distance);
+        return 
+      },
+      fail:function(e) {
+        console.log(e);
+      }
+    })
+  },
   screening:function (listAll) {//筛选商家函数
     var that = this;
+    var fromObj = that.data.latitude + ',' + that.data.longitude
     var merchant = listAll.data.data.merchant;
     console.log(listAll.data.data.merchant)
     for (var w = 0; w < merchant.length; w++) {
+      var tomObj = merchant[w].latitude + ',' + merchant[w].longitude;
+      console.log(fromObj,tomObj);
+
+      qqmapsdk.calculateDistance({
+        mode: 'straight',
+        from: fromObj,
+        to: tomObj,
+        success: function (e) {
+          var tenchetDistance = e.result.elements[0].distance;
+          if(tenchetDistance<1000) {
+            tenchetDistance = tenchetDistance + 'm'
+          }else if(tenchetDistance>=1000) {
+            var num = tenchetDistance/1000;
+            tenchetDistance = num.toFixed(1) + 'km'
+          }
+          console.log(tenchetDistance);
+          merchant[w].distance = tenchetDistance
+        },
+        fail: function (e) {
+          console.log(e);
+        }
+      })
+      var numP =Number(merchant[w].sumScore);
+      merchant[w].sumScore = numP.toFixed(1)
       // debugger;
       var list = merchant[w].discountModelList;
       if (list.length > 0) {
@@ -196,7 +266,7 @@ Page({
     for (var p = 0; p < listmy.length; p++) {
       // debugger;
       var listChid = listmy[p].discountModelList;
-      listmy[p].distance = parseInt(listmy[p].distance);
+      // listmy[p].distance = parseInt(listmy[p].distance);
       for (var u = 0; u < listChid.length; u++) {
         if (listChid[u].type == 0) {
           listChid[u].nathingName = '打折优惠'

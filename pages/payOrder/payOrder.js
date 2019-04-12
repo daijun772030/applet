@@ -43,9 +43,10 @@ Page({
   yhAllMoney:null,//优惠的总合计
   payAllMoney:null,//支付的总money
   wallet:null,//钱包需要扣除的钱
-
+  lazyRed:0,//懒猪红包
+  takoffRed:0,//取送券
   /*页面事件 */
-  dada:function(e) {
+  dada:function(e) {//取消优惠按钮函数
     console.log(e);
     // debugger;
     var list = e.currentTarget.dataset.item.value;
@@ -63,24 +64,35 @@ Page({
     var carList = this.data.CarOrder;
     //取消按钮的操作
     // debugger;
-    var redmoney = null;//红包
+    var redmoney = 0;//红包
     var lazyTakeoff = null;//取送费
     var wallet = 0;//钱包
     var yhAll = 0;//优惠合计
     var payALL = 0;//支付合计
+    var carList = this.data.CarOrder;
     for (var x = 0; x < this.data.checkbox.length; x++) {
-      // debugger;
-      var carList = this.data.CarOrder;
       var list = this.data.checkbox[x];
       if (list.checked) {
         if (list.value == 1) {
           redmoney = carList.red
         } else if (list.value == 2) {
-          lazyTakeoff = carList.DeliveryRed
+          if(this.data.iftake==1) {
+            lazyTakeoff=0
+          }else {
+            lazyTakeoff = carList.DeliveryRed
+          }
         } else if (list.value == 3) {
-          wallet = carList.count + this.data.takeoff + carList.reduce + carList.DeliveryRed + carList.red - 0.01
+          var zijMoney = carList.count + this.data.takeoff - carList.reduce - redmoney - lazyTakeoff
+          if (carList.wallet >= zijMoney) {
+            if(zijMoney<0) {
+              wallet=0;
+            }else {
+              wallet = carList.count + this.data.takeoff - carList.reduce - redmoney - lazyTakeoff - 0.01
+            }
+          }else{
+            wallet = carList.wallet
+          }
         }
-        yhAll += redmoney + lazyTakeoff + wallet
       } else {
         if (list.value == 1) {
           redmoney = 0
@@ -89,10 +101,10 @@ Page({
         } else if (list.value == 3) {
           wallet = 0
         }
-        yhAll += redmoney + lazyTakeoff + wallet
       }
-
-    } 
+    }
+    console.log(redmoney, lazyTakeoff)
+    yhAll = redmoney + lazyTakeoff + carList.reduce + wallet
     var payTak = carList.count + this.data.takeoff
     if (payTak>yhAll) {
       payALL =payTak - yhAll 
@@ -102,9 +114,11 @@ Page({
       payALL = payTak - yhAll
     }
     this.setData({
-      yhAllMoney: yhAll,
+      yhAllMoney: yhAll.toFixed(2),
       payAllMoney: payALL.toFixed(2),
-      wallet: wallet
+      wallet: wallet,
+      lazyRed: redmoney,//懒猪红包
+      takoffRed: lazyTakeoff,//取送券
     })
   },
 
@@ -114,14 +128,28 @@ Page({
     this.setData({
       iftake:e.detail.value
     })
+    for (let i = 0; i <this.data.checkbox.length;i++) {
+      var typeC = "checkbox[" + i + "].checked"
+      this.setData({
+        [typeC]:true,
+        
+      })
+    }
     var takeoff = this.data.takeoff
     if(e.detail.value == 1) {
+      var cke = "checkbox[1].checked"
       this.setData({
-        takeoff:0
+        takeoff:0,
+        [cke]:false,
       })
       this.money();
     }else {
       const that = this;
+      var cke = "checkbox[1].checked"
+      that.setData({
+        [cke]: true,
+        // takoffRed: that.data.CarOrder.DeliveryRed
+      })
       that.qeryDistance();
       setTimeout(function () {
         that.money()
@@ -294,7 +322,7 @@ Page({
         //   that.money();
         // },2000)
       }else {
-        this.setData({
+        that.setData({
           takeoff:0
         })
       }
@@ -305,36 +333,61 @@ Page({
     // debugger;
     // debugger;
     if (that.data.Distance == null || that.data.defaultDistance==null) {
-      this.setData({
+      that.setData({
         takeoff:0
       })
     }
+    var dRed,layRed;
     var takeoff = Number(that.data.takeoff);
     var carList = that.data.CarOrder;
     var wallet = carList.wallet;//钱包总金额
-    var yh = carList.reduce + carList.DeliveryRed + carList.red;//优惠券加上打折的总金额
+    for(let i=0;i<that.data.checkbox.length;i++) {
+      let type = that.data.checkbox[i].checked;
+      if(type) {
+        if(i==0) {
+          layRed = carList.red
+        }else if(i==1) {
+          dRed = carList.DeliveryRed;
+        }
+      }else {
+        if (i == 0) {
+          layRed = 0
+        } else if (i == 1) {
+          dRed = 0;
+        }
+      }
+    }
+    var yh = carList.reduce + dRed + layRed;//优惠券加上打折的总金额
     var shopPayMoney = carList.count + takeoff;//商品总金额加上运费一起的
     var yhallMoney = null //优惠的总金额
     var payAllMoney = null;//实际需要支付的金额
-    if (wallet) {
-      if (wallet < (shopPayMoney - yh) && wallet != 0) {
+    var nathingWallet = 0;//真正的钱包数量
+    if (wallet!=null) {
+      if (wallet < (shopPayMoney - yh)) {
         // debugger;
+        // nathingWallet = wallet;
         yhallMoney = yh + wallet;
         var tfMoney = shopPayMoney - yh - wallet
         payAllMoney = tfMoney.toFixed(2);
 
-        wallet = carList.wallet;
-
       } else if (wallet > (shopPayMoney - yh)) {
         yhallMoney = (shopPayMoney - 0.01);
         payAllMoney = 0.01;
-        wallet = shopPayMoney - yh - 0.01
+        if(shopPayMoney - yh>0) {
+          wallet = shopPayMoney - yh - 0.01
+        } else{
+          wallet=0
+          yhallMoney = carList.reduce + dRed + layRed
+        }
+        
       }
     }
     that.setData({
       yhAllMoney: yhallMoney,
       payAllMoney: payAllMoney,
-      wallet: wallet
+      wallet: wallet,
+      lazyRed: layRed,//懒猪红包
+      takoffRed: dRed,//取送券
     })
     console.log(carList, wallet, yh, shopPayMoney, that.data.yhAllMoney, that.data.payAllMoney);
   },
@@ -405,7 +458,8 @@ Page({
     return m;
   },
   qitashijian:function(now,day) {//选取其他的时间的后三天转化
-    var adta1 = new Date(now)
+    var a = now.replace(/-/g, '/');
+    var adta1 = new Date(a)
     console.log(adta1);
     var targetday_milliseconds = adta1.getTime() + 1000 * 60 * 60 * 24 * day;
     adta1.setTime(targetday_milliseconds); //这个关键

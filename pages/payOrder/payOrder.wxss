@@ -491,6 +491,7 @@ radio text {
 .upDistance>image{
   width: 38rpx;
   height: 38rpx;
+  margin-right: 20rpx
 }
 .upDistance>image{
   font-size:30rpx;

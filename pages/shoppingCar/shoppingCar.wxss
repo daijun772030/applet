@@ -154,6 +154,7 @@ checkbox-group{
   color:rgba(255,255,255,1);
   text-align: center;
   line-height: 54rpx;
+  padding:0;
 }
 .hoverBut {
    width: 128rpx;
@@ -168,6 +169,7 @@ checkbox-group{
   color:rgba(255,255,255,1);
   text-align: center;
   line-height: 54rpx;
+  padding:0
 }
 button::after{
   border:none;

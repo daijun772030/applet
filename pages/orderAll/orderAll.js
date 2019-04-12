@@ -308,17 +308,29 @@ Page({
           mask: true,
         })
       } else {
-        console.log('这是达达的订单')
-        service.request('updateOrder', { type: 2, orderId: list.id, outTradeNo: list.orderNum }).then((res) => {
+        service.request('findByMerchatChidId', { merchantid: e.currentTarget.dataset.item.merchantid, userid: that.data.userid }).then((res) => {
           console.log(res);
-          var index = that.data.navbarActiveIndex;
-          that.queryNathing(index);
+          if (res.data.data.merchant.status != 0) {
+            wx.showToast({
+              title: '当前商家非营业中，不支持发货',
+              icon: 'none',
+              duration: 1500,
+              mask: true,
+            })
+          } else {
+            service.request('updateOrder', { type: 2, orderId: list.id, outTradeNo: list.orderNum }).then((res) => {
+              console.log(res);
+              var index = that.data.navbarActiveIndex;
+              that.queryNathing(index);
+            })
+          }
         })
       }
     }
   },
   receipt:function(e) {//确认收货/这是自取自送
     console.log(e)
+    var that = this;
     var list = e.currentTarget.dataset.item;
     service.request('updateOrder', { type: 3, orderId: list.id, outTradeNo: list.orderNum }).then((res) => {
       console.log(res);

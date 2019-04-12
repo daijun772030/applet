@@ -1,0 +1,23 @@
+<view class='login'>
+  <view class='loginTopImg'>
+    <image src='cloud://sjkj-1-2739cc.736a-sjkj-1-2739cc/img/login/bj@2x.png'></image>
+  </view>
+  <view class='name'>
+    <text>密码设置</text>
+  </view>
+  <view class='loginContent'>
+    <view class='loginPhone loginInput'>
+      <input placeholder="请输入您的密码" type='text' password="{{passwordType}}" value='{{password}}' bindblur ="upPasswode"/>
+    </view>
+    <view class='loginYZ loginInput'>
+      <input placeholder="请再此输入您的密码" type='text'  password="{{passwordType}}" value='{{againPsd}}' bindblur="chedInput"/>
+      <!-- <button disabled='{{disabled}}' data-id="2" bindtap="getVerificationCode">{{item}}</button> -->
+    </view>
+    <view class='loginYZ loginInput'>
+      <input placeholder="请输入邀请码(选填)" type='text' value='{{Invitation}}' bindinput="Invitation"/>
+    </view>
+    <view class='updata'>
+      <button catchtap='login'>确认密码</button>
+    </view>
+  </view>
+</view>

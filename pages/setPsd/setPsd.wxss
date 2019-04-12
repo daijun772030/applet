@@ -1,0 +1,178 @@
+.login{
+  width: 100%;
+  height: 100%;
+}
+.loginTopImg{
+  width: 100%;
+  height:445rpx;
+}
+.loginTopImg image {
+  width: 100%;
+  height: 100%;
+}
+.loginContent{
+  width: 100%;
+  height: 529rpx;
+  /* border: 1px solid red; */
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+}
+.loginInput {
+  width:432rpx;
+  font-size:28rpx;
+  border-bottom: 1rpx solid rgba(213,213,213,1);
+}
+.loginYZ,.loginPhone{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.loginYZ>image,.loginPhone>image {
+  width: 42rpx;
+  height: 47rpx;
+}
+.loginYZ button {
+  width:187rpx;
+  height:57rpx;
+  margin-bottom: 10rpx;
+  background:rgba(193,215,210,.2);
+  /* opacity:0.8; */
+  border-radius:5rpx;
+  border: none;
+  font-size:28rpx;
+  font-family:PingFang-SC-Regular;
+  font-weight:400;
+  padding: 0;
+  color:rgba(0,224,168,1);
+  line-height:57rpx;
+}
+.loginContent>button{
+  width:510rpx;
+  height:54rpx;
+  font-size:36rpx;
+  font-family:PingFang-SC-Medium;
+  font-weight:500;
+  color:rgba(255,255,255,1);
+  line-height:54rpx;
+  background:rgba(0,224,168,1);
+  box-shadow:0rpx 3rpx 5rpx 0rpx rgba(1,185,139,0.79);
+  border-radius:5rpx;
+}
+
+/*选项框的样式*/
+checkbox {
+
+width: 28rpx;
+
+/* height: 28rpx; */
+}
+checkbox .wx-checkbox-input {
+
+width: 28rpx;
+
+height: 28rpx;
+border-radius:50%;
+
+}
+checkbox .wx-checkbox-input.wx-checkbox-input-checked {
+
+background: rgba(117,232,188,1);
+border:none;
+
+}
+checkbox .wx-checkbox-input.wx-checkbox-input-checked::before {
+
+width: 28rpx;
+
+height: 28rpx;
+
+line-height: 28rpx;
+
+text-align: center;
+
+font-size: 22rpx;
+
+color: #fff;
+
+background: transparent;
+
+transform: translate(-50%, -50%) scale(1);
+
+-webkit-transform: translate(-50%, -50%) scale(1);
+
+}
+/*end*/
+.lazyxi{
+  width: 513rpx;
+  display: flex;
+  align-items: center;
+  margin: 0 auto;
+}
+.xiyiMsg{
+  height: 100%;
+  margin-left: 11rpx;
+  font-size:20rpx;
+  font-family:PingFang-SC-Regular;
+  font-weight:400;
+  color:rgba(102,102,102,1);
+  line-height:36rpx;
+}
+.solaid{
+  margin-top: 60rpx;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.prinst{
+  width:354rpx;
+  height:1rpx;
+  background:rgba(229,229,229,1);
+}
+.zron{
+  width:7prx;
+  height:7rpx;
+  background:rgba(117,255,220,1);
+  border-radius:50%;
+}
+.loginName{
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-content: center;
+  font-size:30rpx;
+  font-family:PingFang-SC-Regular;
+  font-weight:400;
+  color:rgba(51,51,51,1);
+  line-height:90rpx;
+}
+.name {
+  width: 100%;
+  font-size:36rpx;
+  font-family:PingFang-SC-Medium;
+  font-weight:500;
+  color:rgba(85,85,85,1);
+  line-height:36rpx;
+  text-align: center;
+  margin:60rpx auto;
+}
+.updata{
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.updata>button {
+  width:510rpx;
+  height:54rpx;
+  font-size:36rpx;
+  font-family:PingFang-SC-Medium;
+  font-weight:500;
+  color:rgba(255,255,255,1);
+  line-height:54rpx;
+  background:rgba(0,224,168,1);
+  box-shadow:0rpx 3rpx 5rpx 0rpx rgba(1,185,139,0.79);
+  border-radius:5rpx;
+}

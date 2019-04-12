@@ -5,8 +5,9 @@
   <view class='sjkjWechat'>
     <view class='sjkjIndex'>
       <view class='sjNav'>
-        <image src='cloud://sjkj-1-2739cc.736a-sjkj-1-2739cc/img/SJF_weizhi@2x.png'></image>
-        <text bindtap='map'>{{mapName}} ></text>
+        <image class='image' src='cloud://sjkj-1-2739cc.736a-sjkj-1-2739cc/img/SJF_weizhi@2x.png'></image>
+        <text bindtap='map'>{{mapName}}</text>
+        <image class='jiantou' src='cloud://sjkj-1-2739cc.736a-sjkj-1-2739cc/img/index/jiantou@3x.png'></image>
       <!-- <input value='' type='text' placeholder='输入店名搜索，如布兰奇'></input> -->
       </view>
     </view>
@@ -43,20 +44,6 @@
         </block>
       </swiper>
     </view>
-    <!-- <view class='sjkjNavList'>
-      <view class='ListTop'>
-          <view wx:for="{{navList}}" wx:key="navListKey" class='navListItem'>
-          <image src='{{item.img}}'></image>
-          <text>{{item.text}}</text>
-        </view>
-      </view>
-      <view class='listBootm'>
-        <view wx:for="{{navList1}}" wx:key="navListKey1" class='navListItem'>
-          <image src='{{item.img}}'></image>
-          <text>{{item.text}}</text>
-        </view>
-      </view>
-    </view> -->
     <view class='vicinity'>
       <text>优质商家</text>
     </view>
@@ -74,16 +61,15 @@
     </view>
     <view class='screen {{scrollTop > 100 ? "topnav" : ""}}'>
       <view class='screenChid'>
-        <text>{{select}}<image src='cloud://sjkj-1-2739cc.736a-sjkj-1-2739cc/img/index/suaixuanjiantouxia@2x.png'></image></text>
-        <text>自营商家</text>
-        <text>评分最高</text>
+        <block wx:for="{{sort}}" wx:key="index">
+          <text class="{{sortIndex==index?'green':''}}" catchtap='sort' data-index="{{index}}">{{item.name}}</text>
+        </block>
       </view>
     </view>
     <!-- 这里是商家列表 -->
     <view class='merchant'>
       <view class='merchantList' bindtap='GOShopDetails' wx:for="{{shopList}}" wx:for-index= "shopListChid" data-itemList='{{item}}'                data-bindId ="{{item.id}}" wx:key="{{item.id}}">
         <view class='merchantListImg'>
-          <!-- <image src='cloud://sjkj-1-2739cc.736a-sjkj-1-2739cc/img/index/216_216.png'></image> -->
           <image src='http://www.pigcome.com:81{{item.logo}}'></image>
           <view class='take' wx:if="{{item.status == 1}}">
             <text>休息中</text>
@@ -96,18 +82,18 @@
           <view class='merchatOrder'>
             <view class='orderLeft'>
               <view class='grade'>
-                <block wx:for="{{item.sumScore}}" wx:key="sumScore">
+                <block wx:for="{{5}}" wx:key="sumScore">
                   <image src='cloud://sjkj-1-2739cc.736a-sjkj-1-2739cc/img/index/huangxin-biekaiche@2x.png'></image>
                 </block>
-                <block wx:for="{{5 - item.sumScore}}" wx:key="sumScore2">
+                <block wx:for="{{5 - 5}}" wx:key="sumScore2">
                   <image src='cloud://sjkj-1-2739cc.736a-sjkj-1-2739cc/img/index/huixing@2x.png'></image>
                 </block>
               </view>
-              <text>{{item.sumScore}}.0</text>
+              <text>{{item.sumScore}}</text>
               <text>月售{{item.monthSales}}单</text>
             </view>
             <view class='distance'>
-              <text>{{item.distance}}km</text>
+              <text>{{item.distance}}</text>
             </view>
           </view>
           <view class='mode'>

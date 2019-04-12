@@ -21,7 +21,7 @@
               <image src="http://www.pigcome.com:81{{items.img}}"></image>
               <view class='leftShopName'>
                 <text class='shName'>{{items.commodityName}}</text>
-                <text class='remark' wx:if="{{items.remark!=null || items.remark!='null'}}">{{items.remark}}</text>
+                <text class='remark' wx:if="{{(items.remark!=null&&items.remark!='null')&&items.custom!='null'}}">{{items.remark}}{{items.custom}}</text>
                 <text class='remark' wx:else>无备注</text>
               </view>
             </view>
